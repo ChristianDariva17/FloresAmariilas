@@ -712,22 +712,22 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: flex-start;
-                padding: 10px;
+                padding: 15px;
                 perspective: none;
             }
 
-            /* Activar contenedor móvil */
+            /* Activar contenedor móvil con ESPACIADO MAYOR */
             .mobile-container {
                 display: flex !important;
                 flex-direction: column;
                 width: 100%;
                 max-width: 400px;
-                gap: 15px;
+                gap: 25px; /* ESPACIADO CONSIDERABLE entre secciones */
                 z-index: 100;
                 position: relative;
             }
 
-            /* Ocultar elementos desktop y reposicionar para móvil */
+            /* 1. MENSAJE PRINCIPAL - PRIMER LUGAR */
             .main-message {
                 position: relative !important;
                 top: auto !important;
@@ -737,6 +737,7 @@
                 max-width: none;
                 font-size: 1rem;
                 padding: 20px;
+                margin-bottom: 5px; /* Espaciado extra */
             }
 
             .main-message .sunflower-icon {
@@ -751,6 +752,7 @@
                 font-size: 1.2rem;
             }
 
+            /* 2. CONTROL MUSICAL - SEGUNDO LUGAR */
             .music-player {
                 position: relative !important;
                 top: auto !important;
@@ -758,6 +760,7 @@
                 width: 100%;
                 max-width: none;
                 min-width: auto;
+                margin-bottom: 5px; /* Espaciado extra */
             }
 
             .music-player h3 {
@@ -772,14 +775,16 @@
                 font-size: 1.1rem;
             }
 
+            /* 3. CONTROLES DE JARDÍN - TERCER LUGAR (HORIZONTAL) */
             .garden-controls {
                 position: relative !important;
                 top: auto !important;
                 left: auto !important;
-                flex-direction: row;
+                flex-direction: row !important; /* HORIZONTAL como solicitaste */
                 justify-content: space-between;
                 gap: 8px;
                 width: 100%;
+                margin-bottom: 5px; /* Espaciado extra */
             }
 
             .garden-btn {
@@ -789,14 +794,14 @@
                 padding: 12px 8px;
             }
 
-            /* Contenedor de flores centrado para móviles */
+            /* 4. FLORES - CUARTO LUGAR CON MAYOR ESPACIADO */
             .flowers-container {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 width: 100%;
-                min-height: 200px;
-                margin: 20px 0;
+                min-height: 250px; /* Altura mínima mayor */
+                margin: 35px 0; /* MAYOR ESPACIADO para las flores */
                 position: relative;
             }
 
@@ -805,16 +810,19 @@
                 position: relative;
             }
 
+            /* 5. CONTADOR DE FLORES - QUINTO LUGAR */
             .flower-counter {
                 position: relative !important;
                 bottom: auto !important;
                 right: auto !important;
                 width: 100%;
                 text-align: center;
-                padding: 10px 15px;
+                padding: 12px 15px;
                 font-size: 0.9rem;
+                margin-bottom: 5px; /* Espaciado extra */
             }
 
+            /* 6. FRASES - SEXTO Y ÚLTIMO LUGAR */
             .quotes-section {
                 position: relative !important;
                 bottom: auto !important;
@@ -823,6 +831,7 @@
                 max-width: none;
                 min-width: auto;
                 padding: 15px;
+                margin-bottom: 10px; /* Espaciado final */
             }
 
             .quotes-section h3 {
@@ -887,9 +896,13 @@
 
         /* Para móviles muy pequeños */
         @media only screen and (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
             .mobile-container {
                 max-width: 100%;
-                gap: 12px;
+                gap: 20px; /* Reducir gap en móviles pequeños */
             }
 
             .main-message {
@@ -902,6 +915,12 @@
 
             .main-message .message-text {
                 font-size: 0.9rem;
+            }
+
+            /* Espaciado especial para flores en móviles pequeños */
+            .flowers-container {
+                margin: 30px 0; /* Espaciado mayor mantenido */
+                min-height: 220px;
             }
 
             .flowers {
