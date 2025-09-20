@@ -722,7 +722,7 @@
                 flex-direction: column;
                 width: 100%;
                 max-width: 400px;
-                gap: 25px; /* ESPACIADO CONSIDERABLE entre secciones */
+                gap: 55px; /* ESPACIADO CONSIDERABLE entre secciones */
                 z-index: 100;
                 position: relative;
             }
@@ -801,7 +801,7 @@
                 align-items: center;
                 width: 100%;
                 min-height: 250px; /* Altura mínima mayor */
-                margin: 35px 0; /* MAYOR ESPACIADO para las flores */
+                margin: 65px 0; /* MAYOR ESPACIADO para las flores */
                 position: relative;
             }
 
