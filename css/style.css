@@ -1,4 +1,3 @@
-
         *,
         *::after,
         *::before {
@@ -14,43 +13,40 @@
             --green-leaf: #228B22;
         }
 
+        /* DISEÑO ORIGINAL PARA DESKTOP/LAPTOP */
         body {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            align-items: flex-end;
+            justify-content: center;
             min-height: 100vh;
             background-color: #000;
             overflow-x: hidden;
+            perspective: 1000px;
             font-family: 'Arial', sans-serif;
-            padding: 10px;
-            position: relative;
         }
 
-        /* Layout principal para móviles - VERTICAL STACK */
+        /* Contenedor móvil - SOLO SE ACTIVA EN MÓVILES */
         .mobile-container {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 400px;
-            gap: 15px;
-            z-index: 100;
-            position: relative;
+            display: none; /* Oculto por defecto en desktop */
         }
 
-        /* Mensaje principal */
+        /* Mensaje principal con girasol */
         .main-message {
-            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(25,25,25,0.95) 100%);
-            padding: 20px;
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(25,25,25,0.9) 100%);
+            padding: 20px 30px;
             border-radius: 20px;
             border: 2px solid var(--golden);
             box-shadow: 0 8px 32px rgba(255, 215, 0, 0.3);
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 15px;
             backdrop-filter: blur(10px);
             animation: message-glow 3s ease-in-out infinite alternate;
-            width: 100%;
         }
 
         @keyframes message-glow {
@@ -59,9 +55,8 @@
         }
 
         .main-message .sunflower-icon {
-            font-size: 2rem;
+            font-size: 2.5rem;
             animation: rotate-sunflower 4s linear infinite;
-            flex-shrink: 0;
         }
 
         @keyframes rotate-sunflower {
@@ -71,7 +66,7 @@
 
         .main-message .message-text {
             color: var(--golden);
-            font-size: 1rem;
+            font-size: 1.3rem;
             font-weight: bold;
             text-align: center;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
@@ -80,7 +75,7 @@
 
         .main-message .date-highlight {
             color: var(--yellow-bright);
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             animation: date-pulse 2s ease-in-out infinite;
         }
 
@@ -89,9 +84,13 @@
             50% { transform: scale(1.1); }
         }
 
-        /* Control de música */
+        /* Control de música mejorado con nombre de canción */
         .music-player {
-            background: rgba(0,0,0,0.9);
+            position: fixed;
+            top: 120px;
+            right: 20px;
+            z-index: 999;
+            background: rgba(0,0,0,0.8);
             padding: 15px;
             border-radius: 15px;
             border: 1px solid var(--golden);
@@ -100,19 +99,21 @@
             flex-direction: column;
             align-items: center;
             gap: 10px;
-            width: 100%;
+            min-width: 200px;
+            max-width: 280px;
         }
 
         .music-player h3 {
             color: var(--golden);
             text-align: center;
             margin: 0;
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
+        /* Nombre de la canción actual */
         .current-song {
             color: white;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             text-align: center;
             font-style: italic;
             padding: 8px;
@@ -158,7 +159,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
 
         .control-btn:hover {
@@ -166,82 +167,30 @@
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
         }
 
-        /* Controles de jardín */
-        .garden-controls {
-            display: flex;
-            justify-content: space-between;
-            gap: 8px;
-            width: 100%;
-        }
-
-        .garden-btn {
-            background: linear-gradient(135deg, var(--golden) 0%, #FFA500 100%);
-            color: black;
-            border: none;
-            padding: 12px 8px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.7rem;
-            flex: 1;
-            min-height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .garden-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
-        }
-
-        /* Contenedor de flores centrado */
-        .flowers-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            min-height: 200px;
-            margin: 20px 0;
-        }
-
-        .flowers {
-            position: relative;
-            transform: scale(0.6);
-        }
-
-        /* Contador de flores */
-        .flower-counter {
-            background: rgba(0, 0, 0, 0.9);
-            color: var(--golden);
-            padding: 10px 15px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            text-shadow: 0 0 10px var(--golden);
-            border: 1px solid var(--golden);
-            text-align: center;
-            width: 100%;
-        }
-
-        /* Sección de frases */
+        /* Sección de frases aleatorias - ADAPTABLE */
         .quotes-section {
-            background: rgba(0,0,0,0.9);
-            padding: 15px;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 999;
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
             border-radius: 15px;
             border: 1px solid var(--golden);
             backdrop-filter: blur(10px);
-            width: 100%;
+            min-width: 300px;
+            max-width: 400px;
+            width: auto;
         }
 
         .quotes-section h3 {
             color: var(--golden);
             text-align: center;
             margin-bottom: 15px;
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
+        /* Cuadro de frases ADAPTABLE */
         .quote-display {
             color: white;
             font-style: italic;
@@ -254,31 +203,31 @@
             margin-bottom: 15px;
             word-wrap: break-word;
             hyphens: auto;
-            min-height: 60px;
+            min-height: auto;
+            height: auto;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            font-size: 0.8rem;
         }
 
         .quote-display.short-text {
-            min-height: 50px;
-            font-size: 0.85rem;
+            min-height: 60px;
+            font-size: 0.95rem;
         }
 
         .quote-display.medium-text {
-            min-height: 70px;
-            font-size: 0.8rem;
+            min-height: 80px;
+            font-size: 0.9rem;
         }
 
         .quote-display.long-text {
-            min-height: 90px;
-            font-size: 0.75rem;
+            min-height: 100px;
+            font-size: 0.85rem;
             line-height: 1.4;
             text-align: left;
             align-items: flex-start;
-            padding-top: 15px;
+            padding-top: 20px;
         }
 
         .quote-controls {
@@ -296,8 +245,7 @@
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s ease;
-            font-size: 0.75rem;
-            flex: 1;
+            font-size: 0.8rem;
         }
 
         .quote-btn:hover {
@@ -305,7 +253,7 @@
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
         }
 
-        /* Estrellas cayendo en el fondo */
+        /* Estrellas cayendo - SOLO BLANCAS Y AMARILLAS */
         .falling-stars {
             position: fixed;
             top: 0;
@@ -319,21 +267,24 @@
 
         .falling-star {
             position: absolute;
-            font-size: 16px;
+            font-size: 20px;
             opacity: 0;
             animation: simple-fall linear infinite;
         }
 
+        /* Estrellas blancas */
         .falling-star.white {
             color: white;
             text-shadow: 0 0 10px white, 0 0 20px rgba(255, 255, 255, 0.5);
         }
 
+        /* Estrellas amarillas */
         .falling-star.yellow {
             color: #FFD700;
             text-shadow: 0 0 10px #FFD700, 0 0 20px rgba(255, 215, 0, 0.5);
         }
 
+        /* Animación simple de caída vertical */
         @keyframes simple-fall {
             0% {
                 transform: translateY(-50px);
@@ -353,43 +304,29 @@
 
         /* Letras sincronizadas */
         #lyrics {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 20px;
+            font-size: 28px;
             font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
             color: white;
+            position: absolute;
+            margin-bottom: 20%;
             z-index: 10;
             font-weight: bold;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             text-align: center;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-            max-width: calc(100vw - 40px);
-            word-wrap: break-word;
-            hyphens: auto;
-            pointer-events: none;
         }
 
-        /* Título */
         .titulo {
-            position: fixed;
-            top: 30%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            margin-bottom: 180px;
             font-family: "Arial Narrow", Arial, sans-serif;
             color: #FFD700;
+            position: absolute;
             font-weight: bold;
-            letter-spacing: 5px;
+            letter-spacing: 10px;
             opacity: 0;
             animation: fadeIn 3s ease-in-out forwards;
             text-align: center;
             text-shadow: 0 0 20px #FFD700;
-            max-width: calc(100vw - 40px);
-            word-wrap: break-word;
-            z-index: 5;
-            font-size: 1.2rem;
-            pointer-events: none;
         }
 
         @keyframes fadeIn {
@@ -402,12 +339,18 @@
             to { opacity: 0; }
         }
 
+        .flowers {
+            position: relative;
+            transform: scale(0.9);
+        }
+
         /* Estilos base para las flores (girasoles) */
         .flower {
             position: absolute;
-            bottom: 0;
+            bottom: 10vmin;
             transform-origin: bottom center;
             z-index: 10;
+            --fl-speed: 0.8s;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -417,6 +360,7 @@
             filter: brightness(1.2);
         }
 
+        /* Animaciones de movimiento para nuevas flores */
         .new-flower {
             animation: flower-entrance 3s ease-out;
         }
@@ -443,6 +387,7 @@
             }
         }
 
+        /* Movimiento continuo para flores dinámicas */
         .flower.dancing {
             animation: flower-dance 6s ease-in-out infinite;
         }
@@ -462,6 +407,7 @@
             }
         }
 
+        /* Girasol 1 */
         .flower--1 {
             animation: moving-flower-1 4s linear infinite;
         }
@@ -471,6 +417,7 @@
             animation-delay: 0.3s;
         }
 
+        /* Girasol 2 */
         .flower--2 {
             left: 50%;
             transform: rotate(20deg);
@@ -482,6 +429,7 @@
             animation-delay: 0.6s;
         }
 
+        /* Girasol 3 */
         .flower--3 {
             left: 50%;
             transform: rotate(-15deg);
@@ -492,6 +440,7 @@
             animation-delay: 0.9s;
         }
 
+        /* Pétalos de girasol */
         .flower__leafs {
             position: relative;
             animation: blooming-flower 2s backwards;
@@ -521,6 +470,7 @@
             filter: blur(10vmin);
         }
 
+        /* Pétalos individuales del girasol */
         .flower__leaf {
             position: absolute;
             bottom: 0;
@@ -557,6 +507,7 @@
             opacity: 0.8;
         }
 
+        /* Centro del girasol */
         .flower__white-circle {
             position: absolute;
             left: -3.5vmin;
@@ -579,6 +530,7 @@
             background: repeating-radial-gradient(circle, #654321 1px, #8B4513 3px, #654321 5px);
         }
 
+        /* Tallo */
         .flower__line {
             height: 55vmin;
             width: 1.5vmin;
@@ -589,6 +541,7 @@
             animation: grow-flower-tree 4s backwards;
         }
 
+        /* Hojas del tallo */
         .flower__line__leaf {
             --w: 7vmin;
             --h: calc(var(--w) + 2vmin);
@@ -617,6 +570,7 @@
         .flower__line__leaf--5 { top: 0; transform-origin: left; transform: rotate(70deg) rotateY(30deg) scale(0.6); }
         .flower__line__leaf--6 { top: -2%; left: -450%; transform-origin: right; transform: rotate(-70deg) rotateY(30deg) scale(0.6); }
 
+        /* Efectos de luz */
         .flower__light {
             position: absolute;
             bottom: 0vmin;
@@ -641,6 +595,7 @@
         .flower__light--7 { left: 3vmin; animation-delay: 2s; }
         .flower__light--8 { left: -6vmin; animation-delay: 3.5s; }
 
+        /* Animaciones principales */
         @keyframes moving-flower-1 {
             0%, 100% { transform: rotate(2deg); }
             50% { transform: rotate(-2deg); }
@@ -673,6 +628,51 @@
             100% { opacity: 0; }
         }
 
+        /* Controles de jardín */
+        .garden-controls {
+            position: fixed;
+            top: 120px;
+            left: 20px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .garden-btn {
+            background: linear-gradient(135deg, var(--golden) 0%, #FFA500 100%);
+            color: black;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .garden-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Contador de flores */
+        .flower-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--golden);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px var(--golden);
+            border: 1px solid var(--golden);
+        }
+
+        /* Efectos de partículas para interacciones */
         .sparkle {
             position: fixed;
             pointer-events: none;
@@ -692,29 +692,229 @@
             }
         }
 
-        /* Para pantallas más grandes */
-        @media only screen and (min-width: 600px) {
+        /* Contenedor de flores centrado para desktop */
+        .flowers-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ========== MEDIA QUERIES - SOLO MÓVILES ========== */
+
+        /* ACTIVAR LAYOUT MÓVIL SOLO EN PANTALLAS PEQUEÑAS */
+        @media only screen and (max-width: 768px) {
+            /* Cambiar body a layout vertical para móviles */
+            body {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 10px;
+                perspective: none;
+            }
+
+            /* Activar contenedor móvil */
             .mobile-container {
-                max-width: 600px;
+                display: flex !important;
+                flex-direction: column;
+                width: 100%;
+                max-width: 400px;
+                gap: 15px;
+                z-index: 100;
+                position: relative;
+            }
+
+            /* Ocultar elementos desktop y reposicionar para móvil */
+            .main-message {
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
+                transform: none !important;
+                width: 100%;
+                max-width: none;
+                font-size: 1rem;
+                padding: 20px;
             }
 
             .main-message .sunflower-icon {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
 
             .main-message .message-text {
-                font-size: 1.3rem;
+                font-size: 1rem;
+            }
+
+            .main-message .date-highlight {
+                font-size: 1.2rem;
+            }
+
+            .music-player {
+                position: relative !important;
+                top: auto !important;
+                right: auto !important;
+                width: 100%;
+                max-width: none;
+                min-width: auto;
+            }
+
+            .music-player h3 {
+                font-size: 0.9rem;
+            }
+
+            .current-song {
+                font-size: 0.75rem;
+            }
+
+            .control-btn {
+                font-size: 1.1rem;
+            }
+
+            .garden-controls {
+                position: relative !important;
+                top: auto !important;
+                left: auto !important;
+                flex-direction: row;
+                justify-content: space-between;
+                gap: 8px;
+                width: 100%;
+            }
+
+            .garden-btn {
+                flex: 1;
+                min-height: 45px;
+                font-size: 0.7rem;
+                padding: 12px 8px;
+            }
+
+            /* Contenedor de flores centrado para móviles */
+            .flowers-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                min-height: 200px;
+                margin: 20px 0;
+                position: relative;
             }
 
             .flowers {
-                transform: scale(0.9);
+                transform: scale(0.6);
+                position: relative;
+            }
+
+            .flower-counter {
+                position: relative !important;
+                bottom: auto !important;
+                right: auto !important;
+                width: 100%;
+                text-align: center;
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+
+            .quotes-section {
+                position: relative !important;
+                bottom: auto !important;
+                left: auto !important;
+                width: 100%;
+                max-width: none;
+                min-width: auto;
+                padding: 15px;
+            }
+
+            .quotes-section h3 {
+                font-size: 0.9rem;
+            }
+
+            .quote-display {
+                font-size: 0.8rem;
+                min-height: 60px;
+            }
+
+            .quote-display.short-text {
+                min-height: 50px;
+                font-size: 0.85rem;
+            }
+
+            .quote-display.medium-text {
+                min-height: 70px;
+                font-size: 0.8rem;
+            }
+
+            .quote-display.long-text {
+                min-height: 90px;
+                font-size: 0.75rem;
+            }
+
+            .quote-btn {
+                font-size: 0.75rem;
+                flex: 1;
+            }
+
+            /* Letras y título adaptados para móvil */
+            #lyrics {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 20px;
+                letter-spacing: 3px;
+                max-width: calc(100vw - 40px);
+                word-wrap: break-word;
+                z-index: 10;
             }
 
             .titulo {
-                font-size: 1.5rem;
+                position: fixed;
+                top: 30%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 1.2rem;
+                letter-spacing: 5px;
+                max-width: calc(100vw - 40px);
+                word-wrap: break-word;
+                z-index: 5;
+                margin-bottom: 0;
+            }
+
+            .falling-star {
+                font-size: 16px;
+            }
+        }
+
+        /* Para móviles muy pequeños */
+        @media only screen and (max-width: 480px) {
+            .mobile-container {
+                max-width: 100%;
+                gap: 12px;
+            }
+
+            .main-message {
+                padding: 15px;
+            }
+
+            .main-message .sunflower-icon {
+                font-size: 1.8rem;
+            }
+
+            .main-message .message-text {
+                font-size: 0.9rem;
+            }
+
+            .flowers {
+                transform: scale(0.5);
+            }
+
+            .titulo {
+                font-size: 1rem;
+                letter-spacing: 3px;
             }
 
             #lyrics {
-                font-size: 28px;
+                font-size: 18px;
+                letter-spacing: 2px;
             }
         }
