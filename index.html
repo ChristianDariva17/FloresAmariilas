@@ -315,25 +315,6 @@
             }, 300);
         }
 
-        // Función para sincronizar letras
-        function updateLyrics() {
-            if (!audio || audio.paused) return;
-
-            const time = Math.floor(audio.currentTime);
-            const currentLine = lyricsData.find(
-                (line) => time >= line.time && time < line.time + 6
-            );
-
-            if (currentLine) {
-                const fadeInDuration = 0.1;
-                const opacity = Math.min(1, (time - currentLine.time) / fadeInDuration);
-                lyrics.style.opacity = opacity;
-                lyrics.innerHTML = currentLine.text;
-            } else {
-                lyrics.style.opacity = 0;
-                lyrics.innerHTML = "";
-            }
-        }
 
         function toggleAutoQuote() {
             const btn = document.getElementById('autoBtn');

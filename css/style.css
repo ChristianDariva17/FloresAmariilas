@@ -1,3 +1,4 @@
+
         *,
         *::after,
         *::before {
@@ -15,34 +16,41 @@
 
         body {
             display: flex;
-            align-items: flex-end;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             min-height: 100vh;
             background-color: #000;
             overflow-x: hidden;
-            perspective: 1000px;
             font-family: 'Arial', sans-serif;
+            padding: 10px;
+            position: relative;
         }
 
-        /* Mensaje principal con girasol - OPTIMIZADO MÓVIL */
+        /* Layout principal para móviles - VERTICAL STACK */
+        .mobile-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 400px;
+            gap: 15px;
+            z-index: 100;
+            position: relative;
+        }
+
+        /* Mensaje principal */
         .main-message {
-            position: fixed;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(25,25,25,0.9) 100%);
-            padding: 20px 30px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(25,25,25,0.95) 100%);
+            padding: 20px;
             border-radius: 20px;
             border: 2px solid var(--golden);
             box-shadow: 0 8px 32px rgba(255, 215, 0, 0.3);
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 15px;
             backdrop-filter: blur(10px);
             animation: message-glow 3s ease-in-out infinite alternate;
-            max-width: calc(100vw - 40px);
-            width: auto;
+            width: 100%;
         }
 
         @keyframes message-glow {
@@ -51,7 +59,7 @@
         }
 
         .main-message .sunflower-icon {
-            font-size: 2.5rem;
+            font-size: 2rem;
             animation: rotate-sunflower 4s linear infinite;
             flex-shrink: 0;
         }
@@ -63,7 +71,7 @@
 
         .main-message .message-text {
             color: var(--golden);
-            font-size: 1.3rem;
+            font-size: 1rem;
             font-weight: bold;
             text-align: center;
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
@@ -72,7 +80,7 @@
 
         .main-message .date-highlight {
             color: var(--yellow-bright);
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             animation: date-pulse 2s ease-in-out infinite;
         }
 
@@ -81,13 +89,9 @@
             50% { transform: scale(1.1); }
         }
 
-        /* Control de música - MEJORADO MÓVIL */
+        /* Control de música */
         .music-player {
-            position: fixed;
-            top: 120px;
-            right: 20px;
-            z-index: 999;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             padding: 15px;
             border-radius: 15px;
             border: 1px solid var(--golden);
@@ -96,21 +100,19 @@
             flex-direction: column;
             align-items: center;
             gap: 10px;
-            min-width: 200px;
-            max-width: 280px;
-            max-width: calc(100vw - 40px);
+            width: 100%;
         }
 
         .music-player h3 {
             color: var(--golden);
             text-align: center;
             margin: 0;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .current-song {
             color: white;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-align: center;
             font-style: italic;
             padding: 8px;
@@ -156,7 +158,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
         .control-btn:hover {
@@ -164,28 +166,80 @@
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
         }
 
-        /* Sección de frases - OPTIMIZADA MÓVIL */
+        /* Controles de jardín */
+        .garden-controls {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .garden-btn {
+            background: linear-gradient(135deg, var(--golden) 0%, #FFA500 100%);
+            color: black;
+            border: none;
+            padding: 12px 8px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.7rem;
+            flex: 1;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .garden-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Contenedor de flores centrado */
+        .flowers-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 200px;
+            margin: 20px 0;
+        }
+
+        .flowers {
+            position: relative;
+            transform: scale(0.6);
+        }
+
+        /* Contador de flores */
+        .flower-counter {
+            background: rgba(0, 0, 0, 0.9);
+            color: var(--golden);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px var(--golden);
+            border: 1px solid var(--golden);
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Sección de frases */
         .quotes-section {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 999;
-            background: rgba(0,0,0,0.8);
-            padding: 20px;
+            background: rgba(0,0,0,0.9);
+            padding: 15px;
             border-radius: 15px;
             border: 1px solid var(--golden);
             backdrop-filter: blur(10px);
-            min-width: 300px;
-            max-width: 400px;
-            width: auto;
-            max-width: calc(100vw - 40px);
+            width: 100%;
         }
 
         .quotes-section h3 {
             color: var(--golden);
             text-align: center;
             margin-bottom: 15px;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         .quote-display {
@@ -200,38 +254,37 @@
             margin-bottom: 15px;
             word-wrap: break-word;
             hyphens: auto;
-            min-height: auto;
-            height: auto;
+            min-height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            font-size: 0.8rem;
         }
 
         .quote-display.short-text {
-            min-height: 60px;
-            font-size: 0.95rem;
+            min-height: 50px;
+            font-size: 0.85rem;
         }
 
         .quote-display.medium-text {
-            min-height: 80px;
-            font-size: 0.9rem;
+            min-height: 70px;
+            font-size: 0.8rem;
         }
 
         .quote-display.long-text {
-            min-height: 100px;
-            font-size: 0.85rem;
+            min-height: 90px;
+            font-size: 0.75rem;
             line-height: 1.4;
             text-align: left;
             align-items: flex-start;
-            padding-top: 20px;
+            padding-top: 15px;
         }
 
         .quote-controls {
             display: flex;
             justify-content: center;
             gap: 10px;
-            flex-wrap: wrap;
         }
 
         .quote-btn {
@@ -243,7 +296,8 @@
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s ease;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
+            flex: 1;
         }
 
         .quote-btn:hover {
@@ -251,7 +305,7 @@
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
         }
 
-        /* Estrellas cayendo - SOLO BLANCAS Y AMARILLAS */
+        /* Estrellas cayendo en el fondo */
         .falling-stars {
             position: fixed;
             top: 0;
@@ -265,7 +319,7 @@
 
         .falling-star {
             position: absolute;
-            font-size: 20px;
+            font-size: 16px;
             opacity: 0;
             animation: simple-fall linear infinite;
         }
@@ -297,36 +351,45 @@
             }
         }
 
-        /* Letras sincronizadas - OPTIMIZADO MÓVIL */
+        /* Letras sincronizadas */
         #lyrics {
-            font-size: 28px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
             font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
             color: white;
-            position: absolute;
-            margin-bottom: 20%;
             z-index: 10;
             font-weight: bold;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             text-align: center;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
             max-width: calc(100vw - 40px);
             word-wrap: break-word;
             hyphens: auto;
+            pointer-events: none;
         }
 
+        /* Título */
         .titulo {
-            margin-bottom: 180px;
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             font-family: "Arial Narrow", Arial, sans-serif;
             color: #FFD700;
-            position: absolute;
             font-weight: bold;
-            letter-spacing: 10px;
+            letter-spacing: 5px;
             opacity: 0;
             animation: fadeIn 3s ease-in-out forwards;
             text-align: center;
             text-shadow: 0 0 20px #FFD700;
             max-width: calc(100vw - 40px);
             word-wrap: break-word;
+            z-index: 5;
+            font-size: 1.2rem;
+            pointer-events: none;
         }
 
         @keyframes fadeIn {
@@ -339,18 +402,12 @@
             to { opacity: 0; }
         }
 
-        .flowers {
-            position: relative;
-            transform: scale(0.9);
-        }
-
         /* Estilos base para las flores (girasoles) */
         .flower {
             position: absolute;
-            bottom: 10vmin;
+            bottom: 0;
             transform-origin: bottom center;
             z-index: 10;
-            --fl-speed: 0.8s;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -616,53 +673,6 @@
             100% { opacity: 0; }
         }
 
-        /* Controles de jardín - OPTIMIZADO MÓVIL */
-        .garden-controls {
-            position: fixed;
-            top: 120px;
-            left: 20px;
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .garden-btn {
-            background: linear-gradient(135deg, var(--golden) 0%, #FFA500 100%);
-            color: black;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.8rem;
-            min-width: 44px;
-            min-height: 44px;
-        }
-
-        .garden-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
-        }
-
-        /* Contador de flores - OPTIMIZADO MÓVIL */
-        .flower-counter {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.8);
-            color: var(--golden);
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: bold;
-            text-shadow: 0 0 10px var(--golden);
-            border: 1px solid var(--golden);
-            max-width: calc(50vw - 40px);
-        }
-
         .sparkle {
             position: fixed;
             pointer-events: none;
@@ -682,323 +692,29 @@
             }
         }
 
-        /* ========== OPTIMIZACIONES MÓVILES ========== */
-
-        /* Para tablets pequeñas */
-        @media only screen and (max-width: 768px) {
-            .main-message {
-                top: 10px;
-                padding: 15px 20px;
-                width: calc(100vw - 20px);
-                gap: 10px;
+        /* Para pantallas más grandes */
+        @media only screen and (min-width: 600px) {
+            .mobile-container {
+                max-width: 600px;
             }
 
             .main-message .sunflower-icon {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
             .main-message .message-text {
-                font-size: 1.1rem;
-            }
-
-            .main-message .date-highlight {
                 font-size: 1.3rem;
             }
 
-            .music-player {
-                top: 80px;
-                right: 10px;
-                left: auto;
-                width: calc(100vw - 20px);
-                max-width: none;
-                min-width: auto;
-            }
-
-            .quotes-section {
-                bottom: 10px;
-                left: 10px;
-                width: calc(100vw - 20px);
-                max-width: none;
-                min-width: auto;
-            }
-
-            .garden-controls {
-                top: 70px;
-                left: 10px;
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 5px;
-                width: calc(50vw - 20px);
-            }
-
-            .garden-btn {
-                padding: 8px 12px;
-                font-size: 0.7rem;
-                flex: 1;
-                min-width: 70px;
-            }
-
-            .flower-counter {
-                bottom: 10px;
-                right: 10px;
-                padding: 10px;
-                font-size: 0.9rem;
-            }
-        }
-
-        /* Para móviles */
-        @media only screen and (max-width: 600px) {
-            body {
-                font-size: 14px;
-            }
-
-            #lyrics {
-                font-size: 16px;
-                margin-bottom: 40%;
-                letter-spacing: 2px;
-                padding: 0 10px;
-            }
-
-            .main-message {
-                top: 5px;
-                padding: 12px 15px;
-                width: calc(100vw - 10px);
-                flex-direction: column;
-                gap: 8px;
-                text-align: center;
-            }
-
-            .main-message .sunflower-icon {
-                font-size: 1.8rem;
-                order: -1;
-            }
-
-            .main-message .message-text {
-                font-size: 0.9rem;
-                order: 1;
-            }
-
-            .main-message .date-highlight {
-                font-size: 1.1rem;
-            }
-
-            .music-player {
-                top: 120px;
-                right: 5px;
-                left: 5px;
-                width: calc(100vw - 10px);
-                padding: 10px;
-                gap: 8px;
-            }
-
-            .music-player h3 {
-                font-size: 0.9rem;
-            }
-
-            .current-song {
-                font-size: 0.7rem;
-                padding: 6px;
-                min-height: 30px;
-            }
-
-            .control-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 1rem;
-                padding: 8px;
-            }
-
-            .music-controls {
-                gap: 10px;
-            }
-
-            .quotes-section {
-                bottom: 5px;
-                left: 5px;
-                right: 5px;
-                width: calc(100vw - 10px);
-                padding: 15px;
-            }
-
-            .quotes-section h3 {
-                font-size: 0.9rem;
-                margin-bottom: 10px;
-            }
-
-            .quote-display {
-                padding: 12px;
-                font-size: 0.8rem;
-                margin-bottom: 10px;
-            }
-
-            .quote-display.short-text {
-                min-height: 50px;
-                font-size: 0.85rem;
-            }
-
-            .quote-display.medium-text {
-                min-height: 70px;
-                font-size: 0.8rem;
-            }
-
-            .quote-display.long-text {
-                min-height: 90px;
-                font-size: 0.75rem;
-                padding-top: 15px;
-            }
-
-            .quote-btn {
-                padding: 6px 12px;
-                font-size: 0.7rem;
-                flex: 1;
-            }
-
-            .garden-controls {
-                top: 240px;
-                left: 5px;
-                right: 5px;
-                width: calc(100vw - 10px);
-                flex-direction: row;
-                gap: 5px;
-            }
-
-            .garden-btn {
-                padding: 8px 10px;
-                font-size: 0.65rem;
-                flex: 1;
-                min-width: auto;
-                border-radius: 15px;
-            }
-
-            .flower-counter {
-                position: fixed;
-                top: 280px;
-                right: 5px;
-                bottom: auto;
-                padding: 8px 12px;
-                font-size: 0.8rem;
-                border-radius: 8px;
-                max-width: 120px;
-            }
-
             .flowers {
-                font-size: 12px;
-                margin-bottom: 50%;
-                letter-spacing: 2px;
-                transform: scale(0.8);
+                transform: scale(0.9);
             }
 
             .titulo {
-                margin-bottom: 320px;
-                font-size: 1.2rem;
-                letter-spacing: 5px;
-                padding: 0 10px;
-            }
-
-            .falling-star {
-                font-size: 16px;
-            }
-        }
-
-        /* Para móviles muy pequeños */
-        @media only screen and (max-width: 480px) {
-            .main-message {
-                padding: 10px;
-                gap: 5px;
-            }
-
-            .main-message .sunflower-icon {
                 font-size: 1.5rem;
             }
 
-            .main-message .message-text {
-                font-size: 0.8rem;
-            }
-
-            .music-player {
-                top: 100px;
-                padding: 8px;
-            }
-
-            .control-btn {
-                width: 35px;
-                height: 35px;
-                font-size: 0.9rem;
-            }
-
-            .quotes-section {
-                padding: 10px;
-            }
-
-            .garden-controls {
-                top: 200px;
-                gap: 3px;
-            }
-
-            .garden-btn {
-                padding: 6px 8px;
-                font-size: 0.6rem;
-            }
-
-            .flower-counter {
-                top: 240px;
-                padding: 6px 10px;
-                font-size: 0.7rem;
-            }
-
-            .titulo {
-                font-size: 1rem;
-                letter-spacing: 3px;
-                margin-bottom: 280px;
-            }
-
             #lyrics {
-                font-size: 14px;
-                letter-spacing: 1px;
-            }
-        }
-
-        /* Para pantallas horizontales móviles */
-        @media only screen and (max-height: 500px) and (orientation: landscape) {
-            .main-message {
-                top: 2px;
-                padding: 8px 12px;
-                font-size: 0.8rem;
-            }
-
-            .music-player {
-                top: 50px;
-                padding: 8px;
-            }
-
-            .quotes-section {
-                bottom: 2px;
-                padding: 8px;
-            }
-
-            .garden-controls {
-                top: 50px;
-                flex-direction: row;
-            }
-
-            .flower-counter {
-                top: 50px;
-                right: 50%;
-                transform: translateX(50%);
-            }
-
-            .titulo {
-                margin-bottom: 150px;
-                font-size: 0.9rem;
-            }
-
-            #lyrics {
-                font-size: 12px;
-                margin-bottom: 20%;
-            }
-
-            .flowers {
-                transform: scale(0.6);
-                margin-bottom: 20%;
+                font-size: 28px;
             }
         }
