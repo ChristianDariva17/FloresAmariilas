@@ -801,7 +801,7 @@
                 align-items: center;
                 width: 100%;
                 min-height: 250px; /* Altura mínima mayor */
-                margin: 65px 0; /* MAYOR ESPACIADO para las flores */
+                margin: 95px 0; /* MAYOR ESPACIADO para las flores */
                 position: relative;
             }
 
