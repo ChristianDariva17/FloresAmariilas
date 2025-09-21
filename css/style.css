@@ -84,7 +84,7 @@
             50% { transform: scale(1.1); }
         }
 
-        /* Control de música mejorado con nombre de canción */
+        /* Control de música - VISIBLE SOLO EN DESKTOP */
         .music-player {
             position: fixed;
             top: 120px;
@@ -110,7 +110,6 @@
             font-size: 1rem;
         }
 
-        /* Nombre de la canción actual */
         .current-song {
             color: white;
             font-size: 0.8rem;
@@ -167,7 +166,7 @@
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
         }
 
-        /* Sección de frases aleatorias - ADAPTABLE */
+        /* Sección de frases aleatorias */
         .quotes-section {
             position: fixed;
             bottom: 20px;
@@ -190,7 +189,6 @@
             font-size: 1rem;
         }
 
-        /* Cuadro de frases ADAPTABLE */
         .quote-display {
             color: white;
             font-style: italic;
@@ -253,7 +251,51 @@
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
         }
 
-        /* Estrellas cayendo - SOLO BLANCAS Y AMARILLAS */
+        /* Controles de jardín - VISIBLE SOLO EN DESKTOP */
+        .garden-controls {
+            position: fixed;
+            top: 120px;
+            left: 20px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .garden-btn {
+            background: linear-gradient(135deg, var(--golden) 0%, #FFA500 100%);
+            color: black;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+        }
+
+        .garden-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Contador de flores - VISIBLE SOLO EN DESKTOP */
+        .flower-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.8);
+            color: var(--golden);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px var(--golden);
+            border: 1px solid var(--golden);
+        }
+
+        /* Estrellas cayendo */
         .falling-stars {
             position: fixed;
             top: 0;
@@ -272,19 +314,16 @@
             animation: simple-fall linear infinite;
         }
 
-        /* Estrellas blancas */
         .falling-star.white {
             color: white;
             text-shadow: 0 0 10px white, 0 0 20px rgba(255, 255, 255, 0.5);
         }
 
-        /* Estrellas amarillas */
         .falling-star.yellow {
             color: #FFD700;
             text-shadow: 0 0 10px #FFD700, 0 0 20px rgba(255, 215, 0, 0.5);
         }
 
-        /* Animación simple de caída vertical */
         @keyframes simple-fall {
             0% {
                 transform: translateY(-50px);
@@ -360,7 +399,6 @@
             filter: brightness(1.2);
         }
 
-        /* Animaciones de movimiento para nuevas flores */
         .new-flower {
             animation: flower-entrance 3s ease-out;
         }
@@ -387,7 +425,6 @@
             }
         }
 
-        /* Movimiento continuo para flores dinámicas */
         .flower.dancing {
             animation: flower-dance 6s ease-in-out infinite;
         }
@@ -407,7 +444,6 @@
             }
         }
 
-        /* Girasol 1 */
         .flower--1 {
             animation: moving-flower-1 4s linear infinite;
         }
@@ -417,7 +453,6 @@
             animation-delay: 0.3s;
         }
 
-        /* Girasol 2 */
         .flower--2 {
             left: 50%;
             transform: rotate(20deg);
@@ -429,7 +464,6 @@
             animation-delay: 0.6s;
         }
 
-        /* Girasol 3 */
         .flower--3 {
             left: 50%;
             transform: rotate(-15deg);
@@ -440,7 +474,6 @@
             animation-delay: 0.9s;
         }
 
-        /* Pétalos de girasol */
         .flower__leafs {
             position: relative;
             animation: blooming-flower 2s backwards;
@@ -470,7 +503,6 @@
             filter: blur(10vmin);
         }
 
-        /* Pétalos individuales del girasol */
         .flower__leaf {
             position: absolute;
             bottom: 0;
@@ -507,7 +539,6 @@
             opacity: 0.8;
         }
 
-        /* Centro del girasol */
         .flower__white-circle {
             position: absolute;
             left: -3.5vmin;
@@ -530,7 +561,6 @@
             background: repeating-radial-gradient(circle, #654321 1px, #8B4513 3px, #654321 5px);
         }
 
-        /* Tallo */
         .flower__line {
             height: 55vmin;
             width: 1.5vmin;
@@ -541,7 +571,6 @@
             animation: grow-flower-tree 4s backwards;
         }
 
-        /* Hojas del tallo */
         .flower__line__leaf {
             --w: 7vmin;
             --h: calc(var(--w) + 2vmin);
@@ -570,7 +599,6 @@
         .flower__line__leaf--5 { top: 0; transform-origin: left; transform: rotate(70deg) rotateY(30deg) scale(0.6); }
         .flower__line__leaf--6 { top: -2%; left: -450%; transform-origin: right; transform: rotate(-70deg) rotateY(30deg) scale(0.6); }
 
-        /* Efectos de luz */
         .flower__light {
             position: absolute;
             bottom: 0vmin;
@@ -595,7 +623,6 @@
         .flower__light--7 { left: 3vmin; animation-delay: 2s; }
         .flower__light--8 { left: -6vmin; animation-delay: 3.5s; }
 
-        /* Animaciones principales */
         @keyframes moving-flower-1 {
             0%, 100% { transform: rotate(2deg); }
             50% { transform: rotate(-2deg); }
@@ -628,51 +655,6 @@
             100% { opacity: 0; }
         }
 
-        /* Controles de jardín */
-        .garden-controls {
-            position: fixed;
-            top: 120px;
-            left: 20px;
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .garden-btn {
-            background: linear-gradient(135deg, var(--golden) 0%, #FFA500 100%);
-            color: black;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.8rem;
-        }
-
-        .garden-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
-        }
-
-        /* Contador de flores */
-        .flower-counter {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.8);
-            color: var(--golden);
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: bold;
-            text-shadow: 0 0 10px var(--golden);
-            border: 1px solid var(--golden);
-        }
-
-        /* Efectos de partículas para interacciones */
         .sparkle {
             position: fixed;
             pointer-events: none;
@@ -692,7 +674,6 @@
             }
         }
 
-        /* Contenedor de flores centrado para desktop */
         .flowers-container {
             position: relative;
             width: 100%;
@@ -702,238 +683,385 @@
             align-items: center;
         }
 
-        /* ========== MEDIA QUERIES - SOLO MÓVILES ========== */
+        /* ========== MEDIA QUERIES - MÓVILES OPTIMIZADO ========== */
 
-        /* ACTIVAR LAYOUT MÓVIL SOLO EN PANTALLAS PEQUEÑAS */
-        @media only screen and (max-width: 768px) {
-            /* Cambiar body a layout vertical para móviles */
-            body {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
-                padding: 15px;
-                perspective: none;
-            }
+/* ========== NUEVOS ESTILOS MÓVILES OPTIMIZADOS ========== */
+/* Agregar al final del archivo CSS existente */
 
-            /* Activar contenedor móvil con ESPACIADO MAYOR */
-            .mobile-container {
-                display: flex !important;
-                flex-direction: column;
-                width: 100%;
-                max-width: 400px;
-                gap: 55px; /* ESPACIADO CONSIDERABLE entre secciones */
-                z-index: 100;
-                position: relative;
-            }
+/* Contenedor móvil - SOLO SE ACTIVA EN MÓVILES */
+.mobile-container {
+    display: none; /* Oculto por defecto en desktop */
+}
 
-            /* 1. MENSAJE PRINCIPAL - PRIMER LUGAR */
-            .main-message {
-                position: relative !important;
-                top: auto !important;
-                left: auto !important;
-                transform: none !important;
-                width: 100%;
-                max-width: none;
-                font-size: 1rem;
-                padding: 20px;
-                margin-bottom: 5px; /* Espaciado extra */
-            }
+/* Contenedor de flores centrado para desktop */
+.flowers-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-            .main-message .sunflower-icon {
-                font-size: 2rem;
-            }
+/* ========== MEDIA QUERIES - MÓVILES OPTIMIZADO ========== */
+/* ========== MEDIA QUERIES - MÓVILES OPTIMIZADO ========== */
+@media only screen and (max-width: 768px) {
+    /* OCULTAR TODAS LAS SECCIONES DESKTOP EN MÓVIL */
+    .music-player {
+        display: none !important;
+    }
 
-            .main-message .message-text {
-                font-size: 1rem;
-            }
+    .garden-controls {
+        display: none !important;
+    }
 
-            .main-message .date-highlight {
-                font-size: 1.2rem;
-            }
+    .flower-counter {
+        display: none !important;
+    }
 
-            /* 2. CONTROL MUSICAL - SEGUNDO LUGAR */
-            .music-player {
-                position: relative !important;
-                top: auto !important;
-                right: auto !important;
-                width: 100%;
-                max-width: none;
-                min-width: auto;
-                margin-bottom: 5px; /* Espaciado extra */
-            }
+    /* OCULTAR ELEMENTOS DUPLICADOS DE DESKTOP EN MÓVIL */
+    .main-message:not(.mobile-container .main-message) {
+        display: none !important;
+    }
 
-            .music-player h3 {
-                font-size: 0.9rem;
-            }
+    .quotes-section:not(.mobile-container .quotes-section) {
+        display: none !important;
+    }
 
-            .current-song {
-                font-size: 0.75rem;
-            }
+    .flowers:not(.mobile-container .flowers) {
+        display: none !important;
+    }
 
-            .control-btn {
-                font-size: 1.1rem;
-            }
+    /* Layout móvil optimizado */
+    body {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        padding: 25px 15px !important;
+        perspective: none !important;
+        min-height: 100vh !important;
+        overflow-x: hidden !important;
+    }
 
-            /* 3. CONTROLES DE JARDÍN - TERCER LUGAR (HORIZONTAL) */
-            .garden-controls {
-                position: relative !important;
-                top: auto !important;
-                left: auto !important;
-                flex-direction: row !important; /* HORIZONTAL como solicitaste */
-                justify-content: space-between;
-                gap: 8px;
-                width: 100%;
-                margin-bottom: 5px; /* Espaciado extra */
-            }
+    .mobile-container {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 400px !important;
+        gap: 50px !important; /* ESPACIADO GENEROSO ENTRE LAS 3 SECCIONES */
+        z-index: 100 !important;
+        position: relative !important;
+        flex: 1 !important;
+        justify-content: flex-start !important;
+        align-items: stretch !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
 
-            .garden-btn {
-                flex: 1;
-                min-height: 45px;
-                font-size: 0.7rem;
-                padding: 12px 8px;
-            }
+    /* ========== 1. MENSAJE PRINCIPAL - PRIMERA SECCIÓN ========== */
+    .mobile-container .main-message {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        width: 100% !important;
+        max-width: none !important;
+        padding: 35px 30px !important; /* Padding generoso */
+        flex: 0 0 auto !important;
+        order: 1 !important; /* PRIMER LUGAR */
+        margin: 0 !important; /* Sin márgenes adicionales */
+        /* Estilos visuales mejorados */
+        background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(25,25,25,0.95) 100%) !important;
+        border: 2px solid var(--golden) !important;
+        border-radius: 25px !important;
+        box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4) !important;
+        backdrop-filter: blur(15px) !important;
+    }
 
-            /* 4. FLORES - CUARTO LUGAR CON MAYOR ESPACIADO */
-            .flowers-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 100%;
-                min-height: 250px; /* Altura mínima mayor */
-                margin: 95px 0; /* MAYOR ESPACIADO para las flores */
-                position: relative;
-            }
+    .mobile-container .main-message .sunflower-icon {
+        font-size: 2.6rem !important; /* Iconos prominentes */
+    }
 
-            .flowers {
-                transform: scale(0.6);
-                position: relative;
-            }
+    .mobile-container .main-message .message-text {
+        font-size: 1.3rem !important; /* Texto destacado */
+    }
 
-            /* 5. CONTADOR DE FLORES - QUINTO LUGAR */
-            .flower-counter {
-                position: relative !important;
-                bottom: auto !important;
-                right: auto !important;
-                width: 100%;
-                text-align: center;
-                padding: 12px 15px;
-                font-size: 0.9rem;
-                margin-bottom: 5px; /* Espaciado extra */
-            }
+    .mobile-container .main-message .date-highlight {
+        font-size: 1.5rem !important; /* Fecha prominente */
+    }
 
-            /* 6. FRASES - SEXTO Y ÚLTIMO LUGAR */
-            .quotes-section {
-                position: relative !important;
-                bottom: auto !important;
-                left: auto !important;
-                width: 100%;
-                max-width: none;
-                min-width: auto;
-                padding: 15px;
-                margin-bottom: 10px; /* Espaciado final */
-            }
+    /* ========== 2. FRASES - SEGUNDA SECCIÓN ========== */
+    .mobile-container .quotes-section {
+        position: relative !important;
+        bottom: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        max-width: none !important;
+        min-width: auto !important;
+        padding: 30px 25px !important; /* Padding generoso */
+        flex: 0 0 auto !important;
+        order: 2 !important; /* SEGUNDO LUGAR */
+        margin: 0 !important; /* Sin márgenes adicionales */
+        /* Estilos visuales mejorados */
+        background: rgba(0,0,0,0.85) !important;
+        border: 2px solid var(--golden) !important;
+        border-radius: 20px !important;
+        box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3) !important;
+        backdrop-filter: blur(12px) !important;
+    }
 
-            .quotes-section h3 {
-                font-size: 0.9rem;
-            }
+    .mobile-container .quotes-section h3 {
+        font-size: 1.2rem !important; /* Título destacado */
+        margin-bottom: 20px !important;
+        color: var(--golden) !important;
+    }
 
-            .quote-display {
-                font-size: 0.8rem;
-                min-height: 60px;
-            }
+    .mobile-container .quote-display {
+        font-size: 1rem !important; /* Texto legible */
+        min-height: 85px !important; /* Altura cómoda */
+        padding: 22px 20px !important; /* Padding generoso */
+        background: rgba(255, 215, 0, 0.08) !important;
+        border-left: 4px solid var(--golden) !important;
+        border-radius: 8px !important;
+        margin-bottom: 18px !important;
+    }
 
-            .quote-display.short-text {
-                min-height: 50px;
-                font-size: 0.85rem;
-            }
+    .mobile-container .quote-controls {
+        gap: 18px !important; /* Gap generoso */
+        margin-top: 20px !important;
+    }
 
-            .quote-display.medium-text {
-                min-height: 70px;
-                font-size: 0.8rem;
-            }
+    .mobile-container .quote-btn {
+        font-size: 0.9rem !important; /* Texto legible */
+        flex: 1 !important;
+        padding: 14px 20px !important; /* Padding generoso */
+        min-height: 48px !important; /* Altura cómoda */
+        border-radius: 25px !important;
+        background: linear-gradient(135deg, var(--golden) 0%, #FFA500 100%) !important;
+    }
 
-            .quote-display.long-text {
-                min-height: 90px;
-                font-size: 0.75rem;
-            }
+    /* ========== 3. FLORES - TERCERA Y ÚLTIMA SECCIÓN - PROTAGONISTAS (ABAJO) ========== */
+    .mobile-container .flowers-container {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: flex-end !important; /* ✅ FLORES EN LA PARTE DE ABAJO */
+        width: 100% !important;
+        min-height: 70vh !important; /* ALTURA MÁXIMA - PROTAGONISMO ABSOLUTO */
+        margin: 0 !important; /* Sin márgenes adicionales */
+        position: relative !important;
+        flex: 1 1 auto !important; /* OCUPA TODO EL ESPACIO RESTANTE */
+        order: 3 !important; /* TERCER Y ÚLTIMO LUGAR - PROTAGONISTAS */
+        /* Efectos visuales especiales para máximo protagonismo */
+        background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.08) 0%, rgba(255, 215, 0, 0.02) 50%, transparent 100%) !important;
+        border-radius: 35px !important; /* Border radius más grande */
+        border: 3px solid rgba(255, 215, 0, 0.3) !important; /* Borde más visible */
+        box-shadow: 
+            0 25px 60px rgba(0, 0, 0, 0.5),
+            inset 0 1px 0 rgba(255, 215, 0, 0.1) !important; /* Sombra dramática doble */
+        backdrop-filter: blur(15px) !important; /* Blur máximo */
+        z-index: 50 !important;
+        padding: 20px 40px 40px 40px !important; /* ✅ MENOS PADDING ARRIBA, MÁS ABAJO */
+    }
 
-            .quote-btn {
-                font-size: 0.75rem;
-                flex: 1;
-            }
+    /* FLORES PROTAGONISTAS CON TAMAÑO MÁXIMO */
+    .mobile-container .flowers {
+        transform: scale(1.5) !important; /* ESCALA MÁXIMA - PROTAGONISMO ABSOLUTO */
+        position: relative !important;
+        flex-shrink: 0 !important;
+        z-index: 51 !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: auto !important;
+        height: auto !important;
+        overflow: visible !important;
+        margin-bottom: 0 !important; /* ✅ SIN MARGEN INFERIOR */
+    }
 
-            /* Letras y título adaptados para móvil */
-            #lyrics {
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                font-size: 20px;
-                letter-spacing: 3px;
-                max-width: calc(100vw - 40px);
-                word-wrap: break-word;
-                z-index: 10;
-            }
+    /* Asegurar máxima visibilidad de cada flor */
+    .mobile-container .flower {
+        position: absolute !important;
+        bottom: 0 !important; /* ✅ FLORES EN EL BOTTOM DEL CONTENEDOR */
+        transform-origin: bottom center !important;
+        z-index: 52 !important;
+        cursor: pointer !important;
+        transition: all 0.5s ease !important; /* Transición más suave */
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
 
-            .titulo {
-                position: fixed;
-                top: 30%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                font-size: 1.2rem;
-                letter-spacing: 5px;
-                max-width: calc(100vw - 40px);
-                word-wrap: break-word;
-                z-index: 5;
-                margin-bottom: 0;
-            }
+    .mobile-container .flower:hover {
+        transform: scale(1.4) !important; /* Hover máximo */
+        filter: brightness(1.6) drop-shadow(0 0 25px rgba(255, 215, 0, 0.8)) !important; /* Efectos máximos */
+    }
 
-            .falling-star {
-                font-size: 16px;
-            }
-        }
+    /* Letras y título adaptados para no interferir */
+    #lyrics {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        font-size: 26px !important; /* Fuente más grande pero no dominante */
+        letter-spacing: 3px !important;
+        max-width: calc(100vw - 50px) !important;
+        word-wrap: break-word !important;
+        z-index: 8 !important; /* Z-index menor que las flores */
+        text-align: center !important;
+        padding: 0 30px !important;
+        pointer-events: none !important;
+        opacity: 0.9 !important; /* Ligeramente transparente */
+    }
 
-        /* Para móviles muy pequeños */
-        @media only screen and (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
+    .titulo {
+        position: fixed !important;
+        top: 20% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        font-size: 1.5rem !important; /* Fuente destacada pero no dominante */
+        letter-spacing: 5px !important;
+        max-width: calc(100vw - 50px) !important;
+        word-wrap: break-word !important;
+        z-index: 5 !important; /* Z-index menor que las flores */
+        text-align: center !important;
+        padding: 0 30px !important;
+        pointer-events: none !important;
+        opacity: 0.95 !important; /* Ligeramente transparente */
+    }
 
-            .mobile-container {
-                max-width: 100%;
-                gap: 20px; /* Reducir gap en móviles pequeños */
-            }
+    .falling-star {
+        font-size: 22px !important; /* Estrellas más grandes pero no dominantes */
+        z-index: 2 !important; /* Z-index menor que las flores */
+    }
 
-            .main-message {
-                padding: 15px;
-            }
+    /* Forzar visibilidad total de flores */
+    .mobile-container .flower, .mobile-container .flower *,
+    .mobile-container .flower__leafs, .mobile-container .flower__leafs *,
+    .mobile-container .flower__leaf, .mobile-container .flower__line,
+    .mobile-container .flower__white-circle, .mobile-container .flower__light {
+        visibility: visible !important;
+        opacity: 1 !important;
+        display: block !important;
+    }
+}
 
-            .main-message .sunflower-icon {
-                font-size: 1.8rem;
-            }
+/* Para móviles pequeños */
+@media only screen and (max-width: 480px) {
+    body {
+        padding: 20px 10px !important;
+    }
 
-            .main-message .message-text {
-                font-size: 0.9rem;
-            }
+    .mobile-container {
+        max-width: 100% !important;
+        gap: 40px !important; /* Gap reducido pero generoso */
+        padding: 0 !important;
+    }
 
-            /* Espaciado especial para flores en móviles pequeños */
-            .flowers-container {
-                margin: 30px 0; /* Espaciado mayor mantenido */
-                min-height: 220px;
-            }
+    .mobile-container .main-message {
+        padding: 30px 25px !important;
+        border-radius: 20px !important;
+    }
 
-            .flowers {
-                transform: scale(0.5);
-            }
+    .mobile-container .main-message .sunflower-icon {
+        font-size: 2.4rem !important;
+    }
 
-            .titulo {
-                font-size: 1rem;
-                letter-spacing: 3px;
-            }
+    .mobile-container .main-message .message-text {
+        font-size: 1.2rem !important;
+    }
 
-            #lyrics {
-                font-size: 18px;
-                letter-spacing: 2px;
-            }
-        }
+    .mobile-container .main-message .date-highlight {
+        font-size: 1.4rem !important;
+    }
+
+    .mobile-container .quotes-section {
+        padding: 25px 20px !important;
+    }
+
+    .mobile-container .quotes-section h3 {
+        font-size: 1.1rem !important;
+    }
+
+    .mobile-container .quote-display {
+        font-size: 0.95rem !important;
+        min-height: 80px !important;
+        padding: 20px 18px !important;
+    }
+
+    .mobile-container .quote-btn {
+        font-size: 0.85rem !important;
+        padding: 12px 18px !important;
+        min-height: 45px !important;
+    }
+
+    /* FLORES PROTAGONISTAS EN MÓVILES PEQUEÑOS (ABAJO) */
+    .mobile-container .flowers-container {
+        min-height: 65vh !important; /* Altura grande mantenida */
+        padding: 15px 35px 35px 35px !important; /* ✅ MENOS PADDING ARRIBA, MÁS ABAJO */
+        border-radius: 30px !important;
+        align-items: flex-end !important; /* ✅ FLORES EN LA PARTE DE ABAJO */
+    }
+
+    .mobile-container .flowers {
+        transform: scale(1.3) !important; /* Escala grande para móviles pequeños */
+        margin-bottom: 0 !important; /* ✅ SIN MARGEN INFERIOR */
+    }
+
+    .titulo {
+        font-size: 1.3rem !important;
+        letter-spacing: 4px !important;
+        top: 18% !important;
+    }
+
+    #lyrics {
+        font-size: 24px !important;
+        letter-spacing: 2px !important;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    .mobile-container {
+        gap: 35px !important;
+    }
+
+    .mobile-container .main-message {
+        padding: 25px 20px !important;
+    }
+
+    .mobile-container .main-message .sunflower-icon {
+        font-size: 2.2rem !important;
+    }
+
+    .mobile-container .main-message .message-text {
+        font-size: 1.1rem !important;
+    }
+
+    .mobile-container .quotes-section {
+        padding: 20px 15px !important;
+    }
+
+    /* FLORES VISIBLES EN PANTALLAS MUY PEQUEÑAS (ABAJO) */
+    .mobile-container .flowers-container {
+        min-height: 60vh !important; /* Altura considerable */
+        padding: 10px 30px 30px 30px !important; /* ✅ MENOS PADDING ARRIBA, MÁS ABAJO */
+        border-radius: 25px !important;
+        align-items: flex-end !important; /* ✅ FLORES EN LA PARTE DE ABAJO */
+    }
+
+    .mobile-container .flowers {
+        transform: scale(1.1) !important; /* Escala ajustada pero grande */
+        margin-bottom: 0 !important; /* ✅ SIN MARGEN INFERIOR */
+    }
+
+    .titulo {
+        font-size: 1.2rem !important;
+        letter-spacing: 3px !important;
+        top: 16% !important;
+    }
+
+    #lyrics {
+        font-size: 22px !important;
+        letter-spacing: 1px !important;
+    }
+}

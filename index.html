@@ -7,18 +7,128 @@
     <link rel="icon" href="img/flowers.png" type="image/x-icon" />
     <link rel="stylesheet" href="css/style.css">
     <title>Flores Para Ti - 21 de Septiembre</title>
-    
 </head>
 
 <body class="container">
-    <!-- Audio principal oculto -->
-    <audio id="mainAudio" loop>
+    <!-- Audio principal con autoplay mejorado -->
+    <audio id="mainAudio" loop autoplay muted>
         <source src="sound/FloresAmarillas.mp3" type="audio/mpeg">
     </audio>
 
     <!-- Estrellas cayendo en el fondo -->
     <div class="falling-stars" id="fallingStars"></div>
 
+    <!-- CONTENEDOR MÓVIL VERTICAL (SOLO VISIBLE EN MÓVILES) -->
+    <div class="mobile-container">
+        <!-- 1. MENSAJE PRINCIPAL -->
+        <div class="main-message">
+            <div class="sunflower-icon">🌻</div>
+            <div class="message-text">
+                Flores Para Ti<br>
+                <span class="date-highlight">Feliz 21 de Septiembre</span>
+            </div>
+            <div class="sunflower-icon">🌻</div>
+        </div>
+
+        <!-- 2. FLORES - PROTAGONISTAS ABSOLUTAS (TODO EL ESPACIO) -->
+        <div class="flowers-container">
+            <div class="flowers" id="mobileFlowersContainer">
+                <!-- Girasol 1 -->
+                <div class="flower flower--1" data-flower-id="1">
+                    <div class="flower__leafs flower__leafs--1">
+                        <div class="flower__leaf flower__leaf--1"></div>
+                        <div class="flower__leaf flower__leaf--2"></div>
+                        <div class="flower__leaf flower__leaf--3"></div>
+                        <div class="flower__leaf flower__leaf--4"></div>
+                        <div class="flower__white-circle"></div>
+
+                        <div class="flower__light flower__light--1"></div>
+                        <div class="flower__light flower__light--2"></div>
+                        <div class="flower__light flower__light--3"></div>
+                        <div class="flower__light flower__light--4"></div>
+                        <div class="flower__light flower__light--5"></div>
+                        <div class="flower__light flower__light--6"></div>
+                        <div class="flower__light flower__light--7"></div>
+                        <div class="flower__light flower__light--8"></div>
+                    </div>
+                    <div class="flower__line">
+                        <div class="flower__line__leaf flower__line__leaf--1"></div>
+                        <div class="flower__line__leaf flower__line__leaf--2"></div>
+                        <div class="flower__line__leaf flower__line__leaf--3"></div>
+                        <div class="flower__line__leaf flower__line__leaf--4"></div>
+                        <div class="flower__line__leaf flower__line__leaf--5"></div>
+                        <div class="flower__line__leaf flower__line__leaf--6"></div>
+                    </div>
+                </div>
+
+                <!-- Girasol 2 -->
+                <div class="flower flower--2" data-flower-id="2">
+                    <div class="flower__leafs flower__leafs--2">
+                        <div class="flower__leaf flower__leaf--1"></div>
+                        <div class="flower__leaf flower__leaf--2"></div>
+                        <div class="flower__leaf flower__leaf--3"></div>
+                        <div class="flower__leaf flower__leaf--4"></div>
+                        <div class="flower__white-circle"></div>
+
+                        <div class="flower__light flower__light--1"></div>
+                        <div class="flower__light flower__light--2"></div>
+                        <div class="flower__light flower__light--3"></div>
+                        <div class="flower__light flower__light--4"></div>
+                        <div class="flower__light flower__light--5"></div>
+                        <div class="flower__light flower__light--6"></div>
+                        <div class="flower__light flower__light--7"></div>
+                        <div class="flower__light flower__light--8"></div>
+                    </div>
+                    <div class="flower__line">
+                        <div class="flower__line__leaf flower__line__leaf--1"></div>
+                        <div class="flower__line__leaf flower__line__leaf--2"></div>
+                        <div class="flower__line__leaf flower__line__leaf--3"></div>
+                        <div class="flower__line__leaf flower__line__leaf--4"></div>
+                    </div>
+                </div>
+
+                <!-- Girasol 3 -->
+                <div class="flower flower--3" data-flower-id="3">
+                    <div class="flower__leafs flower__leafs--3">
+                        <div class="flower__leaf flower__leaf--1"></div>
+                        <div class="flower__leaf flower__leaf--2"></div>
+                        <div class="flower__leaf flower__leaf--3"></div>
+                        <div class="flower__leaf flower__leaf--4"></div>
+                        <div class="flower__white-circle"></div>
+
+                        <div class="flower__light flower__light--1"></div>
+                        <div class="flower__light flower__light--2"></div>
+                        <div class="flower__light flower__light--3"></div>
+                        <div class="flower__light flower__light--4"></div>
+                        <div class="flower__light flower__light--5"></div>
+                        <div class="flower__light flower__light--6"></div>
+                        <div class="flower__light flower__light--7"></div>
+                        <div class="flower__light flower__light--8"></div>
+                    </div>
+                    <div class="flower__line">
+                        <div class="flower__line__leaf flower__line__leaf--1"></div>
+                        <div class="flower__line__leaf flower__line__leaf--2"></div>
+                        <div class="flower__line__leaf flower__line__leaf--3"></div>
+                        <div class="flower__line__leaf flower__line__leaf--4"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. FRASES - AL FINAL -->
+        <div class="quotes-section mobile-quotes">
+            <h3>🌻 Frases 🌻</h3>
+            <div class="quote-display short-text" id="mobileQuoteDisplay">
+                "🌺 La amistad es el ingrediente más importante en la receta de la vida."
+            </div>
+            <div class="quote-controls">
+                <button class="quote-btn" onclick="changeQuote()">Nueva Frase</button>
+                <button class="quote-btn" onclick="toggleAutoQuote()" id="mobileAutoBtn">Auto: OFF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO DESKTOP (SOLO VISIBLE EN DESKTOP) -->
     <!-- Mensaje principal con girasol -->
     <div class="main-message">
         <div class="sunflower-icon">🌻</div>
@@ -42,14 +152,6 @@
         </div>
     </div>
 
-    <!-- Controles de jardín -->
-    <div class="garden-controls">
-        <button class="garden-btn" onclick="addFlower()">➕ Agregar</button>
-        <button class="garden-btn" onclick="removeFlower()">➖ Quitar</button>
-        <button class="garden-btn" onclick="animateAll()">✨ Animar</button>
-        <button class="garden-btn" onclick="clearGarden()">🧹 Limpiar</button>
-    </div>
-
     <!-- Sección de frases aleatorias ADAPTABLE -->
     <div class="quotes-section">
         <h3>🌻 Frases 🌻</h3>
@@ -60,11 +162,6 @@
             <button class="quote-btn" onclick="changeQuote()">Nueva Frase</button>
             <button class="quote-btn" onclick="toggleAutoQuote()" id="autoBtn">Auto: OFF</button>
         </div>
-    </div>
-
-    <!-- Contador de flores -->
-    <div class="flower-counter">
-        🌻 Flores: <span id="flowerCount">3</span>
     </div>
 
     <!-- Letras sincronizadas -->
@@ -156,372 +253,440 @@
         </div>
     </div>
 
-    
 </body>
 <script>
-    
-        // Variables globales
-        let audio = document.getElementById('mainAudio');
-        let lyrics = document.querySelector("#lyrics");
-        let flowerCounter = 3;
-        let nextFlowerId = 4;
-        let currentSongIndex = 0;
-        let isPlaying = false;
-        let autoQuoteEnabled = false;
-        let quoteInterval;
+    // Variables globales
+    let audio = document.getElementById('mainAudio');
+    let lyrics = document.querySelector("#lyrics");
+    let flowerCounter = 3;
+    let nextFlowerId = 4;
+    let currentSongIndex = 0;
+    let isPlaying = false;
+    let autoQuoteEnabled = false;
+    let quoteInterval;
+    let autoFlowerInterval; // Para generar flores automáticamente
 
-        // Lista de canciones con nombres amigables
-        const playlist = [
-            {
-                file: "sound/FloresAmarillas.mp3",
-                name: "♪ Flores Amarillas - Floricienta"
-            },
-            {
-                file: "sound/ColorEsperanza.mp3",
-                name: "♪ Color Esperanza - Diego Torres"
-            },
-            {
-                file: "sound/Sunflower.mp3", 
-                name: "♪ Sunflower - Post Malone & Swae Lee"
-            },
-            {
-                file: "sound/Yellow.mp3",
-                name: "♪ Yellow - Coldplay"
-            },
-        ];
+    // Lista de canciones con nombres amigables
+    const playlist = [
+        {
+            file: "sound/FloresAmarillas.mp3",
+            name: "♪ Flores Amarillas - Floricienta"
+        },
+        {
+            file: "sound/ColorEsperanza.mp3",
+            name: "♪ Color Esperanza - Diego Torres"
+        },
+        {
+            file: "sound/Sunflower.mp3", 
+            name: "♪ Sunflower - Post Malone & Swae Lee"
+        },
+        {
+            file: "sound/Yellow.mp3",
+            name: "♪ Yellow - Coldplay"
+        },
+    ];
 
-        // Frases románticas
-        const romanticQuotes = [
-            "🌼 La vida es mejor con amigos que se vuelven familia",
-            "💛 La amistad verdadera no se trata de ser inseparables, sino de poder estar separados y que nada cambie",
-            "✨ Un verdadero amigo es aquel que conoce tus cicatrices y aún así elige quedarse.",
-            "🌺 La amistad es el ingrediente más importante en la receta de la vida.",
-            "🌷 Un amigo es ese que convierte los momentos simples en recuerdos inolvidables.",
-            "💐 La amistad no se mide por el tiempo, sino por la sinceridad y el cariño.",
-            "🌞 Un buen amigo ilumina tu vida como el sol ilumina la mañana."
-        ];
+    // Frases románticas
+    const romanticQuotes = [
+        "🌼 La vida es mejor con amigos que se vuelven familia",
+        "💛 La amistad verdadera no se trata de ser inseparables, sino de poder estar separados y que nada cambie",
+        "✨ Un verdadero amigo es aquel que conoce tus cicatrices y aún así elige quedarse.",
+        "🌺 La amistad es el ingrediente más importante en la receta de la vida.",
+        "🌷 Un amigo es ese que convierte los momentos simples en recuerdos inolvidables.",
+        "💐 La amistad no se mide por el tiempo, sino por la sinceridad y el cariño.",
+        "🌞 Un buen amigo ilumina tu vida como el sol ilumina la mañana."
+    ];
 
-        // Array de letras sincronizadas
-        const lyricsData = [
-            { text: "💛 La amistad es el puente que une corazones en cualquier distancia.", time: 15 },
-            { text: "✨ Las risas compartidas con un amigo son los mejores recuerdos de la vida.", time: 18 },
-            { text: "🌺 La amistad sincera es un regalo que no se compra ni se vende, solo se cultiva.", time: 27 },
-            { text: "🌷 Un amigo verdadero es aquel que llega para quedarse en todas las estaciones de la vida.", time: 32 },
-            { text: "💐 La amistad es un refugio donde el alma descansa.", time: 33 },
-            { text: "🌞 Tener un amigo es tener un tesoro que brilla más que el oro.", time: 41 }
-        ];
+    // Array de letras sincronizadas
+    const lyricsData = [
+        { text: "💛 La amistad es el puente que une corazones en cualquier distancia.", time: 15 },
+        { text: "✨ Las risas compartidas con un amigo son los mejores recuerdos de la vida.", time: 18 },
+        { text: "🌺 La amistad sincera es un regalo que no se compra ni se vende, solo se cultiva.", time: 27 },
+        { text: "🌷 Un amigo verdadero es aquel que llega para quedarse en todas las estaciones de la vida.", time: 32 },
+        { text: "💐 La amistad es un refugio donde el alma descansa.", time: 33 },
+        { text: "🌞 Tener un amigo es tener un tesoro que brilla más que el oro.", time: 41 }
+    ];
 
-        // Función para crear estrellas cayendo SOLO blancas y amarillas
-        function createSimpleFallingStars() {
-            const starsContainer = document.getElementById('fallingStars');
-            const starTypes = ['⭐', '✨', '✦', '✧'];
+    // FUNCIÓN AUTOPLAY MEJORADA PARA INICIAR INMEDIATAMENTE
+    function initAutoplay() {
+        // Estrategia múltiple para asegurar reproducción automática
 
-            for (let i = 0; i < 30; i++) {
-                const star = document.createElement('div');
-                star.className = 'falling-star';
-                star.textContent = starTypes[Math.floor(Math.random() * starTypes.length)];
+        // 1. Intentar reproducir inmediatamente (sin muted)
+        audio.muted = false;
+        const playPromise = audio.play();
 
-                const isYellow = Math.random() > 0.5;
-                star.classList.add(isYellow ? 'yellow' : 'white');
-
-                star.style.left = Math.random() * 100 + '%';
-                star.style.animationDuration = (Math.random() * 6 + 4) + 's';
-                star.style.animationDelay = Math.random() * 8 + 's';
-                star.style.fontSize = (Math.random() * 8 + 16) + 'px';
-
-                starsContainer.appendChild(star);
-            }
-        }
-
-        // Función para actualizar el nombre de la canción
-        function updateCurrentSongName() {
-            const songNameElement = document.getElementById('currentSongName');
-            const currentSong = playlist[currentSongIndex];
-
-            if (songNameElement && currentSong) {
-                songNameElement.textContent = currentSong.name;
-
-                // Agregar/remover clase de animación según si está reproduciendo
-                if (isPlaying) {
-                    songNameElement.classList.add('playing');
-                } else {
-                    songNameElement.classList.remove('playing');
-                }
-            }
-        }
-
-        // Funciones de control musical mejoradas
-        function togglePlayPause() {
-            const btn = document.getElementById('playPauseBtn');
-            if (isPlaying) {
-                audio.pause();
-                btn.textContent = '▶️';
-                isPlaying = false;
-            } else {
-                audio.play();
-                btn.textContent = '⏸️';
-                isPlaying = true;
-            }
-            updateCurrentSongName();
-        }
-
-        function playNextSong() {
-            currentSongIndex = (currentSongIndex + 1) % playlist.length;
-            loadSong(currentSongIndex);
-        }
-
-        function playPrevSong() {
-            currentSongIndex = currentSongIndex > 0 ? currentSongIndex - 1 : playlist.length - 1;
-            loadSong(currentSongIndex);
-        }
-
-        function loadSong(index) {
-            const song = playlist[index];
-            audio.src = song.file;
-            updateCurrentSongName();
-
-            if (isPlaying) {
-                audio.play();
-            }
-        }
-
-        // Función para determinar la clase CSS según la longitud del texto
-        function getTextLengthClass(text) {
-            const length = text.length;
-            if (length <= 50) return 'short-text';
-            if (length <= 100) return 'medium-text';
-            return 'long-text';
-        }
-
-        // Función para cambiar frases con adaptación de tamaño
-        function changeQuote() {
-            const quoteDisplay = document.getElementById('quoteDisplay');
-            const randomIndex = Math.floor(Math.random() * romanticQuotes.length);
-            const newQuote = `"${romanticQuotes[randomIndex]}"`;
-
-            quoteDisplay.style.opacity = '0';
-
-            setTimeout(() => {
-                // Remover clases anteriores
-                quoteDisplay.classList.remove('short-text', 'medium-text', 'long-text');
-
-                // Agregar nueva clase según longitud
-                const lengthClass = getTextLengthClass(newQuote);
-                quoteDisplay.classList.add(lengthClass);
-
-                // Actualizar texto
-                quoteDisplay.textContent = newQuote;
-                quoteDisplay.style.opacity = '1';
-            }, 300);
-        }
-
-
-        function toggleAutoQuote() {
-            const btn = document.getElementById('autoBtn');
-
-            if (autoQuoteEnabled) {
-                clearInterval(quoteInterval);
-                autoQuoteEnabled = false;
-                btn.textContent = 'Auto: OFF';
-            } else {
-                quoteInterval = setInterval(changeQuote, 8000);
-                autoQuoteEnabled = true;
-                btn.textContent = 'Auto: ON';
-            }
-        }
-
-        // Función para agregar flores con movimiento
-        function addFlower() {
-            const container = document.getElementById('flowersContainer');
-
-            const newFlower = document.createElement('div');
-            newFlower.className = 'flower new-flower';
-            newFlower.setAttribute('data-flower-id', nextFlowerId);
-
-            const positions = [
-                'left: 5%;', 'left: 15%;', 'left: 25%;', 'left: 35%;', 'left: 45%;', 
-                'left: 55%;', 'left: 65%;', 'left: 75%;', 'left: 85%;', 'left: 95%;'
-            ];
-            const randomPosition = positions[Math.floor(Math.random() * positions.length)];
-
-            newFlower.style.cssText = randomPosition;
-
-            newFlower.innerHTML = `
-                <div class="flower__leafs">
-                    <div class="flower__leaf flower__leaf--1"></div>
-                    <div class="flower__leaf flower__leaf--2"></div>
-                    <div class="flower__leaf flower__leaf--3"></div>
-                    <div class="flower__leaf flower__leaf--4"></div>
-                    <div class="flower__white-circle"></div>
-                    ${Array(8).fill().map((_, i) => 
-                        `<div class="flower__light flower__light--${i+1}"></div>`
-                    ).join('')}
-                </div>
-                <div class="flower__line">
-                    ${Array(6).fill().map((_, i) => 
-                        `<div class="flower__line__leaf flower__line__leaf--${i+1}"></div>`
-                    ).join('')}
-                </div>
-            `;
-
-            container.appendChild(newFlower);
-
-            setTimeout(() => {
-                newFlower.classList.remove('new-flower');
-                newFlower.classList.add('dancing');
-            }, 3000);
-
-            newFlower.addEventListener('click', function() {
-                createSparkles(this);
-                this.style.animation = 'blooming-flower 0.8s ease-out';
-                setTimeout(() => {
-                    this.style.animation = '';
-                    if (this.classList.contains('dancing')) {
-                        this.style.animation = 'flower-dance 6s ease-in-out infinite';
-                    }
-                }, 800);
-            });
-
-            flowerCounter++;
-            nextFlowerId++;
-            updateFlowerCounter();
-        }
-
-        // Función para crear chispas - también solo blancas y amarillas
-        function createSparkles(element) {
-            const sparkleTypes = ['✨', '⭐', '✦', '💫'];
-            const rect = element.getBoundingClientRect();
-
-            for (let i = 0; i < 8; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.textContent = sparkleTypes[Math.floor(Math.random() * sparkleTypes.length)];
-
-                const isYellow = Math.random() > 0.5;
-                sparkle.style.color = isYellow ? '#FFD700' : 'white';
-                sparkle.style.textShadow = isYellow ? 
-                    '0 0 10px #FFD700' : '0 0 10px white';
-
-                sparkle.style.left = rect.left + rect.width/2 + (Math.random() - 0.5) * 80 + 'px';
-                sparkle.style.top = rect.top + rect.height/2 + (Math.random() - 0.5) * 80 + 'px';
-                sparkle.style.animationDelay = i * 0.1 + 's';
-
-                document.body.appendChild(sparkle);
-
-                setTimeout(() => {
-                    sparkle.remove();
-                }, 2000);
-            }
-        }
-
-        function removeFlower() {
-            const flowers = document.querySelectorAll('.flower');
-            if (flowers.length > 3) {
-                const lastFlower = flowers[flowers.length - 1];
-                lastFlower.style.animation = 'flower-entrance 0.5s ease-in reverse';
-                setTimeout(() => {
-                    lastFlower.remove();
-                    flowerCounter--;
-                    updateFlowerCounter();
-                }, 500);
-            }
-        }
-
-        function animateAll() {
-            const flowers = document.querySelectorAll('.flower');
-            flowers.forEach((flower, index) => {
-                setTimeout(() => {
-                    createSparkles(flower);
-                    flower.style.animation = 'blooming-flower 0.8s ease-out';
-                    setTimeout(() => {
-                        flower.style.animation = '';
-                        if (flower.classList.contains('dancing')) {
-                            flower.style.animation = 'flower-dance 6s ease-in-out infinite';
-                        }
-                    }, 800);
-                }, index * 200);
-            });
-        }
-
-        function clearGarden() {
-            const flowers = document.querySelectorAll('.flower');
-            flowers.forEach((flower, index) => {
-                if (index > 2) {
-                    setTimeout(() => {
-                        flower.style.animation = 'flower-entrance 0.3s ease-in reverse';
-                        setTimeout(() => {
-                            flower.remove();
-                        }, 300);
-                    }, index * 100);
-                }
-            });
-
-            setTimeout(() => {
-                flowerCounter = 3;
-                nextFlowerId = 4;
-                updateFlowerCounter();
-            }, 1000);
-        }
-
-        function updateFlowerCounter() {
-            document.getElementById('flowerCount').textContent = flowerCounter;
-        }
-
-        // Event listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            createSimpleFallingStars();
-            setInterval(createSimpleFallingStars, 40000);
-
-            // Configurar controles musicales
-            document.getElementById('playPauseBtn').addEventListener('click', togglePlayPause);
-            document.getElementById('nextBtn').addEventListener('click', playNextSong);
-            document.getElementById('prevBtn').addEventListener('click', playPrevSong);
-
-            // Configurar auto-siguiente canción
-            audio.addEventListener('ended', playNextSong);
-
-            audio.volume = 0.7;
-
-            // Inicializar nombre de canción
-            updateCurrentSongName();
-
-            setInterval(updateLyrics, 1000);
-
-            document.querySelectorAll('.flower').forEach(flower => {
-                flower.addEventListener('click', function() {
-                    createSparkles(this);
-                });
-            });
-
-            // Configurar primera frase con clase adecuada
-            const initialQuote = document.getElementById('quoteDisplay');
-            const initialClass = getTextLengthClass(initialQuote.textContent);
-            initialQuote.classList.remove('short-text');
-            initialQuote.classList.add(initialClass);
-
-            // Auto-inicio de reproducción
-            setTimeout(() => {
-                audio.play().then(() => {
+        if (playPromise !== undefined) {
+            playPromise
+                .then(() => {
+                    console.log("🎵 Autoplay exitoso sin muted");
                     isPlaying = true;
-                    document.getElementById('playPauseBtn').textContent = '⏸️';
                     updateCurrentSongName();
-                }).catch(err => {
-                    console.log('Auto-play bloqueado por el navegador');
+                    const playBtn = document.getElementById('playPauseBtn');
+                    if (playBtn) playBtn.textContent = '⏸️';
+                })
+                .catch(error => {
+                    console.log("🎵 Autoplay bloqueado, probando con muted");
+                    // 2. Si falla, intentar con muted y luego unmute
+                    audio.muted = true;
+                    audio.play().then(() => {
+                        console.log("🎵 Reproduciendo con muted, preparando unmute");
+                        isPlaying = true;
+                        updateCurrentSongName();
+                        const playBtn = document.getElementById('playPauseBtn');
+                        if (playBtn) playBtn.textContent = '⏸️';
+
+                        // Unmute después de 100ms
+                        setTimeout(() => {
+                            audio.muted = false;
+                            console.log("🎵 Audio unmuted - sonando completamente");
+                        }, 100);
+                    }).catch(() => {
+                        // 3. Último recurso: reproducir con primera interacción
+                        console.log("🎵 Última opción: reproducir con interacción");
+                        document.addEventListener('click', enableAutoplay, { once: true });
+                        document.addEventListener('touchstart', enableAutoplay, { once: true });
+                        document.addEventListener('keydown', enableAutoplay, { once: true });
+                    });
                 });
-            }, 1000);
+        }
+    }
+
+    function enableAutoplay() {
+        if (!isPlaying) {
+            audio.muted = false;
+            audio.play().then(() => {
+                isPlaying = true;
+                updateCurrentSongName();
+                const playBtn = document.getElementById('playPauseBtn');
+                if (playBtn) playBtn.textContent = '⏸️';
+                console.log("🎵 Audio iniciado por interacción del usuario");
+            }).catch(err => console.log('Error al reproducir:', err));
+        }
+    }
+
+    // Función para crear estrellas cayendo SOLO blancas y amarillas
+    function createSimpleFallingStars() {
+        const starsContainer = document.getElementById('fallingStars');
+        const starTypes = ['⭐', '✨', '✦', '✧'];
+
+        for (let i = 0; i < 30; i++) {
+            const star = document.createElement('div');
+            star.className = 'falling-star';
+            star.textContent = starTypes[Math.floor(Math.random() * starTypes.length)];
+
+            const isYellow = Math.random() > 0.5;
+            star.classList.add(isYellow ? 'yellow' : 'white');
+
+            star.style.left = Math.random() * 100 + '%';
+            star.style.animationDuration = (Math.random() * 6 + 4) + 's';
+            star.style.animationDelay = Math.random() * 8 + 's';
+            star.style.fontSize = (Math.random() * 8 + 16) + 'px';
+
+            starsContainer.appendChild(star);
+        }
+    }
+
+    // Función para actualizar el nombre de la canción
+    function updateCurrentSongName() {
+        const songNameElement = document.getElementById('currentSongName');
+        const currentSong = playlist[currentSongIndex];
+
+        if (songNameElement && currentSong) {
+            songNameElement.textContent = currentSong.name;
+
+            // Agregar/remover clase de animación según si está reproduciendo
+            if (isPlaying) {
+                songNameElement.classList.add('playing');
+            } else {
+                songNameElement.classList.remove('playing');
+            }
+        }
+    }
+
+    // Funciones de control musical mejoradas
+    function togglePlayPause() {
+        const btn = document.getElementById('playPauseBtn');
+        if (isPlaying) {
+            audio.pause();
+            btn.textContent = '▶️';
+            isPlaying = false;
+        } else {
+            audio.play();
+            btn.textContent = '⏸️';
+            isPlaying = true;
+        }
+        updateCurrentSongName();
+    }
+
+    function playNextSong() {
+        currentSongIndex = (currentSongIndex + 1) % playlist.length;
+        loadSong(currentSongIndex);
+    }
+
+    function playPrevSong() {
+        currentSongIndex = currentSongIndex > 0 ? currentSongIndex - 1 : playlist.length - 1;
+        loadSong(currentSongIndex);
+    }
+
+    function loadSong(index) {
+        const song = playlist[index];
+        audio.src = song.file;
+        updateCurrentSongName();
+
+        if (isPlaying) {
+            audio.play();
+        }
+    }
+
+    // Función para determinar la clase CSS según la longitud del texto
+    function getTextLengthClass(text) {
+        const length = text.length;
+        if (length <= 50) return 'short-text';
+        if (length <= 100) return 'medium-text';
+        return 'long-text';
+    }
+
+    // Función para cambiar frases con adaptación de tamaño
+    function changeQuote() {
+        const quoteDisplay = document.getElementById('quoteDisplay');
+        const mobileQuoteDisplay = document.getElementById('mobileQuoteDisplay');
+        const randomIndex = Math.floor(Math.random() * romanticQuotes.length);
+        const newQuote = `"${romanticQuotes[randomIndex]}"`;
+
+        // Actualizar ambas versiones si existen
+        [quoteDisplay, mobileQuoteDisplay].forEach(display => {
+            if (display) {
+                display.style.opacity = '0';
+
+                setTimeout(() => {
+                    // Remover clases anteriores
+                    display.classList.remove('short-text', 'medium-text', 'long-text');
+
+                    // Agregar nueva clase según longitud
+                    const lengthClass = getTextLengthClass(newQuote);
+                    display.classList.add(lengthClass);
+
+                    // Actualizar texto
+                    display.textContent = newQuote;
+                    display.style.opacity = '1';
+                }, 300);
+            }
+        });
+    }
+
+    function toggleAutoQuote() {
+        const btn = document.getElementById('autoBtn');
+        const mobileBtn = document.getElementById('mobileAutoBtn');
+
+        if (autoQuoteEnabled) {
+            clearInterval(quoteInterval);
+            autoQuoteEnabled = false;
+            if (btn) btn.textContent = 'Auto: OFF';
+            if (mobileBtn) mobileBtn.textContent = 'Auto: OFF';
+        } else {
+            quoteInterval = setInterval(changeQuote, 8000);
+            autoQuoteEnabled = true;
+            if (btn) btn.textContent = 'Auto: ON';
+            if (mobileBtn) mobileBtn.textContent = 'Auto: ON';
+        }
+    }
+
+    // FUNCIÓN PARA CREAR ESTRELLAS AL TOCAR FLORES
+    function createStarSparkles(element) {
+        const sparkleTypes = ['⭐', '✨', '✦', '💫', '🌟'];
+        const rect = element.getBoundingClientRect();
+
+        for (let i = 0; i < 12; i++) { // Más estrellas
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.textContent = sparkleTypes[Math.floor(Math.random() * sparkleTypes.length)];
+
+            const isYellow = Math.random() > 0.4; // Más probabilidad de amarillo
+            sparkle.style.color = isYellow ? '#FFD700' : 'white';
+            sparkle.style.textShadow = isYellow ? 
+                '0 0 15px #FFD700, 0 0 25px rgba(255, 215, 0, 0.5)' : 
+                '0 0 15px white, 0 0 25px rgba(255, 255, 255, 0.5)';
+
+            sparkle.style.left = rect.left + rect.width/2 + (Math.random() - 0.5) * 100 + 'px';
+            sparkle.style.top = rect.top + rect.height/2 + (Math.random() - 0.5) * 100 + 'px';
+            sparkle.style.animationDelay = i * 0.08 + 's';
+            sparkle.style.fontSize = (Math.random() * 6 + 16) + 'px';
+
+            document.body.appendChild(sparkle);
+
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2500);
+        }
+    }
+
+    // FUNCIÓN PARA GENERAR FLORES AUTOMÁTICAMENTE CADA 10-15 SEGUNDOS
+    function autoGenerateFlower() {
+        const containers = [
+            document.getElementById('flowersContainer'),
+            document.getElementById('mobileFlowersContainer')
+        ];
+
+        containers.forEach(container => {
+            if (container && container.children.length < 8) { // Máximo 8 flores
+                const newFlower = createNewFlower();
+                if (newFlower) {
+                    container.appendChild(newFlower);
+                    flowerCounter++;
+
+                    // Animar entrada
+                    setTimeout(() => {
+                        newFlower.classList.add('new-flower');
+
+                        // Agregar eventos de toque para estrellas
+                        newFlower.addEventListener('click', function() {
+                            createStarSparkles(this);
+                        });
+                        newFlower.addEventListener('touchstart', function(e) {
+                            e.preventDefault();
+                            createStarSparkles(this);
+                        });
+                    }, 100);
+                }
+            }
+        });
+    }
+
+    // FUNCIÓN PARA CREAR NUEVA FLOR
+    function createNewFlower() {
+        const flowerTemplate = document.querySelector('.flower--1');
+        if (!flowerTemplate) return null;
+
+        const newFlower = flowerTemplate.cloneNode(true);
+        newFlower.className = `flower flower--${(nextFlowerId % 3) + 1}`;
+        newFlower.setAttribute('data-flower-id', nextFlowerId);
+
+        // Posición aleatoria
+        const positions = ['20%', '35%', '50%', '65%', '80%'];
+        const randomPos = positions[Math.floor(Math.random() * positions.length)];
+        newFlower.style.left = randomPos;
+
+        // Variación en altura
+        const heights = ['45vmin', '55vmin', '65vmin'];
+        const randomHeight = heights[Math.floor(Math.random() * heights.length)];
+        const line = newFlower.querySelector('.flower__line');
+        if (line) line.style.height = randomHeight;
+
+        nextFlowerId++;
+        return newFlower;
+    }
+
+    // FUNCIÓN PARA INICIAR GENERACIÓN AUTOMÁTICA DE FLORES
+    function startAutoFlowerGeneration() {
+        // Generar flores cada 10-15 segundos aleatoriamente
+        const generateFlower = () => {
+            autoGenerateFlower();
+            const nextInterval = Math.random() * 5000 + 10000; // 10-15 segundos
+            setTimeout(generateFlower, nextInterval);
+        };
+
+        // Iniciar después de 10 segundos
+        setTimeout(generateFlower, 10000);
+    }
+
+    // Función para sincronizar letras
+    function updateLyrics() {
+        if (!audio || audio.paused) return;
+
+        const time = Math.floor(audio.currentTime);
+        const currentLine = lyricsData.find(
+            (line) => time >= line.time && time < line.time + 6
+        );
+
+        if (currentLine) {
+            const fadeInDuration = 0.1;
+            const opacity = Math.min(1, (time - currentLine.time) / fadeInDuration);
+            lyrics.style.opacity = opacity;
+            lyrics.innerHTML = currentLine.text;
+        } else {
+            lyrics.style.opacity = 0;
+            lyrics.innerHTML = "";
+        }
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+        // INICIAR AUTOPLAY INMEDIATAMENTE AL CARGAR
+        initAutoplay();
+
+        createSimpleFallingStars();
+        setInterval(createSimpleFallingStars, 40000);
+
+        // Configurar controles musicales
+        const playBtn = document.getElementById('playPauseBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+
+        if (playBtn) playBtn.addEventListener('click', togglePlayPause);
+        if (nextBtn) nextBtn.addEventListener('click', playNextSong);
+        if (prevBtn) prevBtn.addEventListener('click', playPrevSong);
+
+        // Configurar auto-siguiente canción
+        audio.addEventListener('ended', playNextSong);
+
+        audio.volume = 0.7;
+
+        // Inicializar nombre de canción
+        updateCurrentSongName();
+
+        setInterval(updateLyrics, 1000);
+
+        // Configurar eventos de toque para flores existentes
+        document.querySelectorAll('.flower').forEach(flower => {
+            flower.addEventListener('click', function() {
+                createStarSparkles(this);
+            });
+            flower.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                createStarSparkles(this);
+            });
         });
 
-        // Función para ocultar título
-        function ocultar_titulo() {
-            const titulo = document.querySelector(".titulo");
-            if (titulo) {
-                titulo.style.animation = "fadeOut 3s ease-in-out forwards";
-                setTimeout(() => {
-                    titulo.style.display = "none";
-                }, 3000);
-            }
-        }
+        // Configurar primera frase con clase adecuada
+        const initialQuote = document.getElementById('quoteDisplay');
+        const mobileInitialQuote = document.getElementById('mobileQuoteDisplay');
 
-        setTimeout(ocultar_titulo, 216000);
+        [initialQuote, mobileInitialQuote].forEach(quote => {
+            if (quote) {
+                const initialClass = getTextLengthClass(quote.textContent);
+                quote.classList.remove('short-text');
+                quote.classList.add(initialClass);
+            }
+        });
+
+        // INICIAR GENERACIÓN AUTOMÁTICA DE FLORES
+        startAutoFlowerGeneration();
+    });
+
+    // Función para ocultar título
+    function ocultar_titulo() {
+        const titulo = document.querySelector(".titulo");
+        if (titulo) {
+            titulo.style.animation = "fadeOut 3s ease-in-out forwards";
+            setTimeout(() => {
+                titulo.style.display = "none";
+            }, 3000);
+        }
+    }
+
+    // Detectar cambio de orientación/tamaño
+    window.addEventListener('resize', function() {
+        if (window.innerWidth <= 768) {
+            // En móvil: asegurar que las flores sean visibles
+            const flowers = document.querySelectorAll('.flower');
+            flowers.forEach(flower => {
+                flower.style.display = 'block';
+                flower.style.visibility = 'visible';
+                flower.style.opacity = '1';
+            });
+        }
+    });
+
+    setTimeout(ocultar_titulo, 216000);
 </script>
 </html>
