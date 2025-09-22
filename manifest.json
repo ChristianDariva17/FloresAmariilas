@@ -1,0 +1,41 @@
+{
+    "name": "Flores Para Ti - 21 de Septiembre",
+    "short_name": "Flores21",
+    "description": "Hermosa experiencia interactiva de flores amarillas con música y frases inspiradoras para el día de la amistad",
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "background_color": "#000000",
+    "theme_color": "#FFD700",
+    "scope": "/",
+    "lang": "es",
+    "dir": "ltr",
+    "categories": ["entertainment", "lifestyle", "music"],
+    "icons": [
+        {
+            "src": "img/flowers-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "img/flowers-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "img/screenshot-desktop.jpg",
+            "sizes": "1280x720",
+            "type": "image/jpeg",
+            "platform": "wide"
+        },
+        {
+            "src": "img/screenshot-mobile.jpg",
+            "sizes": "750x1334",
+            "type": "image/jpeg"
+        }
+    ]
+}

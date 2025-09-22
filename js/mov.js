@@ -1,383 +1,341 @@
 
-        // Variables globales
-        let audio = document.getElementById('mainAudio');
-        let lyrics = document.querySelector("#lyrics");
-        let flowerCounter = 3;
-        let nextFlowerId = 4;
-        let currentSongIndex = 0;
-        let isPlaying = false;
-        let autoQuoteEnabled = false;
-        let quoteInterval;
+// Variables globales
+let audio = document.getElementById('mainAudio');
+let lyrics = document.querySelector("#lyrics");
+let flowerCounter = 3;
+let nextFlowerId = 4;
+let currentSongIndex = 0;
+let isPlaying = false;
+let autoQuoteEnabled = false;
+let quoteInterval;
+let autoFlowerInterval;
 
-        // Lista de canciones con nombres amigables
-        const playlist = [
-            {
-                file: "sound/FloresAmarillas.mp3",
-                name: "♪ Flores Amarillas - Floricienta"
-            },
-            {
-                file: "sound/ColorEsperanza.mp3",
-                name: "♪ Color Esperanza - Diego Torres"
-            },
-            {
-                file: "sound/Sunflower.mp3", 
-                name: "♪ Sunflower - Post Malone & Swae Lee"
-            },
-            {
-                file: "sound/Yellow.mp3",
-                name: "♪ Yellow - Coldplay"
-            },
-        ];
+// Lista de canciones con nombres amigables
+const playlist = [
+    {
+        file: "sound/FloresAmarillas.mp3",
+        name: "♪ Flores Amarillas - Floricienta"
+    },
+    {
+        file: "sound/ColorEsperanza.mp3",
+        name: "♪ Color Esperanza - Diego Torres"
+    },
+    {
+        file: "sound/Sunflower.mp3",
+        name: "♪ Sunflower - Post Malone & Swae Lee"
+    },
+    {
+        file: "sound/Yellow.mp3",
+        name: "♪ Yellow - Coldplay"
+    }
+];
 
-        // Frases románticas
-        const romanticQuotes = [
-            "🌼 La vida es mejor con amigos que se vuelven familia",
-            "💛 La amistad verdadera no se trata de ser inseparables, sino de poder estar separados y que nada cambie",
-            "✨ Un verdadero amigo es aquel que conoce tus cicatrices y aún así elige quedarse.",
-            "🌺 La amistad es el ingrediente más importante en la receta de la vida.",
-            "🌷 Un amigo es ese que convierte los momentos simples en recuerdos inolvidables.",
-            "💐 La amistad no se mide por el tiempo, sino por la sinceridad y el cariño.",
-            "🌞 Un buen amigo ilumina tu vida como el sol ilumina la mañana."
-        ];
+// Frases románticas
+const romanticQuotes = [
+    "🌼 La vida es mejor con amigos que se vuelven familia",
+    "💛 La amistad verdadera no se trata de ser inseparables, sino de poder estar separados y que nada cambie",
+    "✨ Un verdadero amigo es aquel que conoce tus cicatrices y aún así elige quedarse",
+    "🌻 La amistad es el único cemento que podrá mantener unido al mundo",
+    "💝 Los amigos son la familia que elegimos",
+    "🌞 Un amigo fiel es un refugio seguro; el que lo encuentra ha encontrado un tesoro",
+    "🎈 Los amigos verdaderos son como las estrellas, no siempre las ves, pero sabes que están ahí",
+    "🌸 La amistad duplica las alegrías y divide las angustias por la mitad",
+    "💫 Los mejores momentos de la vida se disfrutan mejor cuando se comparten con un amigo",
+    "🌺 Un verdadero amigo es alguien que te conoce tal como eres, comprende dónde has estado, te acompaña en tus logros y fallas, y aún así te permite crecer"
+];
 
-        // Array de letras sincronizadas
-        const lyricsData = [
-            { text: "💛 La amistad es el puente que une corazones en cualquier distancia.", time: 15 },
-            { text: "✨ Las risas compartidas con un amigo son los mejores recuerdos de la vida.", time: 18 },
-            { text: "🌺 La amistad sincera es un regalo que no se compra ni se vende, solo se cultiva.", time: 27 },
-            { text: "🌷 Un amigo verdadero es aquel que llega para quedarse en todas las estaciones de la vida.", time: 32 },
-            { text: "💐 La amistad es un refugio donde el alma descansa.", time: 33 },
-            { text: "🌞 Tener un amigo es tener un tesoro que brilla más que el oro.", time: 41 }
-        ];
+// Manejo de audio
+function enableAudioPlayback() {
+    if (audio) {
+        // Intentar reproducir
+        const playPromise = audio.play();
 
-        // Función para crear estrellas cayendo SOLO blancas y amarillas
-        function createSimpleFallingStars() {
-            const starsContainer = document.getElementById('fallingStars');
-            const starTypes = ['⭐', '✨', '✦', '✧'];
-
-            for (let i = 0; i < 30; i++) {
-                const star = document.createElement('div');
-                star.className = 'falling-star';
-                star.textContent = starTypes[Math.floor(Math.random() * starTypes.length)];
-
-                const isYellow = Math.random() > 0.5;
-                star.classList.add(isYellow ? 'yellow' : 'white');
-
-                star.style.left = Math.random() * 100 + '%';
-                star.style.animationDuration = (Math.random() * 6 + 4) + 's';
-                star.style.animationDelay = Math.random() * 8 + 's';
-                star.style.fontSize = (Math.random() * 8 + 16) + 'px';
-
-                starsContainer.appendChild(star);
-            }
-        }
-
-        // Función para actualizar el nombre de la canción
-        function updateCurrentSongName() {
-            const songNameElement = document.getElementById('currentSongName');
-            const currentSong = playlist[currentSongIndex];
-
-            if (songNameElement && currentSong) {
-                songNameElement.textContent = currentSong.name;
-
-                // Agregar/remover clase de animación según si está reproduciendo
-                if (isPlaying) {
-                    songNameElement.classList.add('playing');
-                } else {
-                    songNameElement.classList.remove('playing');
-                }
-            }
-        }
-
-        // Funciones de control musical mejoradas
-        function togglePlayPause() {
-            const btn = document.getElementById('playPauseBtn');
-            if (isPlaying) {
-                audio.pause();
-                btn.textContent = '▶️';
-                isPlaying = false;
-            } else {
-                audio.play();
-                btn.textContent = '⏸️';
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                console.log("Audio iniciado automáticamente");
                 isPlaying = true;
-            }
-            updateCurrentSongName();
-        }
-
-        function playNextSong() {
-            currentSongIndex = (currentSongIndex + 1) % playlist.length;
-            loadSong(currentSongIndex);
-        }
-
-        function playPrevSong() {
-            currentSongIndex = currentSongIndex > 0 ? currentSongIndex - 1 : playlist.length - 1;
-            loadSong(currentSongIndex);
-        }
-
-        function loadSong(index) {
-            const song = playlist[index];
-            audio.src = song.file;
-            updateCurrentSongName();
-
-            if (isPlaying) {
-                audio.play();
-            }
-        }
-
-        // Función para determinar la clase CSS según la longitud del texto
-        function getTextLengthClass(text) {
-            const length = text.length;
-            if (length <= 50) return 'short-text';
-            if (length <= 100) return 'medium-text';
-            return 'long-text';
-        }
-
-        // Función para cambiar frases con adaptación de tamaño
-        function changeQuote() {
-            const quoteDisplay = document.getElementById('quoteDisplay');
-            const randomIndex = Math.floor(Math.random() * romanticQuotes.length);
-            const newQuote = `"${romanticQuotes[randomIndex]}"`;
-
-            quoteDisplay.style.opacity = '0';
-
-            setTimeout(() => {
-                // Remover clases anteriores
-                quoteDisplay.classList.remove('short-text', 'medium-text', 'long-text');
-
-                // Agregar nueva clase según longitud
-                const lengthClass = getTextLengthClass(newQuote);
-                quoteDisplay.classList.add(lengthClass);
-
-                // Actualizar texto
-                quoteDisplay.textContent = newQuote;
-                quoteDisplay.style.opacity = '1';
-            }, 300);
-        }
-
-        // Función para sincronizar letras
-        function updateLyrics() {
-            if (!audio || audio.paused) return;
-
-            const time = Math.floor(audio.currentTime);
-            const currentLine = lyricsData.find(
-                (line) => time >= line.time && time < line.time + 6
-            );
-
-            if (currentLine) {
-                const fadeInDuration = 0.1;
-                const opacity = Math.min(1, (time - currentLine.time) / fadeInDuration);
-                lyrics.style.opacity = opacity;
-                lyrics.innerHTML = currentLine.text;
-            } else {
-                lyrics.style.opacity = 0;
-                lyrics.innerHTML = "";
-            }
-        }
-
-        function toggleAutoQuote() {
-            const btn = document.getElementById('autoBtn');
-
-            if (autoQuoteEnabled) {
-                clearInterval(quoteInterval);
-                autoQuoteEnabled = false;
-                btn.textContent = 'Auto: OFF';
-            } else {
-                quoteInterval = setInterval(changeQuote, 8000);
-                autoQuoteEnabled = true;
-                btn.textContent = 'Auto: ON';
-            }
-        }
-
-        // Función para agregar flores con movimiento
-        function addFlower() {
-            const container = document.getElementById('flowersContainer');
-
-            const newFlower = document.createElement('div');
-            newFlower.className = 'flower new-flower';
-            newFlower.setAttribute('data-flower-id', nextFlowerId);
-
-            const positions = [
-                'left: 5%;', 'left: 15%;', 'left: 25%;', 'left: 35%;', 'left: 45%;', 
-                'left: 55%;', 'left: 65%;', 'left: 75%;', 'left: 85%;', 'left: 95%;'
-            ];
-            const randomPosition = positions[Math.floor(Math.random() * positions.length)];
-
-            newFlower.style.cssText = randomPosition;
-
-            newFlower.innerHTML = `
-                <div class="flower__leafs">
-                    <div class="flower__leaf flower__leaf--1"></div>
-                    <div class="flower__leaf flower__leaf--2"></div>
-                    <div class="flower__leaf flower__leaf--3"></div>
-                    <div class="flower__leaf flower__leaf--4"></div>
-                    <div class="flower__white-circle"></div>
-                    ${Array(8).fill().map((_, i) => 
-                        `<div class="flower__light flower__light--${i+1}"></div>`
-                    ).join('')}
-                </div>
-                <div class="flower__line">
-                    ${Array(6).fill().map((_, i) => 
-                        `<div class="flower__line__leaf flower__line__leaf--${i+1}"></div>`
-                    ).join('')}
-                </div>
-            `;
-
-            container.appendChild(newFlower);
-
-            setTimeout(() => {
-                newFlower.classList.remove('new-flower');
-                newFlower.classList.add('dancing');
-            }, 3000);
-
-            newFlower.addEventListener('click', function() {
-                createSparkles(this);
-                this.style.animation = 'blooming-flower 0.8s ease-out';
-                setTimeout(() => {
-                    this.style.animation = '';
-                    if (this.classList.contains('dancing')) {
-                        this.style.animation = 'flower-dance 6s ease-in-out infinite';
-                    }
-                }, 800);
-            });
-
-            flowerCounter++;
-            nextFlowerId++;
-            updateFlowerCounter();
-        }
-
-        // Función para crear chispas - también solo blancas y amarillas
-        function createSparkles(element) {
-            const sparkleTypes = ['✨', '⭐', '✦', '💫'];
-            const rect = element.getBoundingClientRect();
-
-            for (let i = 0; i < 8; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.textContent = sparkleTypes[Math.floor(Math.random() * sparkleTypes.length)];
-
-                const isYellow = Math.random() > 0.5;
-                sparkle.style.color = isYellow ? '#FFD700' : 'white';
-                sparkle.style.textShadow = isYellow ? 
-                    '0 0 10px #FFD700' : '0 0 10px white';
-
-                sparkle.style.left = rect.left + rect.width/2 + (Math.random() - 0.5) * 80 + 'px';
-                sparkle.style.top = rect.top + rect.height/2 + (Math.random() - 0.5) * 80 + 'px';
-                sparkle.style.animationDelay = i * 0.1 + 's';
-
-                document.body.appendChild(sparkle);
-
-                setTimeout(() => {
-                    sparkle.remove();
-                }, 2000);
-            }
-        }
-
-        function removeFlower() {
-            const flowers = document.querySelectorAll('.flower');
-            if (flowers.length > 3) {
-                const lastFlower = flowers[flowers.length - 1];
-                lastFlower.style.animation = 'flower-entrance 0.5s ease-in reverse';
-                setTimeout(() => {
-                    lastFlower.remove();
-                    flowerCounter--;
-                    updateFlowerCounter();
-                }, 500);
-            }
-        }
-
-        function animateAll() {
-            const flowers = document.querySelectorAll('.flower');
-            flowers.forEach((flower, index) => {
-                setTimeout(() => {
-                    createSparkles(flower);
-                    flower.style.animation = 'blooming-flower 0.8s ease-out';
-                    setTimeout(() => {
-                        flower.style.animation = '';
-                        if (flower.classList.contains('dancing')) {
-                            flower.style.animation = 'flower-dance 6s ease-in-out infinite';
-                        }
-                    }, 800);
-                }, index * 200);
+                updateCurrentSongName();
+                updatePlayPauseButtons();
+            }).catch(error => {
+                console.log("Autoplay bloqueado, esperando interacción del usuario");
+                isPlaying = false;
+                updatePlayPauseButtons();
             });
         }
+    }
+}
 
-        function clearGarden() {
-            const flowers = document.querySelectorAll('.flower');
-            flowers.forEach((flower, index) => {
-                if (index > 2) {
-                    setTimeout(() => {
-                        flower.style.animation = 'flower-entrance 0.3s ease-in reverse';
-                        setTimeout(() => {
-                            flower.remove();
-                        }, 300);
-                    }, index * 100);
-                }
-            });
+// Actualizar el nombre de la canción actual
+function updateCurrentSongName() {
+    const songNameElement = document.getElementById('currentSongName');
+    const mobileSongNameElement = document.getElementById('mobileCurrentSongName');
+    const currentSong = playlist[currentSongIndex];
 
-            setTimeout(() => {
-                flowerCounter = 3;
-                nextFlowerId = 4;
-                updateFlowerCounter();
-            }, 1000);
+    if (songNameElement && currentSong) {
+        songNameElement.textContent = currentSong.name;
+        if (isPlaying) {
+            songNameElement.classList.add('playing');
+        } else {
+            songNameElement.classList.remove('playing');
         }
+    }
 
-        function updateFlowerCounter() {
-            document.getElementById('flowerCount').textContent = flowerCounter;
+    if (mobileSongNameElement && currentSong) {
+        mobileSongNameElement.textContent = currentSong.name;
+        if (isPlaying) {
+            mobileSongNameElement.classList.add('playing');
+        } else {
+            mobileSongNameElement.classList.remove('playing');
         }
+    }
+}
 
-        // Event listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            createSimpleFallingStars();
-            setInterval(createSimpleFallingStars, 40000);
+// Actualizar botones de play/pause
+function updatePlayPauseButtons() {
+    const playBtn = document.getElementById('playPauseBtn');
+    const mobilePlayBtn = document.getElementById('mobilePlayPauseBtn');
 
-            // Configurar controles musicales
-            document.getElementById('playPauseBtn').addEventListener('click', togglePlayPause);
-            document.getElementById('nextBtn').addEventListener('click', playNextSong);
-            document.getElementById('prevBtn').addEventListener('click', playPrevSong);
+    const symbol = isPlaying ? '⏸️' : '▶️';
 
-            // Configurar auto-siguiente canción
-            audio.addEventListener('ended', playNextSong);
+    if (playBtn) playBtn.textContent = symbol;
+    if (mobilePlayBtn) mobilePlayBtn.textContent = symbol;
+}
 
-            audio.volume = 0.7;
+// Toggle play/pause
+function togglePlayPause() {
+    if (!audio) return;
 
-            // Inicializar nombre de canción
-            updateCurrentSongName();
-
-            setInterval(updateLyrics, 1000);
-
-            document.querySelectorAll('.flower').forEach(flower => {
-                flower.addEventListener('click', function() {
-                    createSparkles(this);
-                });
+    if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+    } else {
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                isPlaying = true;
+            }).catch(error => {
+                console.log("Error al reproducir:", error);
+                isPlaying = false;
             });
+        }
+    }
 
-            // Configurar primera frase con clase adecuada
-            const initialQuote = document.getElementById('quoteDisplay');
-            const initialClass = getTextLengthClass(initialQuote.textContent);
-            initialQuote.classList.remove('short-text');
-            initialQuote.classList.add(initialClass);
+    updatePlayPauseButtons();
+    updateCurrentSongName();
+}
 
-            // Auto-inicio de reproducción
+// Cambiar canción
+function changeSong() {
+    const currentSong = playlist[currentSongIndex];
+    if (currentSong && audio) {
+        audio.src = currentSong.file;
+        if (isPlaying) {
+            audio.play().catch(error => {
+                console.log("Error al cambiar canción:", error);
+            });
+        }
+        updateCurrentSongName();
+    }
+}
+
+// Siguiente canción
+function playNextSong() {
+    currentSongIndex = (currentSongIndex + 1) % playlist.length;
+    changeSong();
+}
+
+// Canción anterior
+function playPrevSong() {
+    currentSongIndex = currentSongIndex === 0 ? playlist.length - 1 : currentSongIndex - 1;
+    changeSong();
+}
+
+// Cambiar frase
+function changeQuote() {
+    const randomIndex = Math.floor(Math.random() * romanticQuotes.length);
+    const newQuote = romanticQuotes[randomIndex];
+
+    const quoteElement = document.getElementById('quoteDisplay');
+    const mobileQuoteElement = document.getElementById('mobileQuoteDisplay');
+
+    // Actualizar frase desktop
+    if (quoteElement) {
+        quoteElement.textContent = newQuote;
+
+        // Clasificar por longitud
+        quoteElement.className = quoteElement.className.replace(/\b(short|medium|long)-text\b/g, '');
+        if (newQuote.length < 60) {
+            quoteElement.classList.add('short-text');
+        } else if (newQuote.length < 120) {
+            quoteElement.classList.add('medium-text');
+        } else {
+            quoteElement.classList.add('long-text');
+        }
+    }
+
+    // Actualizar frase móvil
+    if (mobileQuoteElement) {
+        mobileQuoteElement.textContent = newQuote;
+
+        // Clasificar por longitud
+        mobileQuoteElement.className = mobileQuoteElement.className.replace(/\b(short|medium|long)-text\b/g, '');
+        if (newQuote.length < 60) {
+            mobileQuoteElement.classList.add('short-text');
+        } else if (newQuote.length < 120) {
+            mobileQuoteElement.classList.add('medium-text');
+        } else {
+            mobileQuoteElement.classList.add('long-text');
+        }
+    }
+}
+
+// Toggle frases automáticas
+function toggleAutoQuote() {
+    autoQuoteEnabled = !autoQuoteEnabled;
+    const autoBtn = document.getElementById('autoBtn');
+    const mobileAutoBtn = document.getElementById('mobileAutoBtn');
+
+    const newText = `Auto: ${autoQuoteEnabled ? 'ON' : 'OFF'}`;
+
+    if (autoBtn) autoBtn.textContent = newText;
+    if (mobileAutoBtn) mobileAutoBtn.textContent = newText;
+
+    if (autoQuoteEnabled) {
+        quoteInterval = setInterval(changeQuote, 5000); // Cambiar cada 5 segundos
+    } else {
+        if (quoteInterval) {
+            clearInterval(quoteInterval);
+            quoteInterval = null;
+        }
+    }
+}
+
+// Crear efecto sparkle
+function createSparkles(flower) {
+    const rect = flower.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    // Crear múltiples sparkles
+    for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.textContent = ['✨', '🌟', '⭐', '💫'][Math.floor(Math.random() * 4)];
+
+            // Posición aleatoria alrededor de la flor
+            sparkle.style.left = `${centerX + (Math.random() - 0.5) * 100}px`;
+            sparkle.style.top = `${centerY + (Math.random() - 0.5) * 100}px`;
+
+            document.body.appendChild(sparkle);
+
+            // Eliminar después de la animación
             setTimeout(() => {
-                audio.play().then(() => {
-                    isPlaying = true;
-                    document.getElementById('playPauseBtn').textContent = '⏸️';
-                    updateCurrentSongName();
-                }).catch(err => {
-                    console.log('Auto-play bloqueado por el navegador');
-                });
-            }, 1000);
+                sparkle.remove();
+            }, 2000);
+        }, i * 200);
+    }
+}
+
+// Crear estrella cayendo
+function createFallingStar() {
+    const star = document.createElement('div');
+    star.className = `falling-star ${Math.random() > 0.5 ? 'white' : 'yellow'}`;
+    star.textContent = ['⭐', '✨', '🌟'][Math.floor(Math.random() * 3)];
+
+    // Posición aleatoria en la parte superior
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.animationDuration = `${3 + Math.random() * 4}s`;
+
+    const container = document.getElementById('fallingStars');
+    if (container) {
+        container.appendChild(star);
+
+        // Eliminar después de la animación
+        setTimeout(() => {
+            star.remove();
+        }, 7000);
+    }
+}
+
+// Configurar interacciones de flores
+function setupFlowerInteractions() {
+    const flowers = document.querySelectorAll('.flower');
+    flowers.forEach(flower => {
+        flower.addEventListener('click', () => {
+            createSparkles(flower);
         });
 
-        // Función para ocultar título
-        function ocultar_titulo() {
-            const titulo = document.querySelector(".titulo");
-            if (titulo) {
-                titulo.style.animation = "fadeOut 3s ease-in-out forwards";
-                setTimeout(() => {
-                    titulo.style.display = "none";
-                }, 3000);
+        flower.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                createSparkles(flower);
             }
-        }
+        });
+    });
+}
 
-        setTimeout(ocultar_titulo, 216000);
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar audio
+    audio = document.getElementById('mainAudio');
+
+    // Configurar controles de música desktop
+    const playBtn = document.getElementById('playPauseBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+
+    if (playBtn) playBtn.addEventListener('click', togglePlayPause);
+    if (nextBtn) nextBtn.addEventListener('click', playNextSong);
+    if (prevBtn) prevBtn.addEventListener('click', playPrevSong);
+
+    // Configurar controles de música móvil
+    const mobilePlayBtn = document.getElementById('mobilePlayPauseBtn');
+    const mobileNextBtn = document.getElementById('mobileNextBtn');
+    const mobilePrevBtn = document.getElementById('mobilePrevBtn');
+
+    if (mobilePlayBtn) mobilePlayBtn.addEventListener('click', togglePlayPause);
+    if (mobileNextBtn) mobileNextBtn.addEventListener('click', playNextSong);
+    if (mobilePrevBtn) mobilePrevBtn.addEventListener('click', playPrevSong);
+
+    // Configurar eventos de audio
+    if (audio) {
+        audio.addEventListener('ended', playNextSong);
+        audio.addEventListener('canplay', () => {
+            updateCurrentSongName();
+        });
+    }
+
+    // Configurar interacciones de flores
+    setupFlowerInteractions();
+
+    // Intentar habilitar audio automático
+    enableAudioPlayback();
+
+    // Crear estrellas cayendo periódicamente
+    setInterval(createFallingStar, 2000);
+
+    // Manejar clics en cualquier parte para habilitar audio
+    let audioEnabled = false;
+    document.addEventListener('click', () => {
+        if (!audioEnabled && audio) {
+            enableAudioPlayback();
+            audioEnabled = true;
+        }
+    });
+
+    console.log('Flores Para Ti - Inicializado');
+});
+
+// Service Worker registration (si existe)
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then(registration => {
+                console.log('SW registered: ', registration);
+            })
+            .catch(registrationError => {
+                console.log('SW registration failed: ', registrationError);
+            });
+    });
+}

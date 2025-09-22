@@ -1,0 +1,454 @@
+/* ========================================
+   ARCHIVO: css/components.css
+   DESCRIPCIÓN: Componentes específicos del proyecto
+======================================== */
+
+/* DISEÑO ORIGINAL PARA DESKTOP/LAPTOP */
+body {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    overflow-x: hidden;
+    perspective: 1000px;
+    font-family: var(--font-family-primary);
+}
+
+/* CONTENEDORES PRINCIPALES */
+.mobile-container {
+    display: none; /* Oculto por defecto en desktop */
+}
+
+.desktop-content {
+    display: block;
+}
+
+/* MENSAJE PRINCIPAL */
+.main-message {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: var(--z-ui);
+    background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(25,25,25,0.9) 100%);
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--border-radius-xl);
+    border: 2px solid var(--accent);
+    box-shadow: 0 8px 32px rgba(255, 215, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    backdrop-filter: blur(15px);
+    animation: message-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes message-glow {
+    0% { box-shadow: 0 8px 32px rgba(255, 215, 0, 0.3); }
+    100% { box-shadow: 0 12px 40px rgba(255, 215, 0, 0.6); }
+}
+
+.sunflower-icon {
+    font-size: 2.5rem;
+    animation: rotate-sunflower 4s linear infinite;
+}
+
+@keyframes rotate-sunflower {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.message-text {
+    color: var(--accent);
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    line-height: 1.4;
+}
+
+.message-title {
+    display: block;
+    font-size: var(--font-size-xxl);
+}
+
+.date-highlight {
+    color: var(--yellow-bright);
+    font-size: var(--font-size-display);
+    animation: date-pulse 2s ease-in-out infinite;
+}
+
+@keyframes date-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* REPRODUCTOR DE MÚSICA */
+.music-player {
+    position: fixed;
+    top: 120px;
+    right: var(--space-lg);
+    z-index: var(--z-ui);
+    background: rgba(0,0,0,0.85);
+    padding: var(--space-md);
+    border-radius: var(--border-radius-md);
+    border: 2px solid var(--accent);
+    backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    min-width: 200px;
+    max-width: 280px;
+    box-shadow: var(--shadow-lg);
+}
+
+.music-player h3 {
+    color: var(--accent);
+    text-align: center;
+    margin: 0;
+    font-size: var(--font-size-md);
+}
+
+.current-song {
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+    text-align: center;
+    font-style: italic;
+    padding: var(--space-sm);
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: var(--border-radius-sm);
+    border-left: 3px solid var(--accent);
+    width: 100%;
+    min-height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    word-wrap: break-word;
+    hyphens: auto;
+    line-height: 1.2;
+    transition: background var(--transition-normal);
+}
+
+.current-song.playing {
+    animation: song-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes song-glow {
+    0% { background: rgba(255, 215, 0, 0.1); }
+    100% { background: rgba(255, 215, 0, 0.2); }
+}
+
+.music-controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    margin-top: var(--space-xs);
+}
+
+.control-btn {
+    background: var(--accent);
+    border: none;
+    color: var(--dark-color);
+    padding: 12px;
+    border-radius: var(--border-radius-round);
+    cursor: pointer;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-normal);
+    font-size: var(--font-size-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.control-btn:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-md);
+}
+
+.control-btn:active {
+    transform: scale(0.95);
+}
+
+/* CONTROL DE VOLUMEN */
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    width: 100%;
+    margin-top: var(--space-sm);
+}
+
+.volume-control input[type="range"] {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 215, 0, 0.3);
+    border-radius: 2px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.volume-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--accent);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.volume-control input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: var(--accent);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+.volume-icon {
+    font-size: var(--font-size-sm);
+    color: var(--accent);
+}
+
+/* SECCIÓN DE FRASES */
+.quotes-section {
+    position: fixed;
+    bottom: var(--space-lg);
+    left: var(--space-lg);
+    z-index: var(--z-ui);
+    background: rgba(0,0,0,0.85);
+    padding: var(--space-lg);
+    border-radius: var(--border-radius-md);
+    border: 2px solid var(--accent);
+    backdrop-filter: blur(15px);
+    min-width: 300px;
+    max-width: 400px;
+    width: auto;
+    box-shadow: var(--shadow-lg);
+}
+
+.quotes-section h3 {
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: var(--space-md);
+    font-size: var(--font-size-md);
+}
+
+.quote-display {
+    color: var(--text-primary);
+    font-style: italic;
+    text-align: center;
+    line-height: 1.5;
+    padding: var(--space-md);
+    border-left: 3px solid var(--accent);
+    background: rgba(255, 215, 0, 0.05);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: var(--space-md);
+    word-wrap: break-word;
+    hyphens: auto;
+    min-height: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-normal);
+}
+
+.quote-display.short-text {
+    min-height: 60px;
+    font-size: var(--font-size-md);
+}
+
+.quote-display.medium-text {
+    min-height: 80px;
+    font-size: var(--font-size-sm);
+}
+
+.quote-display.long-text {
+    min-height: 100px;
+    font-size: var(--font-size-sm);
+    line-height: 1.4;
+    text-align: left;
+    align-items: flex-start;
+    padding-top: var(--space-lg);
+}
+
+.quote-controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+}
+
+.quote-btn {
+    background: linear-gradient(135deg, var(--accent) 0%, #FFA500 100%);
+    border: none;
+    color: var(--dark-color);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--border-radius-xl);
+    cursor: pointer;
+    font-weight: bold;
+    transition: all var(--transition-normal);
+    font-size: var(--font-size-sm);
+    box-shadow: var(--shadow-sm);
+    flex: 1;
+}
+
+.quote-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.quote-btn:active {
+    transform: translateY(0);
+}
+
+/* BOTÓN AGREGAR FLOR */
+.add-flower-btn {
+    position: fixed;
+    bottom: var(--space-xl);
+    right: 50%;
+    transform: translateX(50%);
+    background: linear-gradient(135deg, var(--green-leaf) 0%, #32CD32 100%);
+    border: none;
+    color: white;
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--border-radius-xl);
+    cursor: pointer;
+    font-weight: bold;
+    font-size: var(--font-size-md);
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition-normal);
+    z-index: var(--z-ui);
+}
+
+.add-flower-btn:hover {
+    transform: translateX(50%) translateY(-3px) scale(1.05);
+    box-shadow: var(--shadow-xl);
+}
+
+.add-flower-btn:active {
+    transform: translateX(50%) translateY(-1px) scale(1.02);
+}
+
+/* ESTRELLAS CAYENDO */
+.falling-stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: var(--z-background);
+    overflow: hidden;
+}
+
+.falling-star {
+    position: absolute;
+    font-size: 20px;
+    opacity: 0;
+    animation: simple-fall linear infinite;
+}
+
+.falling-star.white {
+    color: var(--white);
+    text-shadow: 0 0 10px var(--white), 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.falling-star.yellow {
+    color: var(--golden);
+    text-shadow: 0 0 10px var(--golden), 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+@keyframes simple-fall {
+    0% {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+/* LETRAS SINCRONIZADAS */
+#lyrics {
+    font-size: 28px;
+    font-family: var(--font-family-secondary);
+    color: var(--text-primary);
+    position: absolute;
+    margin-bottom: 20%;
+    z-index: var(--z-content);
+    font-weight: bold;
+    letter-spacing: 4px;
+    text-align: center;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    pointer-events: none;
+}
+
+.titulo {
+    margin-bottom: 180px;
+    font-family: var(--font-family-secondary);
+    color: var(--accent);
+    position: absolute;
+    font-weight: bold;
+    letter-spacing: 10px;
+    opacity: 0;
+    animation: fadeIn 3s ease-in-out forwards;
+    text-align: center;
+    text-shadow: 0 0 20px var(--golden);
+    pointer-events: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* CONTENEDOR DE FLORES */
+.flowers {
+    position: relative;
+    transform: scale(0.9);
+}
+
+.flowers-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* EFECTOS DE INTERACCIÓN */
+.sparkle {
+    position: fixed;
+    pointer-events: none;
+    font-size: 16px;
+    z-index: var(--z-overlay);
+    animation: sparkle-float 2s ease-out forwards;
+}
+
+@keyframes sparkle-float {
+    0% { 
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+    100% { 
+        opacity: 0;
+        transform: translateY(-100px) scale(0.3) rotate(360deg);
+    }
+}
