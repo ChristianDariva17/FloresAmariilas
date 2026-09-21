@@ -1,5 +1,6 @@
 import * as THREE from '../js/vendor/three.module.js';
 import { GLTFExporter } from '../js/vendor/GLTFExporter.mjs';
+import { mergeGeometries } from '../js/utils/BufferGeometryUtils.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -15,6 +16,7 @@ globalThis.FileReader = class {
 };
 
 const isMobile = process.argv.includes('--mobile');
+const isOptimized = process.argv.includes('--optimized');
 const quality = isMobile ? {
     name: 'mobile',
     outerPetals: 18,
@@ -30,6 +32,21 @@ const quality = isMobile ? {
     seedSegments: 5,
     seedRings: 4,
     seedCount: 72
+} : isOptimized ? {
+    name: 'optimized',
+    outerPetals: 28,
+    innerPetals: 18,
+    petalWidthSegments: 10,
+    petalLengthSegments: 20,
+    leafWidthSegments: 8,
+    leafLengthSegments: 12,
+    stemSegments: 14,
+    calyxWidthSegments: 24,
+    calyxHeightSegments: 14,
+    centerSegments: 48,
+    seedSegments: 6,
+    seedRings: 4,
+    seedCount: 144
 } : {
     name: 'desktop',
     outerPetals: 32,
@@ -47,7 +64,11 @@ const quality = isMobile ? {
     seedCount: 220
 };
 
-const output = path.resolve(isMobile ? 'assets/models/sunflower-mobile.glb' : 'assets/models/sunflower.glb');
+const output = path.resolve(isMobile
+    ? 'assets/models/sunflower-mobile.glb'
+    : isOptimized
+        ? 'assets/models/sunflower-optimized.glb'
+        : 'assets/models/sunflower.glb');
 fs.mkdirSync(path.dirname(output), { recursive: true });
 
 const scene = new THREE.Scene();
@@ -86,6 +107,8 @@ const leafMaterials = [
     new THREE.MeshPhysicalMaterial({ color: 0x607c42, roughness: 0.86, clearcoat: 0.04, side: THREE.DoubleSide }),
     new THREE.MeshPhysicalMaterial({ color: 0x789352, roughness: 0.9, clearcoat: 0.03, side: THREE.DoubleSide })
 ];
+const leafVeinMaterial = new THREE.LineBasicMaterial({ color: 0x9aab69, transparent: true, opacity: 0.55 });
+const leafSideVeinMaterial = new THREE.LineBasicMaterial({ color: 0x9aab69, transparent: true, opacity: 0.3 });
 
 const makeSurfaceGeometry = (length, width, widthSegments, lengthSegments, profile) => {
     const positions = [];
@@ -189,10 +212,7 @@ scene.add(stem);
         new THREE.Vector3(0, 0.02, 0.025),
         new THREE.Vector3(0, spec.length * 0.92, 0.025)
     ]);
-    leaf.add(new THREE.Line(
-        vein,
-        new THREE.LineBasicMaterial({ color: 0x9aab69, transparent: true, opacity: 0.55 })
-    ));
+    leaf.add(new THREE.Line(vein, leafVeinMaterial));
     const sideVeinPoints = [];
     for (let veinIndex = 1; veinIndex <= 4; veinIndex += 1) {
         const ratio = veinIndex / 5;
@@ -205,10 +225,7 @@ scene.add(stem);
             new THREE.Vector3(-span, y + spec.length * 0.075, 0.029)
         );
     }
-    leaf.add(new THREE.LineSegments(
-        new THREE.BufferGeometry().setFromPoints(sideVeinPoints),
-        new THREE.LineBasicMaterial({ color: 0x9aab69, transparent: true, opacity: 0.3 })
-    ));
+    leaf.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(sideVeinPoints), leafSideVeinMaterial));
     leaf.position.set(spec.side * 0.018, spec.y, 0.018);
     leaf.rotation.z = spec.rotation;
     leaf.rotation.y = spec.side * 0.16;
@@ -326,6 +343,107 @@ seeds.instanceMatrix.needsUpdate = true;
 if (seeds.instanceColor) seeds.instanceColor.needsUpdate = true;
 head.add(seeds);
 
+function mergeStaticPetalMeshes() {
+    scene.updateMatrixWorld(true);
+    const batches = new Map();
+
+    scene.traverse((object) => {
+        if (!object.isMesh || object.isInstancedMesh || !object.geometry || !object.material) return;
+        const name = object.name.toLowerCase();
+        if (!name.includes('petal')) return;
+        const parent = object.parent || scene;
+        const material = Array.isArray(object.material) ? object.material[0] : object.material;
+        if (!material) return;
+        const key = `${parent.uuid}:${material.uuid}`;
+        if (!batches.has(key)) batches.set(key, { parent, material, meshes: [] });
+        batches.get(key).meshes.push(object);
+    });
+
+    batches.forEach(({ parent, material, meshes }) => {
+        if (meshes.length < 2) return;
+        const parentInverse = new THREE.Matrix4().copy(parent.matrixWorld).invert();
+        const geometries = meshes.map((mesh) => {
+            const geometry = mesh.geometry.clone();
+            const relativeMatrix = new THREE.Matrix4().multiplyMatrices(parentInverse, mesh.matrixWorld);
+            geometry.applyMatrix4(relativeMatrix);
+            return geometry;
+        });
+        const mergedGeometry = mergeGeometries(geometries, false);
+        if (!mergedGeometry) return;
+        mergedGeometry.computeBoundingSphere();
+        const mergedMesh = new THREE.Mesh(mergedGeometry, material);
+        mergedMesh.name = 'MergedPetalBatch';
+        parent.add(mergedMesh);
+        meshes.forEach((mesh) => mesh.parent?.remove(mesh));
+    });
+}
+
+function mergeStaticLeafMeshes() {
+    scene.updateMatrixWorld(true);
+    const batches = new Map();
+
+    scene.traverse((object) => {
+        if (!object.isMesh || object.isInstancedMesh || !object.geometry || !object.material) return;
+        if (!object.name.toLowerCase().includes('leaf')) return;
+        const material = Array.isArray(object.material) ? object.material[0] : object.material;
+        if (!material) return;
+        const key = material.uuid;
+        if (!batches.has(key)) batches.set(key, { material, meshes: [] });
+        batches.get(key).meshes.push(object);
+    });
+
+    batches.forEach(({ material, meshes }) => {
+        if (meshes.length < 2) return;
+        const geometries = meshes.map((mesh) => {
+            const geometry = mesh.geometry.clone();
+            geometry.applyMatrix4(mesh.matrixWorld);
+            return geometry;
+        });
+        const mergedGeometry = mergeGeometries(geometries, false);
+        if (!mergedGeometry) return;
+        mergedGeometry.computeBoundingSphere();
+        const mergedMesh = new THREE.Mesh(mergedGeometry, material);
+        mergedMesh.name = 'MergedLeafBatch';
+        scene.add(mergedMesh);
+        meshes.forEach((mesh) => mesh.parent?.remove(mesh));
+    });
+}
+
+function mergeStaticLeafVeins() {
+    scene.updateMatrixWorld(true);
+    const batches = new Map();
+
+    scene.traverse((object) => {
+        if (!(object.isLine || object.isLineSegments) || !object.geometry || !object.material) return;
+        if (!object.parent?.name.toLowerCase().includes('leaf')) return;
+        const mode = object.isLineSegments ? 'segments' : 'line';
+        const key = `${mode}:${object.material.uuid}`;
+        if (!batches.has(key)) batches.set(key, { mode, material: object.material, lines: [] });
+        batches.get(key).lines.push(object);
+    });
+
+    batches.forEach(({ mode, material, lines }) => {
+        if (lines.length < 2) return;
+        const geometries = lines.map((line) => {
+            const geometry = line.geometry.clone();
+            geometry.applyMatrix4(line.matrixWorld);
+            return geometry;
+        });
+        const mergedGeometry = mergeGeometries(geometries, false);
+        if (!mergedGeometry) return;
+        mergedGeometry.computeBoundingSphere();
+        const mergedLine = mode === 'segments'
+            ? new THREE.LineSegments(mergedGeometry, material)
+            : new THREE.Line(mergedGeometry, material);
+        mergedLine.name = 'MergedLeafVeinBatch';
+        scene.add(mergedLine);
+        lines.forEach((line) => line.parent?.remove(line));
+    });
+}
+
+mergeStaticPetalMeshes();
+mergeStaticLeafMeshes();
+mergeStaticLeafVeins();
 scene.updateMatrixWorld(true);
 
 const exporter = new GLTFExporter();

@@ -1,10 +1,11 @@
-const CACHE_NAME = 'flores-para-ti-v20';
+const CACHE_NAME = 'flores-para-ti-v24';
 const SHELL_ASSETS = [
     '/',
     '/css/style.css',
     '/css/interactive.css',
     '/css/design-refresh.css',
     '/css/experience-polish.css',
+    '/css/flower-first.css',
     '/js/vendor/three.module.js',
     '/js/vendor/GLTFLoader.js',
     '/js/vendor/KTX2Loader.js',
@@ -12,52 +13,11 @@ const SHELL_ASSETS = [
     '/js/vendor/zstddec.module.js',
     '/js/vendor/basis/basis_transcoder.js',
     '/js/vendor/basis/basis_transcoder.wasm',
-    '/js/utils/WorkerPool.js',
     '/js/vendor/RoomEnvironment.js',
-    '/js/utils/TextureUtils.js',
-    '/js/utils/BufferGeometryUtils.js',
     '/js/interactive-scene.js',
     '/js/mov.js',
     '/img/flower-mark.svg',
     '/img/sunflowers-realistic.webp',
-    '/assets/models/sunflower.glb',
-    '/assets/models/sunflower-mobile.glb',
-    '/assets/textures/petal-basecolor.jpg',
-    '/assets/textures/petal-basecolor.ktx2',
-    '/assets/textures/petal-basecolor-mobile.ktx2',
-    '/assets/textures/petal-normal.png',
-    '/assets/textures/petal-normal.ktx2',
-    '/assets/textures/petal-normal-mobile.ktx2',
-    '/assets/textures/petal-roughness.png',
-    '/assets/textures/petal-roughness.ktx2',
-    '/assets/textures/petal-roughness-mobile.ktx2',
-    '/assets/textures/petal-ao.png',
-    '/assets/textures/petal-ao.ktx2',
-    '/assets/textures/petal-ao-mobile.ktx2',
-    '/assets/textures/leaf-basecolor.jpg',
-    '/assets/textures/leaf-basecolor.ktx2',
-    '/assets/textures/leaf-basecolor-mobile.ktx2',
-    '/assets/textures/leaf-normal.png',
-    '/assets/textures/leaf-normal.ktx2',
-    '/assets/textures/leaf-normal-mobile.ktx2',
-    '/assets/textures/leaf-roughness.png',
-    '/assets/textures/leaf-roughness.ktx2',
-    '/assets/textures/leaf-roughness-mobile.ktx2',
-    '/assets/textures/leaf-ao.png',
-    '/assets/textures/leaf-ao.ktx2',
-    '/assets/textures/leaf-ao-mobile.ktx2',
-    '/assets/textures/center-basecolor.jpg',
-    '/assets/textures/center-basecolor.ktx2',
-    '/assets/textures/center-basecolor-mobile.ktx2',
-    '/assets/textures/center-normal.png',
-    '/assets/textures/center-normal.ktx2',
-    '/assets/textures/center-normal-mobile.ktx2',
-    '/assets/textures/center-roughness.png',
-    '/assets/textures/center-roughness.ktx2',
-    '/assets/textures/center-roughness-mobile.ktx2',
-    '/assets/textures/center-ao.png',
-    '/assets/textures/center-ao.ktx2',
-    '/assets/textures/center-ao-mobile.ktx2',
     '/manifest.json',
 ];
 
@@ -87,7 +47,8 @@ self.addEventListener('fetch', (event) => {
     const requestUrl = new URL(event.request.url);
     const isSameOrigin = requestUrl.origin === self.location.origin;
     const cacheableDestination = ['document', 'script', 'style', 'image', 'manifest', 'video'].includes(event.request.destination);
-    if (!isSameOrigin || !cacheableDestination) return;
+    const cacheable3DAsset = /\.(glb|ktx2)$/i.test(requestUrl.pathname);
+    if (!isSameOrigin || (!cacheableDestination && !cacheable3DAsset)) return;
 
     event.respondWith(
         caches.match(event.request).then((cachedResponse) => cachedResponse || fetch(event.request).then((response) => {

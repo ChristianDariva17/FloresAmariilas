@@ -38,12 +38,12 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
             workerLimit: 2
         },
         balanced: {
-            flowerCount: 5,
-            particleCount: 48,
-            maxPixelRatio: 1.3,
+            flowerCount: 4,
+            particleCount: 40,
+            maxPixelRatio: 1.15,
             anisotropy: 4,
-            shadows: true,
-            shadowMapSize: 768,
+            shadows: false,
+            shadowMapSize: 512,
             targetFps: 45,
             antialias: false,
             useMobileTextures: true,
@@ -52,7 +52,7 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
         mobile: {
             flowerCount: 3,
             particleCount: 24,
-            maxPixelRatio: 1.1,
+            maxPixelRatio: 1,
             anisotropy: 2,
             shadows: false,
             shadowMapSize: 512,
@@ -65,7 +65,7 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
 
     const getQualityProfileName = () => {
         if (mobileQuery.matches) return 'mobile';
-        if (isLowPowerDevice || window.innerWidth < 1100) return 'balanced';
+        if (isLowPowerDevice || window.innerWidth < 1600) return 'balanced';
         return 'high';
     };
     const getQualityProfile = () => QUALITY_PROFILES[getQualityProfileName()];
@@ -352,20 +352,17 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
         petal: {
             map: loadPbrTexture('assets/textures/petal-basecolor.jpg', THREE.SRGBColorSpace, 'assets/textures/petal-basecolor.ktx2', 'assets/textures/petal-basecolor-mobile.ktx2'),
             normalMap: loadPbrTexture('assets/textures/petal-normal.png', THREE.NoColorSpace, 'assets/textures/petal-normal.ktx2', 'assets/textures/petal-normal-mobile.ktx2'),
-            roughnessMap: loadPbrTexture('assets/textures/petal-roughness.png', THREE.NoColorSpace, 'assets/textures/petal-roughness.ktx2', 'assets/textures/petal-roughness-mobile.ktx2'),
-            aoMap: loadPbrTexture('assets/textures/petal-ao.png', THREE.NoColorSpace, 'assets/textures/petal-ao.ktx2', 'assets/textures/petal-ao-mobile.ktx2')
+            ormMap: loadPbrTexture('assets/textures/petal-orm.png', THREE.NoColorSpace, 'assets/textures/petal-orm.ktx2', 'assets/textures/petal-orm-mobile.ktx2')
         },
         leaf: {
             map: loadPbrTexture('assets/textures/leaf-basecolor.jpg', THREE.SRGBColorSpace, 'assets/textures/leaf-basecolor.ktx2', 'assets/textures/leaf-basecolor-mobile.ktx2'),
             normalMap: loadPbrTexture('assets/textures/leaf-normal.png', THREE.NoColorSpace, 'assets/textures/leaf-normal.ktx2', 'assets/textures/leaf-normal-mobile.ktx2'),
-            roughnessMap: loadPbrTexture('assets/textures/leaf-roughness.png', THREE.NoColorSpace, 'assets/textures/leaf-roughness.ktx2', 'assets/textures/leaf-roughness-mobile.ktx2'),
-            aoMap: loadPbrTexture('assets/textures/leaf-ao.png', THREE.NoColorSpace, 'assets/textures/leaf-ao.ktx2', 'assets/textures/leaf-ao-mobile.ktx2')
+            ormMap: loadPbrTexture('assets/textures/leaf-orm.png', THREE.NoColorSpace, 'assets/textures/leaf-orm.ktx2', 'assets/textures/leaf-orm-mobile.ktx2')
         },
         center: {
             map: loadPbrTexture('assets/textures/center-basecolor.jpg', THREE.SRGBColorSpace, 'assets/textures/center-basecolor.ktx2', 'assets/textures/center-basecolor-mobile.ktx2'),
             normalMap: loadPbrTexture('assets/textures/center-normal.png', THREE.NoColorSpace, 'assets/textures/center-normal.ktx2', 'assets/textures/center-normal-mobile.ktx2'),
-            roughnessMap: loadPbrTexture('assets/textures/center-roughness.png', THREE.NoColorSpace, 'assets/textures/center-roughness.ktx2', 'assets/textures/center-roughness-mobile.ktx2'),
-            aoMap: loadPbrTexture('assets/textures/center-ao.png', THREE.NoColorSpace, 'assets/textures/center-ao.ktx2', 'assets/textures/center-ao-mobile.ktx2')
+            ormMap: loadPbrTexture('assets/textures/center-orm.png', THREE.NoColorSpace, 'assets/textures/center-orm.ktx2', 'assets/textures/center-orm-mobile.ktx2')
         }
     };
 
@@ -656,17 +653,20 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
                     material.map = textureSet.map.texture;
                     material.normalMap = textureSet.normalMap.texture;
                     if (material.normalScale) material.normalScale.set(0.62, 0.62);
-                    material.roughnessMap = textureSet.roughnessMap.texture;
-                    material.aoMap = textureSet.aoMap.texture;
+                    // ORM lineal: Three.js lee AO desde R y roughness desde G.
+                    // Un único recurso sustituye las dos descargas separadas sin perder detalle PBR.
+                    material.roughnessMap = textureSet.ormMap.texture;
+                    material.aoMap = textureSet.ormMap.texture;
                     material.aoMapIntensity = 0.72;
                     if (textureSet === pbrTextureSets.petal && 'transmission' in material) {
-                        material.sheen = compactExperience() ? 0.04 : 0.12;
+                        material.sheen = compactExperience() ? 0 : 0.12;
                         material.sheenRoughness = 0.62;
                         material.sheenColor.set(0xffd35a);
                         material.transmission = compactExperience() ? 0 : 0.045;
                         material.thickness = 0.012;
                         material.ior = 1.38;
                     }
+                    if (compactExperience() && 'clearcoat' in material) material.clearcoat = 0;
                 }
                 if (material.map) material.map.colorSpace = THREE.SRGBColorSpace;
                 if (material.emissiveMap) material.emissiveMap.colorSpace = THREE.SRGBColorSpace;
@@ -683,7 +683,9 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
     }
 
     function getModelPath() {
-        return mobileQuery.matches ? 'assets/models/sunflower-mobile.glb' : 'assets/models/sunflower.glb';
+        if (mobileQuery.matches) return 'assets/models/sunflower-mobile.glb';
+        if (isLowPowerDevice || window.innerWidth < 1600) return 'assets/models/sunflower-optimized.glb';
+        return 'assets/models/sunflower.glb';
     }
 
     function loadSunflowerModel(modelPath = getModelPath()) {
@@ -694,7 +696,7 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
             (gltf) => {
                 prepareModelMaterials(gltf.scene);
 
-                const flowerCount = compactExperience() ? 4 : 7;
+                const flowerCount = getQualityProfile().flowerCount;
                 for (let index = 0; index < flowerCount; index += 1) {
                     const instance = gltf.scene.clone(true);
                     let head = null;
@@ -847,7 +849,8 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
         };
         if (performanceHud) {
             performanceHud.hidden = false;
-            performanceHud.textContent = `Perfil ${telemetry.profile} · ${telemetry.fps} FPS (mín. ${telemetry.minFps}) · ${telemetry.drawCalls} llamadas · ${Math.round(telemetry.triangles / 1000)}k tri · DPR ${telemetry.pixelRatio}`;
+            const modelLabel = loadedModelPath ? loadedModelPath.split('/').pop() : 'cargando';
+            performanceHud.textContent = `Perfil ${telemetry.profile} · ${telemetry.fps} FPS (mín. ${telemetry.minFps}) · ${telemetry.drawCalls} llamadas · ${Math.round(telemetry.triangles / 1000)}k tri · DPR ${telemetry.pixelRatio} · LOD ${modelLabel}`;
         }
         if (perfDebug) console.info('[FloresPerf]', telemetry);
         performanceState.frames = 0;
@@ -996,6 +999,7 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
     function resetFlowerFocus() {
         focusedFlower = null;
         stage.classList.remove('flower-focus');
+        document.body.classList.remove('flower-focused');
         if (focusResetTimer) window.clearTimeout(focusResetTimer);
         focusResetTimer = 0;
         if (focusResetButton) focusResetButton.hidden = true;
@@ -1016,6 +1020,7 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
         } else {
             focusedFlower = flower;
             stage.classList.add('flower-focus');
+            document.body.classList.add('flower-focused');
             if (focusResetButton) focusResetButton.hidden = false;
             if (focusResetTimer) window.clearTimeout(focusResetTimer);
             focusResetTimer = window.setTimeout(() => {

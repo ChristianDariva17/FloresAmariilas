@@ -1,0 +1,315 @@
+/* Fase 10 — composición flower-first: la escena manda, la UI acompaña. */
+
+body.design-refresh .main-message {
+    top: 22px;
+    width: min(88vw, 540px);
+    padding: 10px 18px;
+    border: 1px solid rgba(255, 222, 126, 0.2);
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(18, 10, 3, 0.58), rgba(18, 10, 3, 0.18));
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px) saturate(1.05);
+}
+
+body.design-refresh .main-message .sunflower-icon {
+    font-size: 1.7rem;
+}
+
+body.design-refresh .main-message .message-text {
+    font-size: clamp(1rem, 1.45vw, 1.24rem);
+}
+
+body.design-refresh .main-message .date-highlight {
+    font-size: clamp(1.05rem, 1.7vw, 1.34rem);
+}
+
+body.design-refresh .music-player,
+body.design-refresh .quotes-section,
+body.design-refresh .mobile-music-player {
+    transition: opacity 260ms ease, transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease, width 260ms ease;
+}
+
+/* Estado de reposo: controles secundarios reducidos a pequeñas islas. */
+body.design-refresh:not(.tools-open) .music-player,
+body.design-refresh:not(.tools-open) .quotes-section,
+body.design-refresh:not(.tools-open) .mobile-music-player {
+    opacity: 0.86;
+    filter: none;
+    transform: none;
+}
+
+body.design-refresh:not(.tools-open) .music-player {
+    top: 112px;
+    right: 20px;
+    min-width: 168px;
+    width: 168px;
+    padding: 9px 10px;
+    gap: 7px;
+}
+
+body.design-refresh:not(.tools-open) .music-player h3 {
+    margin: 0;
+    font-size: 0.72rem;
+}
+
+body.design-refresh:not(.tools-open) .music-player .current-song {
+    min-height: 27px;
+    padding: 5px 7px;
+    overflow: hidden;
+    font-size: 0.66rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+body.design-refresh:not(.tools-open) .music-player .music-hint,
+body.design-refresh:not(.tools-open) .music-player .control-btn:not(#playPauseBtn) {
+    display: none;
+}
+
+body.design-refresh:not(.tools-open) .music-player .music-controls {
+    margin-top: 0;
+}
+
+body.design-refresh:not(.tools-open) .music-player #playPauseBtn {
+    width: 34px;
+    height: 34px;
+    padding: 7px;
+    font-size: 0.9rem;
+}
+
+body.design-refresh:not(.tools-open) .quotes-section {
+    bottom: 20px;
+    left: 20px;
+    min-width: 0;
+    width: auto;
+    max-width: 180px;
+    padding: 9px 13px;
+    border-radius: 999px;
+}
+
+body.design-refresh:not(.tools-open) .quotes-section h3 {
+    margin: 0;
+    font-size: 0.72rem;
+    text-align: left;
+    white-space: nowrap;
+}
+
+body.design-refresh:not(.tools-open) .quotes-section > :not(h3) {
+    display: none;
+}
+
+body.design-refresh.tools-open .music-player,
+body.design-refresh.tools-open .quotes-section,
+body.design-refresh.tools-open .mobile-music-player {
+    opacity: 1;
+    filter: none;
+    transform: none;
+}
+
+/* La CTA queda como un dock liviano, no como una tarjeta que tapa el jardín. */
+body.design-refresh .hero-callout {
+    bottom: max(18px, env(safe-area-inset-bottom));
+    width: min(86vw, 370px);
+    padding: 10px 13px;
+    border-color: rgba(255, 221, 129, 0.34);
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(19, 12, 5, 0.72), rgba(61, 34, 9, 0.56));
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.3), 0 0 22px rgba(255, 190, 54, 0.08);
+    backdrop-filter: blur(10px) saturate(1.08);
+}
+
+body.design-refresh .hero-callout__eyebrow {
+    margin-bottom: 4px;
+    font-size: 0.62rem;
+}
+
+body.design-refresh .hero-callout__text {
+    margin-bottom: 8px;
+    font-size: 0.72rem;
+}
+
+body.design-refresh .hero-bloom-button {
+    min-height: 42px;
+    padding: 9px 15px;
+    font-size: 0.78rem;
+}
+
+body.design-refresh .hero-stage-status {
+    margin-top: 6px;
+    font-size: 0.67rem;
+}
+
+/* Al tocar una flor, la card se transforma en una leyenda contextual. */
+body.design-refresh.flower-focused .hero-callout {
+    width: min(84vw, 330px);
+    border-color: rgba(255, 236, 164, 0.72);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.36), 0 0 30px rgba(255, 192, 55, 0.2);
+}
+
+body.design-refresh.flower-focused .hero-callout__text {
+    display: none;
+}
+
+body.design-refresh.flower-focused .hero-stage-status {
+    color: #ffe9a2;
+    font-weight: 700;
+}
+
+/* En laptops angostas, separar el dock de la card abierta para no crear una pila. */
+@media only screen and (min-width: 769px) and (max-width: 1200px) {
+    body.design-refresh.tools-open .hero-callout {
+        right: 20px;
+        left: auto;
+        width: min(38vw, 330px);
+        transform: none;
+    }
+
+    body.design-refresh.tools-open .quotes-section {
+        width: min(34vw, 300px);
+        min-width: 0;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    body.design-refresh .mobile-container {
+        position: static !important;
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        pointer-events: none;
+    }
+
+    body.design-refresh .mobile-container .main-message,
+    body.design-refresh .mobile-container .quotes-section,
+    body.design-refresh .mobile-container .mobile-music-player {
+        pointer-events: auto;
+    }
+
+    body.design-refresh .mobile-container .main-message {
+        position: fixed !important;
+        top: 12px !important;
+        left: 50% !important;
+        width: min(92vw, 360px) !important;
+        padding: 10px 12px !important;
+        border: 1px solid rgba(255, 222, 126, 0.28) !important;
+        border-radius: 16px !important;
+        background: rgba(18, 10, 3, 0.66) !important;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24) !important;
+        backdrop-filter: blur(9px) !important;
+        transform: translateX(-50%) !important;
+        z-index: 120 !important;
+    }
+
+    body.design-refresh .mobile-container .main-message .sunflower-icon {
+        font-size: 1.4rem !important;
+    }
+
+    body.design-refresh .mobile-container .main-message .message-text {
+        font-size: 0.92rem !important;
+    }
+
+    body.design-refresh .mobile-container .main-message .date-highlight {
+        font-size: 1.02rem !important;
+    }
+
+    body.design-refresh .mobile-container .quotes-section {
+        position: fixed !important;
+        top: 76px !important;
+        right: auto !important;
+        bottom: auto !important;
+        left: 14px !important;
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: 150px !important;
+        padding: 8px 11px !important;
+        border: 1px solid rgba(255, 222, 126, 0.28) !important;
+        border-radius: 999px !important;
+        background: rgba(18, 10, 3, 0.62) !important;
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24) !important;
+        backdrop-filter: blur(8px) !important;
+        z-index: 120 !important;
+    }
+
+    body.design-refresh .mobile-container .quotes-section h3 {
+        margin: 0 !important;
+        font-size: 0.68rem !important;
+        text-align: left !important;
+        white-space: nowrap;
+    }
+
+    body.design-refresh:not(.tools-open) .mobile-container .quotes-section > :not(h3) {
+        display: none !important;
+    }
+
+    body.design-refresh .mobile-music-player {
+        position: fixed !important;
+        top: 76px !important;
+        right: 14px !important;
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: 152px !important;
+        padding: 8px 10px !important;
+        gap: 6px !important;
+        border: 1px solid rgba(255, 222, 126, 0.28) !important;
+        border-radius: 999px !important;
+        background: rgba(18, 10, 3, 0.62) !important;
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24) !important;
+        backdrop-filter: blur(8px) !important;
+        z-index: 120 !important;
+    }
+
+    body.design-refresh .mobile-music-player h3 {
+        margin: 0 !important;
+        font-size: 0.68rem !important;
+        white-space: nowrap;
+    }
+
+    body.design-refresh .mobile-music-player .current-song,
+    body.design-refresh .mobile-music-player .music-hint,
+    body.design-refresh .mobile-music-player .control-btn:not(#mobilePlayPauseBtn) {
+        display: none !important;
+    }
+
+    body.design-refresh .mobile-music-player .music-controls {
+        margin: 0 !important;
+    }
+
+    body.design-refresh .mobile-music-player #mobilePlayPauseBtn {
+        width: 30px !important;
+        height: 30px !important;
+        padding: 6px !important;
+        font-size: 0.82rem !important;
+    }
+
+    body.design-refresh .hero-callout {
+        bottom: max(12px, env(safe-area-inset-bottom)) !important;
+        width: min(92vw, 360px) !important;
+        padding: 8px 10px !important;
+        border-radius: 16px !important;
+    }
+
+    body.design-refresh .hero-callout__eyebrow {
+        font-size: 0.58rem !important;
+    }
+
+    body.design-refresh .hero-callout__text {
+        font-size: 0.68rem !important;
+    }
+
+    body.design-refresh .hero-bloom-button {
+        min-height: 40px !important;
+        font-size: 0.74rem !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.design-refresh .main-message,
+    body.design-refresh .music-player,
+    body.design-refresh .quotes-section,
+    body.design-refresh .mobile-music-player,
+    body.design-refresh .hero-callout {
+        transition: none;
+    }
+}
