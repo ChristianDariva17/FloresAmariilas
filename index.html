@@ -1,43 +1,91 @@
 <!DOCTYPE html>
 <html lang="es">
-
+<head>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TBLYXSDHQX"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'G-TBLYXSDHQX');
     </script>
-
-<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- SEO BÁSICO -->
-    <meta name="description" content="Hermosa página interactiva de flores amarillas para el 21 de septiembre. Música relajante, frases inspiradoras y animaciones de girasoles.">
-    <meta name="keywords" content="flores amarillas, girasoles, 21 septiembre, música, frases inspiradoras">
+    <meta name="description" content="Una dedicatoria interactiva de flores amarillas para compartir con alguien especial este 21 de septiembre.">
+    <meta name="theme-color" content="#24170b">
+    <meta property="og:title" content="Flores para ti 🌻">
+    <meta property="og:description" content="Una dedicatoria amarilla para alguien especial.">
+    <meta property="og:image" content="https://flores-amarillas-omega-virid.vercel.app/media/girasoles-desktop-poster.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://flores-amarillas-omega-virid.vercel.app/">
+    <link rel="canonical" href="https://flores-amarillas-omega-virid.vercel.app/">
 
     <!-- FAVICON -->
-    <link rel="icon" href="img/flowers.png" type="image/x-icon" />
+    <link rel="icon" href="img/flower-mark.svg" type="image/svg+xml" />
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/interactive.css">
+    <link rel="stylesheet" href="css/design-refresh.css">
+    <link rel="stylesheet" href="css/experience-polish.css">
+    <link rel="preload" href="assets/models/sunflower.glb" as="fetch" type="model/gltf-binary" crossorigin media="(min-width: 769px)">
+    <link rel="preload" href="assets/models/sunflower-mobile.glb" as="fetch" type="model/gltf-binary" crossorigin media="(max-width: 768px)">
 
 
-    <title>Flores Para Ti - 21 de Septiembre</title>
+    <title>Flores para ti 🌻 | Dedicatoria amarilla</title>
 
 </head>
 
 
-<body class="container">
+<body class="container realistic-flowers design-refresh">
     <!-- AUDIO CON FALLBACKS -->
-    <audio id="mainAudio" loop preload="auto" crossorigin="anonymous">
+    <audio id="mainAudio" preload="metadata" crossorigin="anonymous">
         <source src="sound/FloresAmarillas.mp3" type="audio/mpeg">
         <source src="sound/FloresAmarillas.ogg" type="audio/ogg">
-        <source src="sound/FloresAmarillas.wav" type="audio/wav">
         Tu navegador no soporta audio HTML5.
     </audio>
+
+    <!-- PANTALLA DE BIENVENIDA -->
+    <section class="welcome-screen" id="welcomeScreen" hidden aria-labelledby="welcomeTitle">
+        <div class="welcome-card">
+            <p class="welcome-card__eyebrow">Una sorpresa para vos</p>
+            <h1 id="welcomeTitle">Flores para ti <span aria-hidden="true">🌻</span></h1>
+            <p>Entrá a un pequeño jardín interactivo y hacé florecer una dedicatoria.</p>
+            <button class="welcome-card__button" type="button" data-action="open-gift">Abrir mi regalo <span aria-hidden="true">→</span></button>
+            <small>El sonido es opcional y se activa solo cuando vos quieras.</small>
+        </div>
+    </section>
+
+    <!-- ATMÓSFERA INTERACTIVA: VIDEO RESPONSIVE + THREE.JS -->
+    <section class="interactive-stage" id="interactiveStage" aria-label="Jardín interactivo de girasoles">
+        <canvas id="threeCanvas" aria-hidden="true"></canvas>
+        <div class="hero-vignette" aria-hidden="true"></div>
+    </section>
+    <div class="scene-loader" id="sceneLoader" role="status" aria-live="polite">
+        <div class="scene-loader__mark" aria-hidden="true">🌻</div>
+        <p class="scene-loader__eyebrow">Preparando tu jardín</p>
+        <p class="scene-loader__status" id="sceneLoaderStatus">Cargando la escena 3D…</p>
+        <div class="scene-loader__track" aria-hidden="true"><span id="sceneLoaderProgress"></span></div>
+    </div>
+    <aside class="performance-hud" id="performanceHud" hidden aria-live="polite"></aside>
+    <div class="hero-callout">
+        <p class="hero-callout__eyebrow">Regalá un jardín</p>
+        <p class="hero-callout__text">Mové el cursor o tocá la pantalla para despertar la escena.</p>
+        <div class="hero-callout__actions">
+            <button class="hero-bloom-button" type="button" data-action="bloom">
+                Hacé florecer la dedicatoria <span aria-hidden="true">🌻</span>
+            </button>
+            <button class="hero-tools-toggle" type="button" data-action="toggle-tools" aria-expanded="false">
+                Ver detalles
+            </button>
+            <button class="hero-focus-reset" type="button" data-action="reset-focus" hidden>
+                Ver todo el jardín
+            </button>
+        </div>
+        <p class="hero-stage-status" id="bloomStatus" aria-live="polite">Una sorpresa amarilla está por florecer.</p>
+    </div>
 
     <!-- ESTRELLAS CAYENDO -->
     <div class="falling-stars" id="fallingStars"></div>
@@ -46,18 +94,21 @@
 
     <!-- MENSAJE PRINCIPAL DESKTOP -->
     <div class="main-message">
-        <div class="sunflower-icon">🌻</div>
+        <div class="sunflower-icon" aria-hidden="true">🌻</div>
         <div class="message-text">
+            <span class="message-kicker">Un detalle para alguien especial</span>
             Flores Para Ti<br>
             <span class="date-highlight">Feliz 21 de Septiembre</span>
+            <span class="personal-message" data-personal-message aria-live="polite"></span>
         </div>
-        <div class="sunflower-icon">🌻</div>
+        <div class="sunflower-icon" aria-hidden="true">🌻</div>
     </div>
 
     <!-- CONTROL MUSICAL DESKTOP -->
-    <div class="music-player">
+    <div class="music-player" id="secondaryTools" aria-label="Herramientas secundarias">
         <h3>🎵 Control Musical</h3>
-        <div class="current-song" id="currentSongName">♪</div>
+        <div class="current-song" id="currentSongName" aria-live="polite">♪</div>
+        <p class="music-hint">Activá la música cuando quieras.</p>
         <div class="music-controls">
             <button class="control-btn" id="prevBtn" aria-label="Canción anterior">⏮️</button>
             <button class="control-btn" id="playPauseBtn" aria-label="Reproducir o pausar">▶️</button>
@@ -68,19 +119,22 @@
     <!-- SECCIÓN DE FRASES DESKTOP -->
     <div class="quotes-section">
         <h3>🌻 Frases 🌻</h3>
-        <div class="quote-display short-text" id="quoteDisplay">
+        <div class="quote-display short-text" id="quoteDisplay" aria-live="polite">
             "🌺 La amistad es el ingrediente más importante en la receta de la vida."
         </div>
         <div class="quote-controls">
-            <button class="quote-btn" onclick="changeQuote()">Nueva Frase</button>
+            <button class="quote-btn" type="button" data-action="quote">Nueva frase</button>
         </div>
+            <button class="customize-btn" type="button" data-action="customize">Personalizar dedicatoria</button>
+            <button class="share-btn" type="button" data-action="share">Compartir esta experiencia</button>
+            <p class="share-status" data-share-status aria-live="polite"></p>
     </div>
 
     <!-- FLORES DESKTOP - DISEÑO ORIGINAL -->
     <div class="flowers-container">
         <div class="flowers" id="flowersContainer">
             <!-- Girasol 1 -->
-            <div class="flower flower--1" data-flower-id="1" tabindex="0">
+            <div role="button" aria-label="Tocar este girasol" class="flower flower--1" data-flower-id="1">
                 <div class="flower__leafs flower__leafs--1">
                     <div class="flower__leaf flower__leaf--1"></div>
                     <div class="flower__leaf flower__leaf--2"></div>
@@ -107,7 +161,7 @@
             </div>
 
             <!-- Girasol 2 -->
-            <div class="flower flower--2" data-flower-id="2" tabindex="0">
+            <div role="button" aria-label="Tocar este girasol" class="flower flower--2" data-flower-id="2">
                 <div class="flower__leafs flower__leafs--2">
                     <div class="flower__leaf flower__leaf--1"></div>
                     <div class="flower__leaf flower__leaf--2"></div>
@@ -132,7 +186,7 @@
             </div>
 
             <!-- Girasol 3 -->
-            <div class="flower flower--3" data-flower-id="3" tabindex="0">
+            <div role="button" aria-label="Tocar este girasol" class="flower flower--3" data-flower-id="3">
                 <div class="flower__leafs flower__leafs--3">
                     <div class="flower__leaf flower__leaf--1"></div>
                     <div class="flower__leaf flower__leaf--2"></div>
@@ -163,30 +217,35 @@
 
         <!-- MENSAJE PRINCIPAL MÓVIL -->
         <div class="main-message">
-            <div class="sunflower-icon">🌻</div>
+            <div class="sunflower-icon" aria-hidden="true">🌻</div>
             <div class="message-text">
+                <span class="message-kicker">Un detalle para alguien especial</span>
                 Flores Para Ti<br>
                 <span class="date-highlight">Feliz 21 de Septiembre</span>
+            <span class="personal-message" data-personal-message aria-live="polite"></span>
             </div>
-            <div class="sunflower-icon">🌻</div>
+            <div class="sunflower-icon" aria-hidden="true">🌻</div>
         </div>
 
         <!-- FRASES MÓVIL -->
         <div class="quotes-section mobile-quotes">
             <h3>🌻 Frases 🌻</h3>
-            <div class="quote-display short-text" id="mobileQuoteDisplay">
+            <div class="quote-display short-text" id="mobileQuoteDisplay" aria-live="polite">
                 "🌺 La amistad es el ingrediente más importante en la receta de la vida."
             </div>
             <div class="quote-controls">
-                <button class="quote-btn" onclick="changeQuote()">Nueva Frase</button>
+                <button class="quote-btn" type="button" data-action="quote">Nueva frase</button>
             </div>
+            <button class="customize-btn" type="button" data-action="customize">Personalizar dedicatoria</button>
+            <button class="share-btn" type="button" data-action="share">Compartir esta experiencia</button>
+            <p class="share-status" data-share-status aria-live="polite"></p>
         </div>
 
         <!-- FLORES MÓVIL - DISEÑO ORIGINAL -->
         <div class="flowers-container">
             <div class="flowers" id="mobileFlowersContainer">
                 <!-- Girasoles móviles idénticos a desktop -->
-                <div class="flower flower--1" data-flower-id="m1" tabindex="0">
+                <div role="button" aria-label="Tocar este girasol" class="flower flower--1" data-flower-id="m1">
                     <div class="flower__leafs flower__leafs--1">
                         <div class="flower__leaf flower__leaf--1"></div>
                         <div class="flower__leaf flower__leaf--2"></div>
@@ -212,7 +271,7 @@
                     </div>
                 </div>
 
-                <div class="flower flower--2" data-flower-id="m2" tabindex="0">
+                <div role="button" aria-label="Tocar este girasol" class="flower flower--2" data-flower-id="m2">
                     <div class="flower__leafs flower__leafs--2">
                         <div class="flower__leaf flower__leaf--1"></div>
                         <div class="flower__leaf flower__leaf--2"></div>
@@ -236,7 +295,7 @@
                     </div>
                 </div>
 
-                <div class="flower flower--3" data-flower-id="m3" tabindex="0">
+                <div role="button" aria-label="Tocar este girasol" class="flower flower--3" data-flower-id="m3">
                     <div class="flower__leafs flower__leafs--3">
                         <div class="flower__leaf flower__leaf--1"></div>
                         <div class="flower__leaf flower__leaf--2"></div>
@@ -265,7 +324,8 @@
         <!-- MÚSICA MÓVIL -->
         <div class="mobile-music-player">
             <h3>🎵 Control Musical</h3>
-            <div class="current-song" id="mobileCurrentSongName">♪</div>
+            <div class="current-song" id="mobileCurrentSongName" aria-live="polite">♪</div>
+            <p class="music-hint">Activá la música cuando quieras.</p>
             <div class="music-controls">
                 <button class="control-btn" id="mobilePrevBtn" aria-label="Anterior">⏮️</button>
                 <button class="control-btn" id="mobilePlayPauseBtn" aria-label="Play/Pause">▶️</button>
@@ -273,590 +333,53 @@
             </div>
         </div>
     </div>
+    <div class="sr-only" id="statusMessage" aria-live="polite"></div>
+    <dialog class="dedication-dialog" id="dedicationDialog" aria-labelledby="dedicationTitle">
+        <form method="dialog" class="dedication-form" id="dedicationForm">
+            <div class="dialog-heading">
+                <p class="message-kicker">Un detalle único</p>
+                <h2 id="dedicationTitle">Personalizá tu dedicatoria</h2>
+                <p>El nombre y el mensaje quedarán guardados en el enlace que compartas.</p>
+            </div>
+            <label for="dedicationName">¿Para quién es?</label>
+            <input id="dedicationName" name="name" type="text" maxlength="60" autocomplete="name" placeholder="Ej.: María" />
+            <label for="dedicationMessage">Mensaje</label>
+            <textarea id="dedicationMessage" name="message" rows="4" maxlength="180" placeholder="Escribí un mensaje especial..."></textarea>
+            <div class="dialog-actions">
+                <button class="dialog-secondary" type="button" data-action="close-customize">Cancelar</button>
+                <button class="dialog-primary" type="submit">Ver mi dedicatoria</button>
+            </div>
+        </form>
+    </dialog>
 
-    <!-- LETRAS Y TÍTULO -->
-    <div id="lyrics"></div>
-    <h1 class="titulo"></h1>
+    <dialog class="share-dialog" id="shareDialog" aria-labelledby="shareTitle">
+        <div class="share-dialog__content">
+            <button class="dialog-close" type="button" data-action="close-share" aria-label="Cerrar">×</button>
+            <p class="message-kicker">Tu dedicatoria está lista</p>
+            <h2 id="shareTitle">Compartila con alguien especial</h2>
+            <div class="share-card-preview" id="shareCardPreview">
+                <img src="img/sunflowers-realistic.webp" alt="" aria-hidden="true">
+                <div>
+                    <p class="share-card-preview__eyebrow">Flores para ti 🌻</p>
+                    <p class="share-card-preview__title" id="shareCardTitle">Una dedicatoria para vos</p>
+                    <p class="share-card-preview__message" id="shareCardMessage">Que nunca falte un motivo para florecer.</p>
+                </div>
+            </div>
+            <div class="share-qr-wrap">
+                <img id="shareQrCode" width="148" height="148" alt="Código QR para abrir la dedicatoria" loading="lazy">
+                <p>Escaneá para abrirla en otro dispositivo o descargá la tarjeta.</p>
+            </div>
+            <div class="share-dialog__actions">
+                <button class="dialog-primary" type="button" data-action="share-now">Compartir ahora</button>
+                <button class="dialog-secondary" type="button" data-action="copy-link">Copiar enlace</button>
+                <button class="dialog-secondary" type="button" data-action="share-whatsapp">WhatsApp</button>
+                <button class="dialog-secondary" type="button" data-action="download-card">Descargar tarjeta</button>
+            </div>
+            <p class="share-dialog__status" id="shareDialogStatus" aria-live="polite"></p>
+        </div>
+    </dialog>
 
+<script type="module" src="js/interactive-scene.js"></script>
+<script src="js/mov.js" defer></script>
 </body>
-
-<script>
-// Variables globales
-let audio = document.getElementById('mainAudio');
-let lyrics = document.querySelector("#lyrics");
-let flowerCounter = 3;
-let nextFlowerId = 4;
-let currentSongIndex = 0;
-let isPlaying = false;
-let autoQuoteEnabled = false;
-let quoteInterval;
-let autoFlowerInterval;
-let audioInitialized = false;
-
-// CONFIGURACIÓN DE AUTO-FLORES
-const MAX_FLOWERS = 15; // Límite máximo de flores
-const AUTO_FLOWER_INTERVAL = 8000; // 8 segundos entre cada nueva flor
-let autoFlowerEnabled = false; // Control del auto-incremento
-
-// Lista de canciones con nombres amigables
-const playlist = [
-    {
-        file: "sound/FloresAmarillas.mp3",
-        name: "♪ Flores Amarillas - Floricienta"
-    },
-    {
-        file: "sound/ColorEsperanza.mp3", 
-        name: "♪ Color Esperanza - Diego Torres"
-    },
-    {
-        file: "sound/Sunflower.mp3",
-        name: "♪ Sunflower - Post Malone & Swae Lee"
-    },
-    {
-        file: "sound/Yellow.mp3",
-        name: "♪ Yellow - Coldplay"
-    }
-];
-
-// Frases románticas
-const romanticQuotes = [
-    "🌼 La vida es mejor con amigos que se vuelven familia",
-    "💛 La amistad verdadera no se trata de ser inseparables, sino de poder estar separados y que nada cambie",
-    "✨ Un verdadero amigo es aquel que conoce tus cicatrices y aún así elige quedarse",
-    "🌻 La amistad es el único cemento que podrá mantener unido al mundo",
-    "💝 Los amigos son la familia que elegimos",
-    "🌞 Un amigo fiel es un refugio seguro; el que lo encuentra ha encontrado un tesoro",
-    "🎈 Los amigos verdaderos son como las estrellas, no siempre las ves, pero sabes que están ahí",
-    "🌸 La amistad duplica las alegrías y divide las angustias por la mitad",
-    "💫 Los mejores momentos de la vida se disfrutan mejor cuando se comparten con un amigo",
-    "🌺 Un verdadero amigo es alguien que te conoce tal como eres, comprende dónde has estado, te acompaña en tus logros y fallas, y aún así te permite crecer"
-];
-
-// AUTOPLAY AUTOMÁTICO MEJORADO - MÚLTIPLES ESTRATEGIAS
-function initializeAudio() {
-    if (!audio || audioInitialized) return;
-
-    console.log('🎵 Inicializando audio...');
-
-    // Estrategia 1: Intentar reproducir inmediatamente
-    tryAutoplay()
-        .then(() => {
-            console.log('✅ Autoplay exitoso - Estrategia 1');
-            audioInitialized = true;
-        })
-        .catch(() => {
-            console.log('⚠️ Estrategia 1 falló, intentando Estrategia 2...');
-            // Estrategia 2: Esperar primer clic/toque
-            setupUserInteractionAutoplay();
-        });
-}
-
-// Estrategia 1: Autoplay directo
-function tryAutoplay() {
-    return new Promise((resolve, reject) => {
-        if (!audio) {
-            reject('No audio element');
-            return;
-        }
-
-        // Configurar audio
-        audio.volume = 0.7;
-        audio.muted = false; // Desmutear para autoplay real
-
-        // Intentar reproducir
-        const playPromise = audio.play();
-
-        if (playPromise !== undefined) {
-            playPromise
-                .then(() => {
-                    isPlaying = true;
-                    updateCurrentSongName();
-                    updatePlayPauseButtons();
-                    console.log('🎶 Música iniciada automáticamente');
-                    resolve();
-                })
-                .catch(error => {
-                    console.log('Autoplay bloqueado por el navegador:', error.message);
-                    reject(error);
-                });
-        } else {
-            reject('Play promise undefined');
-        }
-    });
-}
-
-// Estrategia 2: Autoplay al primer click/toque del usuario
-function setupUserInteractionAutoplay() {
-    const startAudioOnInteraction = () => {
-        if (!audioInitialized && audio) {
-            console.log('👆 Usuario interactuó, iniciando música...');
-
-            audio.muted = false;
-            const playPromise = audio.play();
-
-            if (playPromise) {
-                playPromise
-                    .then(() => {
-                        isPlaying = true;
-                        updateCurrentSongName();
-                        updatePlayPauseButtons();
-                        audioInitialized = true;
-                        console.log('🎶 Música iniciada por interacción');
-
-                        // Remover listeners después del primer uso
-                        document.removeEventListener('click', startAudioOnInteraction);
-                        document.removeEventListener('touchstart', startAudioOnInteraction);
-                        document.removeEventListener('keydown', startAudioOnInteraction);
-                    })
-                    .catch(error => {
-                        console.log('Error al iniciar audio:', error);
-                    });
-            }
-        }
-    };
-
-    // Escuchar cualquier interacción del usuario
-    document.addEventListener('click', startAudioOnInteraction, { once: false });
-    document.addEventListener('touchstart', startAudioOnInteraction, { once: false });
-    document.addEventListener('keydown', startAudioOnInteraction, { once: false });
-
-    console.log('🎯 Esperando interacción del usuario para iniciar música...');
-}
-
-// ========== FUNCIONES DE AUTO-FLORES ========== 
-// Crear una nueva flor dinámicamente
-function createNewFlower(containerId) {
-    if (flowerCounter >= MAX_FLOWERS) {
-        console.log(`🚫 Límite máximo de ${MAX_FLOWERS} flores alcanzado`);
-        return null;
-    }
-
-    const container = document.getElementById(containerId);
-    if (!container) return null;
-
-    const flower = document.createElement('div');
-    flower.className = `flower flower--dynamic new-flower dancing`;
-    flower.setAttribute('data-flower-id', nextFlowerId);
-    flower.setAttribute('tabindex', '0');
-
-    // Posición aleatoria para que no se superpongan
-    const leftPosition = 15 + Math.random() * 70; // Entre 15% y 85%
-    flower.style.left = `${leftPosition}%`;
-
-    // Añadir transformación aleatoria para variedad
-    const rotation = (Math.random() - 0.5) * 40; // Entre -20deg y 20deg
-    flower.style.transform = `rotate(${rotation}deg)`;
-
-    // Estructura completa de la flor (idéntica al diseño original)
-    flower.innerHTML = `
-        <div class="flower__leafs flower__leafs--${(nextFlowerId % 3) + 1}">
-            <div class="flower__leaf flower__leaf--1"></div>
-            <div class="flower__leaf flower__leaf--2"></div>
-            <div class="flower__leaf flower__leaf--3"></div>
-            <div class="flower__leaf flower__leaf--4"></div>
-            <div class="flower__white-circle"></div>
-            <div class="flower__light flower__light--1"></div>
-            <div class="flower__light flower__light--2"></div>
-            <div class="flower__light flower__light--3"></div>
-            <div class="flower__light flower__light--4"></div>
-            <div class="flower__light flower__light--5"></div>
-            <div class="flower__light flower__light--6"></div>
-            <div class="flower__light flower__light--7"></div>
-            <div class="flower__light flower__light--8"></div>
-        </div>
-        <div class="flower__line">
-            <div class="flower__line__leaf flower__line__leaf--1"></div>
-            <div class="flower__line__leaf flower__line__leaf--2"></div>
-            <div class="flower__line__leaf flower__line__leaf--3"></div>
-            <div class="flower__line__leaf flower__line__leaf--4"></div>
-            <div class="flower__line__leaf flower__line__leaf--5"></div>
-            <div class="flower__line__leaf flower__line__leaf--6"></div>
-        </div>
-    `;
-
-    // Event listeners para interacción
-    flower.addEventListener('click', () => createSparkles(flower));
-    flower.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            createSparkles(flower);
-        }
-    });
-
-    // Agregar al contenedor
-    container.appendChild(flower);
-
-    // Incrementar contadores
-    flowerCounter++;
-    nextFlowerId++;
-
-    console.log(`🌻 Nueva flor creada! Total: ${flowerCounter}/${MAX_FLOWERS}`);
-
-    return flower;
-}
-
-// Iniciar auto-incremento de flores
-function startAutoFlowers() {
-    if (autoFlowerEnabled || flowerCounter >= MAX_FLOWERS) return;
-
-    autoFlowerEnabled = true;
-    console.log(`🌱 Iniciando auto-incremento de flores cada ${AUTO_FLOWER_INTERVAL/1000} segundos...`);
-
-    autoFlowerInterval = setInterval(() => {
-        if (flowerCounter >= MAX_FLOWERS) {
-            stopAutoFlowers();
-            console.log(`🌸 Jardín completo! ${MAX_FLOWERS} flores plantadas`);
-            return;
-        }
-
-        // Crear flor en desktop
-        createNewFlower('flowersContainer');
-
-        // Crear flor en móvil (si existe)
-        const mobileContainer = document.getElementById('mobileFlowersContainer');
-        if (mobileContainer) {
-            createNewFlower('mobileFlowersContainer');
-        }
-
-    }, AUTO_FLOWER_INTERVAL);
-}
-
-// Detener auto-incremento de flores
-function stopAutoFlowers() {
-    if (autoFlowerInterval) {
-        clearInterval(autoFlowerInterval);
-        autoFlowerInterval = null;
-        autoFlowerEnabled = false;
-        console.log('⏹️ Auto-incremento de flores detenido');
-    }
-}
-
-// Toggle auto-incremento de flores (función pública)
-function toggleAutoFlowers() {
-    if (autoFlowerEnabled) {
-        stopAutoFlowers();
-    } else {
-        startAutoFlowers();
-    }
-}
-
-// Agregar una flor manualmente (función pública)
-function addFlower() {
-    if (flowerCounter >= MAX_FLOWERS) {
-        console.log(`🚫 No se pueden agregar más flores. Límite: ${MAX_FLOWERS}`);
-        return;
-    }
-
-    // Agregar en desktop
-    createNewFlower('flowersContainer');
-
-    // Agregar en móvil
-    createNewFlower('mobileFlowersContainer');
-}
-
-// Actualizar el nombre de la canción actual
-function updateCurrentSongName() {
-    const songNameElement = document.getElementById('currentSongName');
-    const mobileSongNameElement = document.getElementById('mobileCurrentSongName');
-    const currentSong = playlist[currentSongIndex];
-
-    if (songNameElement && currentSong) {
-        songNameElement.textContent = currentSong.name;
-        songNameElement.classList.toggle('playing', isPlaying);
-    }
-
-    if (mobileSongNameElement && currentSong) {
-        mobileSongNameElement.textContent = currentSong.name;
-        mobileSongNameElement.classList.toggle('playing', isPlaying);
-    }
-}
-
-// Actualizar botones de play/pause
-function updatePlayPauseButtons() {
-    const playBtn = document.getElementById('playPauseBtn');
-    const mobilePlayBtn = document.getElementById('mobilePlayPauseBtn');
-
-    const symbol = isPlaying ? '⏸️' : '▶️';
-
-    if (playBtn) playBtn.textContent = symbol;
-    if (mobilePlayBtn) mobilePlayBtn.textContent = symbol;
-}
-
-// Toggle play/pause
-function togglePlayPause() {
-    if (!audio) return;
-
-    if (isPlaying) {
-        audio.pause();
-        isPlaying = false;
-        console.log('⏸️ Música pausada');
-    } else {
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-            playPromise.then(() => {
-                isPlaying = true;
-                console.log('▶️ Música reanudada');
-            }).catch(error => {
-                console.log("Error al reproducir:", error);
-                isPlaying = false;
-            });
-        }
-    }
-
-    updatePlayPauseButtons();
-    updateCurrentSongName();
-}
-
-// Cambiar canción
-function changeSong() {
-    const currentSong = playlist[currentSongIndex];
-    if (currentSong && audio) {
-        console.log(`🔄 Cambiando a: ${currentSong.name}`);
-        audio.src = currentSong.file;
-
-        if (isPlaying) {
-            // Pequeña pausa para cargar la nueva canción
-            setTimeout(() => {
-                audio.play().catch(error => {
-                    console.log("Error al cambiar canción:", error);
-                });
-            }, 100);
-        }
-        updateCurrentSongName();
-    }
-}
-
-// Siguiente canción
-function playNextSong() {
-    currentSongIndex = (currentSongIndex + 1) % playlist.length;
-    changeSong();
-}
-
-// Canción anterior
-function playPrevSong() {
-    currentSongIndex = currentSongIndex === 0 ? playlist.length - 1 : currentSongIndex - 1;
-    changeSong();
-}
-
-// Cambiar frase
-function changeQuote() {
-    const randomIndex = Math.floor(Math.random() * romanticQuotes.length);
-    const newQuote = romanticQuotes[randomIndex];
-
-    const quoteElement = document.getElementById('quoteDisplay');
-    const mobileQuoteElement = document.getElementById('mobileQuoteDisplay');
-
-    // Actualizar frase desktop
-    if (quoteElement) {
-        quoteElement.textContent = newQuote;
-
-        // Clasificar por longitud
-        quoteElement.className = quoteElement.className.replace(/\b(short|medium|long)-text\b/g, '');
-        if (newQuote.length < 60) {
-            quoteElement.classList.add('short-text');
-        } else if (newQuote.length < 120) {
-            quoteElement.classList.add('medium-text');
-        } else {
-            quoteElement.classList.add('long-text');
-        }
-    }
-
-    // Actualizar frase móvil
-    if (mobileQuoteElement) {
-        mobileQuoteElement.textContent = newQuote;
-
-        // Clasificar por longitud
-        mobileQuoteElement.className = mobileQuoteElement.className.replace(/\b(short|medium|long)-text\b/g, '');
-        if (newQuote.length < 60) {
-            mobileQuoteElement.classList.add('short-text');
-        } else if (newQuote.length < 120) {
-            mobileQuoteElement.classList.add('medium-text');
-        } else {
-            mobileQuoteElement.classList.add('long-text');
-        }
-    }
-}
-
-// Toggle frases automáticas
-function toggleAutoQuote() {
-    autoQuoteEnabled = !autoQuoteEnabled;
-    const autoBtn = document.getElementById('autoBtn');
-    const mobileAutoBtn = document.getElementById('mobileAutoBtn');
-
-    const newText = `Auto: ${autoQuoteEnabled ? 'ON' : 'OFF'}`;
-
-    if (autoBtn) autoBtn.textContent = newText;
-    if (mobileAutoBtn) mobileAutoBtn.textContent = newText;
-
-    if (autoQuoteEnabled) {
-        quoteInterval = setInterval(changeQuote, 5000); // Cambiar cada 5 segundos
-        console.log('🔄 Frases automáticas activadas');
-    } else {
-        if (quoteInterval) {
-            clearInterval(quoteInterval);
-            quoteInterval = null;
-        }
-        console.log('⏹️ Frases automáticas desactivadas');
-    }
-}
-
-// Crear efecto sparkle
-function createSparkles(flower) {
-    const rect = flower.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    // Crear múltiples sparkles
-    for (let i = 0; i < 5; i++) {
-        setTimeout(() => {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
-            sparkle.textContent = ['✨', '🌟', '⭐', '💫'][Math.floor(Math.random() * 4)];
-
-            // Posición aleatoria alrededor de la flor
-            sparkle.style.left = `${centerX + (Math.random() - 0.5) * 100}px`;
-            sparkle.style.top = `${centerY + (Math.random() - 0.5) * 100}px`;
-
-            document.body.appendChild(sparkle);
-
-            // Eliminar después de la animación
-            setTimeout(() => {
-                sparkle.remove();
-            }, 2000);
-        }, i * 200);
-    }
-}
-
-// Crear estrella cayendo
-function createFallingStar() {
-    const star = document.createElement('div');
-    star.className = `falling-star ${Math.random() > 0.5 ? 'white' : 'yellow'}`;
-    star.textContent = ['⭐', '✨', '🌟'][Math.floor(Math.random() * 3)];
-
-    // Posición aleatoria en la parte superior
-    star.style.left = `${Math.random() * 100}%`;
-    star.style.animationDuration = `${3 + Math.random() * 4}s`;
-
-    const container = document.getElementById('fallingStars');
-    if (container) {
-        container.appendChild(star);
-
-        // Eliminar después de la animación
-        setTimeout(() => {
-            star.remove();
-        }, 7000);
-    }
-}
-
-// Configurar interacciones de flores existentes y nuevas
-function setupFlowerInteractions() {
-    const flowers = document.querySelectorAll('.flower');
-    flowers.forEach(flower => {
-        // Verificar si ya tiene event listeners para evitar duplicados
-        if (!flower.hasAttribute('data-listeners-added')) {
-            flower.addEventListener('click', () => {
-                createSparkles(flower);
-            });
-
-            flower.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    createSparkles(flower);
-                }
-            });
-
-            // Marcar como procesada
-            flower.setAttribute('data-listeners-added', 'true');
-        }
-    });
-}
-
-// INICIALIZACIÓN PRINCIPAL
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🌻 Flores Para Ti - Inicializando...');
-
-    // Inicializar audio inmediatamente
-    audio = document.getElementById('mainAudio');
-
-    // INICIAR AUTOPLAY AUTOMÁTICO INMEDIATAMENTE
-    setTimeout(() => {
-        initializeAudio();
-    }, 500); // Pequeña pausa para asegurar que todo esté cargado
-
-    // INICIAR AUTO-INCREMENTO DE FLORES después de 10 segundos
-    setTimeout(() => {
-        startAutoFlowers();
-        console.log('🌱 Sistema de auto-flores activado');
-    }, 10000); // Esperar 10 segundos después de cargar
-
-    // Configurar controles de música desktop
-    const playBtn = document.getElementById('playPauseBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const prevBtn = document.getElementById('prevBtn');
-
-    if (playBtn) playBtn.addEventListener('click', togglePlayPause);
-    if (nextBtn) nextBtn.addEventListener('click', playNextSong);
-    if (prevBtn) prevBtn.addEventListener('click', playPrevSong);
-
-    // Configurar controles de música móvil
-    const mobilePlayBtn = document.getElementById('mobilePlayPauseBtn');
-    const mobileNextBtn = document.getElementById('mobileNextBtn');
-    const mobilePrevBtn = document.getElementById('mobilePrevBtn');
-
-    if (mobilePlayBtn) mobilePlayBtn.addEventListener('click', togglePlayPause);
-    if (mobileNextBtn) mobileNextBtn.addEventListener('click', playNextSong);
-    if (mobilePrevBtn) mobilePrevBtn.addEventListener('click', playPrevSong);
-
-    // Configurar eventos de audio
-    if (audio) {
-        audio.addEventListener('ended', playNextSong);
-        audio.addEventListener('canplay', () => {
-            updateCurrentSongName();
-        });
-
-        // Evento cuando la música se carga y está lista
-        audio.addEventListener('loadeddata', () => {
-            console.log('🎵 Audio cargado y listo');
-            updateCurrentSongName();
-        });
-    }
-
-    // Configurar interacciones de flores
-    setupFlowerInteractions();
-
-    // Reconfigurar interacciones cada 2 segundos para flores nuevas
-    setInterval(() => {
-        setupFlowerInteractions();
-    }, 2000);
-
-    // Crear estrellas cayendo periódicamente
-    setInterval(createFallingStar, 2000);
-
-    console.log('✅ Flores Para Ti - Inicializado completamente');
-    console.log(`🌻 Configuración: Máximo ${MAX_FLOWERS} flores, intervalo ${AUTO_FLOWER_INTERVAL/1000}s`);
-});
-
-// Service Worker registration (si existe)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('SW registered: ', registration);
-            })
-            .catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
-            });
-    });
-}
-
-// ========== FUNCIONES PÚBLICAS DISPONIBLES ==========
-// Estas funciones pueden ser llamadas desde la consola o eventos HTML:
-// - addFlower() - Agregar una flor manualmente
-// - toggleAutoFlowers() - Activar/desactivar auto-incremento
-// - stopAutoFlowers() - Detener auto-incremento
-// - startAutoFlowers() - Iniciar auto-incremento
-// - changeQuote() - Cambiar frase manualmente
-// - toggleAutoQuote() - Activar/desactivar frases automáticas
-</script>
-
 </html>

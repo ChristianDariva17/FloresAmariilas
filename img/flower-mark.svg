@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Girasol</title>
+  <desc id="desc">Un girasol amarillo sobre un fondo oscuro</desc>
+  <rect width="512" height="512" rx="112" fill="#24170b"/>
+  <g fill="#ffd700">
+    <ellipse cx="256" cy="146" rx="48" ry="118"/>
+    <ellipse cx="256" cy="366" rx="48" ry="118"/>
+    <ellipse cx="146" cy="256" rx="118" ry="48"/>
+    <ellipse cx="366" cy="256" rx="118" ry="48"/>
+    <ellipse transform="rotate(45 256 256)" cx="256" cy="146" rx="48" ry="118"/>
+    <ellipse transform="rotate(135 256 256)" cx="256" cy="146" rx="48" ry="118"/>
+    <ellipse transform="rotate(225 256 256)" cx="256" cy="146" rx="48" ry="118"/>
+    <ellipse transform="rotate(315 256 256)" cx="256" cy="146" rx="48" ry="118"/>
+  </g>
+  <circle cx="256" cy="256" r="72" fill="#8b4513"/>
+  <circle cx="256" cy="256" r="48" fill="#654321" opacity=".72"/>
+  <path d="M256 329v107c0 16-13 29-29 29s-29-13-29-29V329z" fill="#39a852"/>
+</svg>

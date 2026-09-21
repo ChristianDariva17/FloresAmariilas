@@ -1102,3 +1102,211 @@ body {
         letter-spacing: 1px !important;
     }
 }
+/* Mejoras de experiencia y accesibilidad */
+button {
+    font: inherit;
+}
+
+.date-highlight {
+    display: inline-block;
+}
+
+.message-kicker {
+    display: block;
+    margin-bottom: 6px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.music-hint {
+    margin: -4px 0 0;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.72rem;
+    text-align: center;
+}
+
+.share-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border: 1px solid rgba(255, 215, 0, 0.6);
+    border-radius: 999px;
+    background: rgba(255, 215, 0, 0.12);
+    color: #fff7c2;
+    cursor: pointer;
+    font-size: 0.82rem;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.share-btn:hover {
+    background: rgba(255, 215, 0, 0.24);
+    transform: translateY(-1px);
+}
+
+.share-status {
+    min-height: 1.2em;
+    margin: 8px 0 0;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.72rem;
+    text-align: center;
+}
+
+.flower:focus-visible,
+.control-btn:focus-visible,
+.quote-btn:focus-visible,
+.share-btn:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 4px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .falling-stars {
+        display: none !important;
+    }
+}
+
+.personal-message {
+    display: block;
+    margin-top: 8px;
+    color: #fff7c2;
+    font-size: 0.78rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.personal-message[hidden] {
+    display: none;
+}
+
+.customize-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 999px;
+    background: #ffd700;
+    color: #1b1208;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 700;
+    transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.customize-btn:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+}
+
+.dedication-dialog {
+    width: min(92vw, 460px);
+    padding: 0;
+    border: 1px solid rgba(255, 215, 0, 0.55);
+    border-radius: 24px;
+    background: #19110a;
+    color: #fff;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
+}
+
+.dedication-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(5px);
+}
+
+.dedication-form {
+    display: grid;
+    gap: 10px;
+    padding: 28px;
+}
+
+.dialog-heading h2 {
+    margin: 4px 0 8px;
+    color: #ffd700;
+    font-size: 1.45rem;
+}
+
+.dialog-heading p:last-child {
+    margin: 0 0 12px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.dedication-form label {
+    color: #fff7c2;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.dedication-form input,
+.dedication-form textarea {
+    width: 100%;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 12px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.07);
+    color: #fff;
+    font: inherit;
+    resize: vertical;
+}
+
+.dedication-form input::placeholder,
+.dedication-form textarea::placeholder {
+    color: rgba(255, 255, 255, 0.48);
+}
+
+.dedication-form input:focus,
+.dedication-form textarea:focus {
+    border-color: #ffd700;
+    outline: 2px solid rgba(255, 215, 0, 0.25);
+    outline-offset: 2px;
+}
+
+.dialog-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+.dialog-primary,
+.dialog-secondary {
+    border: 0;
+    border-radius: 999px;
+    padding: 11px 16px;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.dialog-primary {
+    background: #ffd700;
+    color: #1b1208;
+}
+
+.dialog-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
