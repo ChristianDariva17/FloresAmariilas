@@ -1,92 +1,174 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
+  <head>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TBLYXSDHQX"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-TBLYXSDHQX"
+    ></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-TBLYXSDHQX');
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-TBLYXSDHQX");
     </script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- SEO BÁSICO -->
-    <meta name="description" content="Una dedicatoria interactiva de flores amarillas para compartir con alguien especial este 21 de septiembre.">
-    <meta name="theme-color" content="#24170b">
-    <meta property="og:title" content="Flores para ti 🌻">
-    <meta property="og:description" content="Una dedicatoria amarilla para alguien especial.">
-    <meta property="og:image" content="https://flores-amarillas-omega-virid.vercel.app/media/girasoles-desktop-poster.jpg">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://flores-amarillas-omega-virid.vercel.app/">
-    <link rel="canonical" href="https://flores-amarillas-omega-virid.vercel.app/">
+    <meta
+      name="description"
+      content="Una dedicatoria interactiva de flores amarillas para compartir con alguien especial este 21 de septiembre."
+    />
+    <meta name="theme-color" content="#24170b" />
+    <meta property="og:title" content="Flores para ti 🌻" />
+    <meta
+      property="og:description"
+      content="Una dedicatoria amarilla para alguien especial."
+    />
+    <meta
+      property="og:image"
+      content="https://flores-amarillas-omega-virid.vercel.app/media/girasoles-desktop-poster.jpg"
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://flores-amarillas-omega-virid.vercel.app/"
+    />
+    <link
+      rel="canonical"
+      href="https://flores-amarillas-omega-virid.vercel.app/"
+    />
 
     <!-- FAVICON -->
     <link rel="icon" href="img/flower-mark.svg" type="image/svg+xml" />
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/interactive.css">
-    <link rel="stylesheet" href="css/design-refresh.css">
-    <link rel="stylesheet" href="css/experience-polish.css">
-    <link rel="stylesheet" href="css/flower-first.css?v=11">
-    <link rel="preload" href="assets/models/sunflower.glb" as="fetch" type="model/gltf-binary" crossorigin media="(min-width: 1600px)">
-    <link rel="preload" href="assets/models/sunflower-optimized.glb" as="fetch" type="model/gltf-binary" crossorigin media="(min-width: 769px) and (max-width: 1599px)">
-    <link rel="preload" href="assets/models/sunflower-mobile.glb" as="fetch" type="model/gltf-binary" crossorigin media="(max-width: 768px)">
-
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/interactive.css" />
+    <link rel="stylesheet" href="css/design-refresh.css" />
+    <link rel="stylesheet" href="css/experience-polish.css" />
+    <link rel="stylesheet" href="css/flower-first.css?v=11" />
+    <link
+      rel="preload"
+      href="assets/models/sunflower.glb"
+      as="fetch"
+      type="model/gltf-binary"
+      crossorigin
+      media="(min-width: 1600px)"
+    />
+    <link
+      rel="preload"
+      href="assets/models/sunflower-optimized.glb"
+      as="fetch"
+      type="model/gltf-binary"
+      crossorigin
+      media="(min-width: 769px) and (max-width: 1599px)"
+    />
+    <link
+      rel="preload"
+      href="assets/models/sunflower-mobile.glb"
+      as="fetch"
+      type="model/gltf-binary"
+      crossorigin
+      media="(max-width: 768px)"
+    />
 
     <title>Flores para ti 🌻 | Dedicatoria amarilla</title>
+  </head>
 
-</head>
-
-
-<body class="container realistic-flowers design-refresh">
+  <body class="container realistic-flowers design-refresh">
     <!-- AUDIO CON FALLBACKS -->
     <audio id="mainAudio" preload="metadata" crossorigin="anonymous">
-        <source src="sound/FloresAmarillas.mp3" type="audio/mpeg">
-        <source src="sound/FloresAmarillas.ogg" type="audio/ogg">
-        Tu navegador no soporta audio HTML5.
+      <source src="sound/FloresAmarillas.mp3" type="audio/mpeg" />
+      <source src="sound/FloresAmarillas.ogg" type="audio/ogg" />
+      Tu navegador no soporta audio HTML5.
     </audio>
 
     <!-- PANTALLA DE BIENVENIDA -->
-    <section class="welcome-screen" id="welcomeScreen" hidden aria-labelledby="welcomeTitle">
-        <div class="welcome-card">
-            <p class="welcome-card__eyebrow">Una sorpresa para vos</p>
-            <h1 id="welcomeTitle">Flores para ti <span aria-hidden="true">🌻</span></h1>
-            <p>Entrá a un pequeño jardín interactivo y hacé florecer una dedicatoria.</p>
-            <button class="welcome-card__button" type="button" data-action="open-gift">Abrir mi regalo <span aria-hidden="true">→</span></button>
-            <small>El sonido es opcional y se activa solo cuando vos quieras.</small>
-        </div>
+    <section
+      class="welcome-screen"
+      id="welcomeScreen"
+      hidden
+      aria-labelledby="welcomeTitle"
+    >
+      <div class="welcome-card">
+        <p class="welcome-card__eyebrow">Una sorpresa para vos</p>
+        <h1 id="welcomeTitle">
+          Flores para ti <span aria-hidden="true">🌻</span>
+        </h1>
+        <p>
+          Entrá a un pequeño jardín interactivo y hacé florecer una dedicatoria.
+        </p>
+        <button
+          class="welcome-card__button"
+          type="button"
+          data-action="open-gift"
+        >
+          Abrir mi regalo <span aria-hidden="true">→</span>
+        </button>
+        <small
+          >El sonido es opcional y se activa solo cuando vos quieras.</small
+        >
+      </div>
     </section>
 
     <!-- ATMÓSFERA INTERACTIVA: VIDEO RESPONSIVE + THREE.JS -->
-    <section class="interactive-stage" id="interactiveStage" aria-label="Jardín interactivo de girasoles">
-        <canvas id="threeCanvas" aria-hidden="true"></canvas>
-        <div class="hero-vignette" aria-hidden="true"></div>
+    <section
+      class="interactive-stage"
+      id="interactiveStage"
+      aria-label="Jardín interactivo de girasoles"
+    >
+      <canvas id="threeCanvas" aria-hidden="true"></canvas>
+      <div class="hero-vignette" aria-hidden="true"></div>
     </section>
     <div class="scene-loader" id="sceneLoader" role="status" aria-live="polite">
-        <div class="scene-loader__mark" aria-hidden="true">🌻</div>
-        <p class="scene-loader__eyebrow">Preparando tu jardín</p>
-        <p class="scene-loader__status" id="sceneLoaderStatus">Cargando la escena 3D…</p>
-        <div class="scene-loader__track" aria-hidden="true"><span id="sceneLoaderProgress"></span></div>
+      <div class="scene-loader__mark" aria-hidden="true">🌻</div>
+      <p class="scene-loader__eyebrow">Preparando tu jardín</p>
+      <p class="scene-loader__status" id="sceneLoaderStatus">
+        Cargando la escena 3D…
+      </p>
+      <div class="scene-loader__track" aria-hidden="true">
+        <span id="sceneLoaderProgress"></span>
+      </div>
     </div>
-    <aside class="performance-hud" id="performanceHud" hidden aria-live="polite"></aside>
+    <aside
+      class="performance-hud"
+      id="performanceHud"
+      hidden
+      aria-live="polite"
+    ></aside>
     <div class="hero-callout">
-        <p class="hero-callout__eyebrow">Regalá un jardín</p>
-        <p class="hero-callout__text">Mové el cursor o tocá la pantalla para despertar la escena.</p>
-        <div class="hero-callout__actions">
-            <button class="hero-bloom-button" type="button" data-action="bloom">
-                Hacé florecer la dedicatoria <span aria-hidden="true">🌻</span>
-            </button>
-            <button class="hero-tools-toggle" type="button" data-action="toggle-tools" aria-expanded="false">
-                Ver detalles
-            </button>
-            <button class="hero-focus-reset" type="button" data-action="reset-focus" hidden>
-                Ver todo el jardín
-            </button>
-        </div>
-        <p class="hero-stage-status" id="bloomStatus" aria-live="polite">Una sorpresa amarilla está por florecer.</p>
+      <p class="hero-callout__eyebrow">Regalá un jardín</p>
+      <p class="hero-callout__text">
+        Mové el cursor o tocá la pantalla para despertar la escena.
+      </p>
+      <div class="hero-callout__actions">
+        <button class="hero-bloom-button" type="button" data-action="bloom">
+          Hacé florecer la dedicatoria <span aria-hidden="true">🌻</span>
+        </button>
+        <button
+          class="hero-tools-toggle"
+          type="button"
+          data-action="toggle-tools"
+          aria-expanded="false"
+        >
+          Ver detalles
+        </button>
+        <button
+          class="hero-focus-reset"
+          type="button"
+          data-action="reset-focus"
+          hidden
+        >
+          Ver todo el jardín
+        </button>
+      </div>
+      <p class="hero-stage-status" id="bloomStatus" aria-live="polite">
+        Una sorpresa amarilla está por florecer.
+      </p>
     </div>
 
     <!-- ESTRELLAS CAYENDO -->
@@ -96,292 +178,446 @@
 
     <!-- MENSAJE PRINCIPAL DESKTOP -->
     <div class="main-message">
-        <div class="sunflower-icon" aria-hidden="true">🌻</div>
-        <div class="message-text">
-            <span class="message-kicker">Un detalle para alguien especial</span>
-            Flores Para Ti<br>
-            <span class="date-highlight">Feliz 21 de Septiembre</span>
-            <span class="personal-message" data-personal-message aria-live="polite"></span>
-        </div>
-        <div class="sunflower-icon" aria-hidden="true">🌻</div>
+      <div class="sunflower-icon" aria-hidden="true">🌻</div>
+      <div class="message-text">
+        <span class="message-kicker">Un detalle para alguien especial</span>
+        Flores Para Ti<br />
+        <span class="date-highlight">Feliz 21 de Septiembre</span>
+        <span
+          class="personal-message"
+          data-personal-message
+          aria-live="polite"
+        ></span>
+      </div>
+      <div class="sunflower-icon" aria-hidden="true">🌻</div>
     </div>
 
     <!-- CONTROL MUSICAL DESKTOP -->
-    <div class="music-player" id="secondaryTools" aria-label="Herramientas secundarias">
-        <h3>🎵 Control Musical</h3>
-        <div class="current-song" id="currentSongName" aria-live="polite">♪</div>
-        <p class="music-hint">Activá la música cuando quieras.</p>
-        <div class="music-controls">
-            <button class="control-btn" id="prevBtn" aria-label="Canción anterior">⏮️</button>
-            <button class="control-btn" id="playPauseBtn" aria-label="Reproducir o pausar">▶️</button>
-            <button class="control-btn" id="nextBtn" aria-label="Siguiente canción">⏭️</button>
-        </div>
+    <div
+      class="music-player"
+      id="secondaryTools"
+      aria-label="Herramientas secundarias"
+    >
+      <h3>🎵 Control Musical</h3>
+      <div class="current-song" id="currentSongName" aria-live="polite">♪</div>
+      <p class="music-hint">Activá la música cuando quieras.</p>
+      <div class="music-controls">
+        <button class="control-btn" id="prevBtn" aria-label="Canción anterior">
+          ⏮️
+        </button>
+        <button
+          class="control-btn"
+          id="playPauseBtn"
+          aria-label="Reproducir o pausar"
+        >
+          ▶️
+        </button>
+        <button class="control-btn" id="nextBtn" aria-label="Siguiente canción">
+          ⏭️
+        </button>
+      </div>
     </div>
 
     <!-- SECCIÓN DE FRASES DESKTOP -->
     <div class="quotes-section">
-        <h3>🌻 Frases 🌻</h3>
-        <div class="quote-display short-text" id="quoteDisplay" aria-live="polite">
-            "🌺 La amistad es el ingrediente más importante en la receta de la vida."
-        </div>
-        <div class="quote-controls">
-            <button class="quote-btn" type="button" data-action="quote">Nueva frase</button>
-        </div>
-            <button class="customize-btn" type="button" data-action="customize">Personalizar dedicatoria</button>
-            <button class="share-btn" type="button" data-action="share">Compartir esta experiencia</button>
-            <p class="share-status" data-share-status aria-live="polite"></p>
+      <h3>🌻 Frases 🌻</h3>
+      <div
+        class="quote-display short-text"
+        id="quoteDisplay"
+        aria-live="polite"
+      >
+        "🌺 La amistad es el ingrediente más importante en la receta de la
+        vida."
+      </div>
+      <div class="quote-controls">
+        <button class="quote-btn" type="button" data-action="quote">
+          Nueva frase
+        </button>
+      </div>
+      <button class="customize-btn" type="button" data-action="customize">
+        Personalizar dedicatoria
+      </button>
+      <button class="share-btn" type="button" data-action="share">
+        Compartir esta experiencia
+      </button>
+      <p class="share-status" data-share-status aria-live="polite"></p>
     </div>
 
     <!-- FLORES DESKTOP - DISEÑO ORIGINAL -->
     <div class="flowers-container">
-        <div class="flowers" id="flowersContainer">
-            <!-- Girasol 1 -->
-            <div role="button" aria-label="Tocar este girasol" class="flower flower--1" data-flower-id="1">
-                <div class="flower__leafs flower__leafs--1">
-                    <div class="flower__leaf flower__leaf--1"></div>
-                    <div class="flower__leaf flower__leaf--2"></div>
-                    <div class="flower__leaf flower__leaf--3"></div>
-                    <div class="flower__leaf flower__leaf--4"></div>
-                    <div class="flower__white-circle"></div>
-                    <div class="flower__light flower__light--1"></div>
-                    <div class="flower__light flower__light--2"></div>
-                    <div class="flower__light flower__light--3"></div>
-                    <div class="flower__light flower__light--4"></div>
-                    <div class="flower__light flower__light--5"></div>
-                    <div class="flower__light flower__light--6"></div>
-                    <div class="flower__light flower__light--7"></div>
-                    <div class="flower__light flower__light--8"></div>
-                </div>
-                <div class="flower__line">
-                    <div class="flower__line__leaf flower__line__leaf--1"></div>
-                    <div class="flower__line__leaf flower__line__leaf--2"></div>
-                    <div class="flower__line__leaf flower__line__leaf--3"></div>
-                    <div class="flower__line__leaf flower__line__leaf--4"></div>
-                    <div class="flower__line__leaf flower__line__leaf--5"></div>
-                    <div class="flower__line__leaf flower__line__leaf--6"></div>
-                </div>
-            </div>
-
-            <!-- Girasol 2 -->
-            <div role="button" aria-label="Tocar este girasol" class="flower flower--2" data-flower-id="2">
-                <div class="flower__leafs flower__leafs--2">
-                    <div class="flower__leaf flower__leaf--1"></div>
-                    <div class="flower__leaf flower__leaf--2"></div>
-                    <div class="flower__leaf flower__leaf--3"></div>
-                    <div class="flower__leaf flower__leaf--4"></div>
-                    <div class="flower__white-circle"></div>
-                    <div class="flower__light flower__light--1"></div>
-                    <div class="flower__light flower__light--2"></div>
-                    <div class="flower__light flower__light--3"></div>
-                    <div class="flower__light flower__light--4"></div>
-                    <div class="flower__light flower__light--5"></div>
-                    <div class="flower__light flower__light--6"></div>
-                    <div class="flower__light flower__light--7"></div>
-                    <div class="flower__light flower__light--8"></div>
-                </div>
-                <div class="flower__line">
-                    <div class="flower__line__leaf flower__line__leaf--1"></div>
-                    <div class="flower__line__leaf flower__line__leaf--2"></div>
-                    <div class="flower__line__leaf flower__line__leaf--3"></div>
-                    <div class="flower__line__leaf flower__line__leaf--4"></div>
-                </div>
-            </div>
-
-            <!-- Girasol 3 -->
-            <div role="button" aria-label="Tocar este girasol" class="flower flower--3" data-flower-id="3">
-                <div class="flower__leafs flower__leafs--3">
-                    <div class="flower__leaf flower__leaf--1"></div>
-                    <div class="flower__leaf flower__leaf--2"></div>
-                    <div class="flower__leaf flower__leaf--3"></div>
-                    <div class="flower__leaf flower__leaf--4"></div>
-                    <div class="flower__white-circle"></div>
-                    <div class="flower__light flower__light--1"></div>
-                    <div class="flower__light flower__light--2"></div>
-                    <div class="flower__light flower__light--3"></div>
-                    <div class="flower__light flower__light--4"></div>
-                    <div class="flower__light flower__light--5"></div>
-                    <div class="flower__light flower__light--6"></div>
-                    <div class="flower__light flower__light--7"></div>
-                    <div class="flower__light flower__light--8"></div>
-                </div>
-                <div class="flower__line">
-                    <div class="flower__line__leaf flower__line__leaf--1"></div>
-                    <div class="flower__line__leaf flower__line__leaf--2"></div>
-                    <div class="flower__line__leaf flower__line__leaf--3"></div>
-                    <div class="flower__line__leaf flower__line__leaf--4"></div>
-                </div>
-            </div>
+      <div class="flowers" id="flowersContainer">
+        <!-- Girasol 1 -->
+        <div
+          role="button"
+          aria-label="Tocar este girasol"
+          class="flower flower--1"
+          data-flower-id="1"
+        >
+          <div class="flower__leafs flower__leafs--1">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+            <div class="flower__line__leaf flower__line__leaf--5"></div>
+            <div class="flower__line__leaf flower__line__leaf--6"></div>
+          </div>
         </div>
+
+        <!-- Girasol 2 -->
+        <div
+          role="button"
+          aria-label="Tocar este girasol"
+          class="flower flower--2"
+          data-flower-id="2"
+        >
+          <div class="flower__leafs flower__leafs--2">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+          </div>
+        </div>
+
+        <!-- Girasol 3 -->
+        <div
+          role="button"
+          aria-label="Tocar este girasol"
+          class="flower flower--3"
+          data-flower-id="3"
+        >
+          <div class="flower__leafs flower__leafs--3">
+            <div class="flower__leaf flower__leaf--1"></div>
+            <div class="flower__leaf flower__leaf--2"></div>
+            <div class="flower__leaf flower__leaf--3"></div>
+            <div class="flower__leaf flower__leaf--4"></div>
+            <div class="flower__white-circle"></div>
+            <div class="flower__light flower__light--1"></div>
+            <div class="flower__light flower__light--2"></div>
+            <div class="flower__light flower__light--3"></div>
+            <div class="flower__light flower__light--4"></div>
+            <div class="flower__light flower__light--5"></div>
+            <div class="flower__light flower__light--6"></div>
+            <div class="flower__light flower__light--7"></div>
+            <div class="flower__light flower__light--8"></div>
+          </div>
+          <div class="flower__line">
+            <div class="flower__line__leaf flower__line__leaf--1"></div>
+            <div class="flower__line__leaf flower__line__leaf--2"></div>
+            <div class="flower__line__leaf flower__line__leaf--3"></div>
+            <div class="flower__line__leaf flower__line__leaf--4"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- ========== CONTENIDO MÓVIL ========== -->
     <div class="mobile-container">
-
-        <!-- MENSAJE PRINCIPAL MÓVIL -->
-        <div class="main-message">
-            <div class="sunflower-icon" aria-hidden="true">🌻</div>
-            <div class="message-text">
-                <span class="message-kicker">Un detalle para alguien especial</span>
-                Flores Para Ti<br>
-                <span class="date-highlight">Feliz 21 de Septiembre</span>
-            <span class="personal-message" data-personal-message aria-live="polite"></span>
-            </div>
-            <div class="sunflower-icon" aria-hidden="true">🌻</div>
+      <!-- MENSAJE PRINCIPAL MÓVIL -->
+      <div class="main-message">
+        <div class="sunflower-icon" aria-hidden="true">🌻</div>
+        <div class="message-text">
+          <span class="message-kicker">Un detalle para alguien especial</span>
+          Flores Para Ti<br />
+          <span class="date-highlight">Feliz 21 de Septiembre</span>
+          <span
+            class="personal-message"
+            data-personal-message
+            aria-live="polite"
+          ></span>
         </div>
+        <div class="sunflower-icon" aria-hidden="true">🌻</div>
+      </div>
 
-        <!-- FRASES MÓVIL -->
-        <div class="quotes-section mobile-quotes">
-            <h3>🌻 Frases 🌻</h3>
-            <div class="quote-display short-text" id="mobileQuoteDisplay" aria-live="polite">
-                "🌺 La amistad es el ingrediente más importante en la receta de la vida."
-            </div>
-            <div class="quote-controls">
-                <button class="quote-btn" type="button" data-action="quote">Nueva frase</button>
-            </div>
-            <button class="customize-btn" type="button" data-action="customize">Personalizar dedicatoria</button>
-            <button class="share-btn" type="button" data-action="share">Compartir esta experiencia</button>
-            <p class="share-status" data-share-status aria-live="polite"></p>
+      <!-- FRASES MÓVIL -->
+      <div class="quotes-section mobile-quotes">
+        <h3>🌻 Frases 🌻</h3>
+        <div
+          class="quote-display short-text"
+          id="mobileQuoteDisplay"
+          aria-live="polite"
+        >
+          "🌺 La amistad es el ingrediente más importante en la receta de la
+          vida."
         </div>
-
-        <!-- FLORES MÓVIL - DISEÑO ORIGINAL -->
-        <div class="flowers-container">
-            <div class="flowers" id="mobileFlowersContainer">
-                <!-- Girasoles móviles idénticos a desktop -->
-                <div role="button" aria-label="Tocar este girasol" class="flower flower--1" data-flower-id="m1">
-                    <div class="flower__leafs flower__leafs--1">
-                        <div class="flower__leaf flower__leaf--1"></div>
-                        <div class="flower__leaf flower__leaf--2"></div>
-                        <div class="flower__leaf flower__leaf--3"></div>
-                        <div class="flower__leaf flower__leaf--4"></div>
-                        <div class="flower__white-circle"></div>
-                        <div class="flower__light flower__light--1"></div>
-                        <div class="flower__light flower__light--2"></div>
-                        <div class="flower__light flower__light--3"></div>
-                        <div class="flower__light flower__light--4"></div>
-                        <div class="flower__light flower__light--5"></div>
-                        <div class="flower__light flower__light--6"></div>
-                        <div class="flower__light flower__light--7"></div>
-                        <div class="flower__light flower__light--8"></div>
-                    </div>
-                    <div class="flower__line">
-                        <div class="flower__line__leaf flower__line__leaf--1"></div>
-                        <div class="flower__line__leaf flower__line__leaf--2"></div>
-                        <div class="flower__line__leaf flower__line__leaf--3"></div>
-                        <div class="flower__line__leaf flower__line__leaf--4"></div>
-                        <div class="flower__line__leaf flower__line__leaf--5"></div>
-                        <div class="flower__line__leaf flower__line__leaf--6"></div>
-                    </div>
-                </div>
-
-                <div role="button" aria-label="Tocar este girasol" class="flower flower--2" data-flower-id="m2">
-                    <div class="flower__leafs flower__leafs--2">
-                        <div class="flower__leaf flower__leaf--1"></div>
-                        <div class="flower__leaf flower__leaf--2"></div>
-                        <div class="flower__leaf flower__leaf--3"></div>
-                        <div class="flower__leaf flower__leaf--4"></div>
-                        <div class="flower__white-circle"></div>
-                        <div class="flower__light flower__light--1"></div>
-                        <div class="flower__light flower__light--2"></div>
-                        <div class="flower__light flower__light--3"></div>
-                        <div class="flower__light flower__light--4"></div>
-                        <div class="flower__light flower__light--5"></div>
-                        <div class="flower__light flower__light--6"></div>
-                        <div class="flower__light flower__light--7"></div>
-                        <div class="flower__light flower__light--8"></div>
-                    </div>
-                    <div class="flower__line">
-                        <div class="flower__line__leaf flower__line__leaf--1"></div>
-                        <div class="flower__line__leaf flower__line__leaf--2"></div>
-                        <div class="flower__line__leaf flower__line__leaf--3"></div>
-                        <div class="flower__line__leaf flower__line__leaf--4"></div>
-                    </div>
-                </div>
-
-                <div role="button" aria-label="Tocar este girasol" class="flower flower--3" data-flower-id="m3">
-                    <div class="flower__leafs flower__leafs--3">
-                        <div class="flower__leaf flower__leaf--1"></div>
-                        <div class="flower__leaf flower__leaf--2"></div>
-                        <div class="flower__leaf flower__leaf--3"></div>
-                        <div class="flower__leaf flower__leaf--4"></div>
-                        <div class="flower__white-circle"></div>
-                        <div class="flower__light flower__light--1"></div>
-                        <div class="flower__light flower__light--2"></div>
-                        <div class="flower__light flower__light--3"></div>
-                        <div class="flower__light flower__light--4"></div>
-                        <div class="flower__light flower__light--5"></div>
-                        <div class="flower__light flower__light--6"></div>
-                        <div class="flower__light flower__light--7"></div>
-                        <div class="flower__light flower__light--8"></div>
-                    </div>
-                    <div class="flower__line">
-                        <div class="flower__line__leaf flower__line__leaf--1"></div>
-                        <div class="flower__line__leaf flower__line__leaf--2"></div>
-                        <div class="flower__line__leaf flower__line__leaf--3"></div>
-                        <div class="flower__line__leaf flower__line__leaf--4"></div>
-                    </div>
-                </div>
-            </div>
+        <div class="quote-controls">
+          <button class="quote-btn" type="button" data-action="quote">
+            Nueva frase
+          </button>
         </div>
+        <button class="customize-btn" type="button" data-action="customize">
+          Personalizar dedicatoria
+        </button>
+        <button class="share-btn" type="button" data-action="share">
+          Compartir esta experiencia
+        </button>
+        <p class="share-status" data-share-status aria-live="polite"></p>
+      </div>
 
-        <!-- MÚSICA MÓVIL -->
-        <div class="mobile-music-player">
-            <h3>🎵 Control Musical</h3>
-            <div class="current-song" id="mobileCurrentSongName" aria-live="polite">♪</div>
-            <p class="music-hint">Activá la música cuando quieras.</p>
-            <div class="music-controls">
-                <button class="control-btn" id="mobilePrevBtn" aria-label="Anterior">⏮️</button>
-                <button class="control-btn" id="mobilePlayPauseBtn" aria-label="Play/Pause">▶️</button>
-                <button class="control-btn" id="mobileNextBtn" aria-label="Siguiente">⏭️</button>
+      <!-- FLORES MÓVIL - DISEÑO ORIGINAL -->
+      <div class="flowers-container">
+        <div class="flowers" id="mobileFlowersContainer">
+          <!-- Girasoles móviles idénticos a desktop -->
+          <div
+            role="button"
+            aria-label="Tocar este girasol"
+            class="flower flower--1"
+            data-flower-id="m1"
+          >
+            <div class="flower__leafs flower__leafs--1">
+              <div class="flower__leaf flower__leaf--1"></div>
+              <div class="flower__leaf flower__leaf--2"></div>
+              <div class="flower__leaf flower__leaf--3"></div>
+              <div class="flower__leaf flower__leaf--4"></div>
+              <div class="flower__white-circle"></div>
+              <div class="flower__light flower__light--1"></div>
+              <div class="flower__light flower__light--2"></div>
+              <div class="flower__light flower__light--3"></div>
+              <div class="flower__light flower__light--4"></div>
+              <div class="flower__light flower__light--5"></div>
+              <div class="flower__light flower__light--6"></div>
+              <div class="flower__light flower__light--7"></div>
+              <div class="flower__light flower__light--8"></div>
             </div>
+            <div class="flower__line">
+              <div class="flower__line__leaf flower__line__leaf--1"></div>
+              <div class="flower__line__leaf flower__line__leaf--2"></div>
+              <div class="flower__line__leaf flower__line__leaf--3"></div>
+              <div class="flower__line__leaf flower__line__leaf--4"></div>
+              <div class="flower__line__leaf flower__line__leaf--5"></div>
+              <div class="flower__line__leaf flower__line__leaf--6"></div>
+            </div>
+          </div>
+
+          <div
+            role="button"
+            aria-label="Tocar este girasol"
+            class="flower flower--2"
+            data-flower-id="m2"
+          >
+            <div class="flower__leafs flower__leafs--2">
+              <div class="flower__leaf flower__leaf--1"></div>
+              <div class="flower__leaf flower__leaf--2"></div>
+              <div class="flower__leaf flower__leaf--3"></div>
+              <div class="flower__leaf flower__leaf--4"></div>
+              <div class="flower__white-circle"></div>
+              <div class="flower__light flower__light--1"></div>
+              <div class="flower__light flower__light--2"></div>
+              <div class="flower__light flower__light--3"></div>
+              <div class="flower__light flower__light--4"></div>
+              <div class="flower__light flower__light--5"></div>
+              <div class="flower__light flower__light--6"></div>
+              <div class="flower__light flower__light--7"></div>
+              <div class="flower__light flower__light--8"></div>
+            </div>
+            <div class="flower__line">
+              <div class="flower__line__leaf flower__line__leaf--1"></div>
+              <div class="flower__line__leaf flower__line__leaf--2"></div>
+              <div class="flower__line__leaf flower__line__leaf--3"></div>
+              <div class="flower__line__leaf flower__line__leaf--4"></div>
+            </div>
+          </div>
+
+          <div
+            role="button"
+            aria-label="Tocar este girasol"
+            class="flower flower--3"
+            data-flower-id="m3"
+          >
+            <div class="flower__leafs flower__leafs--3">
+              <div class="flower__leaf flower__leaf--1"></div>
+              <div class="flower__leaf flower__leaf--2"></div>
+              <div class="flower__leaf flower__leaf--3"></div>
+              <div class="flower__leaf flower__leaf--4"></div>
+              <div class="flower__white-circle"></div>
+              <div class="flower__light flower__light--1"></div>
+              <div class="flower__light flower__light--2"></div>
+              <div class="flower__light flower__light--3"></div>
+              <div class="flower__light flower__light--4"></div>
+              <div class="flower__light flower__light--5"></div>
+              <div class="flower__light flower__light--6"></div>
+              <div class="flower__light flower__light--7"></div>
+              <div class="flower__light flower__light--8"></div>
+            </div>
+            <div class="flower__line">
+              <div class="flower__line__leaf flower__line__leaf--1"></div>
+              <div class="flower__line__leaf flower__line__leaf--2"></div>
+              <div class="flower__line__leaf flower__line__leaf--3"></div>
+              <div class="flower__line__leaf flower__line__leaf--4"></div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- MÚSICA MÓVIL -->
+      <div class="mobile-music-player">
+        <h3>🎵 Control Musical</h3>
+        <div class="current-song" id="mobileCurrentSongName" aria-live="polite">
+          ♪
+        </div>
+        <p class="music-hint">Activá la música cuando quieras.</p>
+        <div class="music-controls">
+          <button class="control-btn" id="mobilePrevBtn" aria-label="Anterior">
+            ⏮️
+          </button>
+          <button
+            class="control-btn"
+            id="mobilePlayPauseBtn"
+            aria-label="Play/Pause"
+          >
+            ▶️
+          </button>
+          <button class="control-btn" id="mobileNextBtn" aria-label="Siguiente">
+            ⏭️
+          </button>
+        </div>
+      </div>
     </div>
     <div class="sr-only" id="statusMessage" aria-live="polite"></div>
-    <dialog class="dedication-dialog" id="dedicationDialog" aria-labelledby="dedicationTitle">
-        <form method="dialog" class="dedication-form" id="dedicationForm">
-            <div class="dialog-heading">
-                <p class="message-kicker">Un detalle único</p>
-                <h2 id="dedicationTitle">Personalizá tu dedicatoria</h2>
-                <p>El nombre y el mensaje quedarán guardados en el enlace que compartas.</p>
-            </div>
-            <label for="dedicationName">¿Para quién es?</label>
-            <input id="dedicationName" name="name" type="text" maxlength="60" autocomplete="name" placeholder="Ej.: María" />
-            <label for="dedicationMessage">Mensaje</label>
-            <textarea id="dedicationMessage" name="message" rows="4" maxlength="180" placeholder="Escribí un mensaje especial..."></textarea>
-            <div class="dialog-actions">
-                <button class="dialog-secondary" type="button" data-action="close-customize">Cancelar</button>
-                <button class="dialog-primary" type="submit">Ver mi dedicatoria</button>
-            </div>
-        </form>
+    <dialog
+      class="dedication-dialog"
+      id="dedicationDialog"
+      aria-labelledby="dedicationTitle"
+    >
+      <form method="dialog" class="dedication-form" id="dedicationForm">
+        <div class="dialog-heading">
+          <p class="message-kicker">Un detalle único</p>
+          <h2 id="dedicationTitle">Personalizá tu dedicatoria</h2>
+          <p>
+            El nombre y el mensaje quedarán guardados en el enlace que
+            compartas.
+          </p>
+        </div>
+        <label for="dedicationName">¿Para quién es?</label>
+        <input
+          id="dedicationName"
+          name="name"
+          type="text"
+          maxlength="60"
+          autocomplete="name"
+          placeholder="Ej.: María"
+        />
+        <label for="dedicationMessage">Mensaje</label>
+        <textarea
+          id="dedicationMessage"
+          name="message"
+          rows="4"
+          maxlength="180"
+          placeholder="Escribí un mensaje especial..."
+        ></textarea>
+        <div class="dialog-actions">
+          <button
+            class="dialog-secondary"
+            type="button"
+            data-action="close-customize"
+          >
+            Cancelar
+          </button>
+          <button class="dialog-primary" type="submit">
+            Ver mi dedicatoria
+          </button>
+        </div>
+      </form>
     </dialog>
 
     <dialog class="share-dialog" id="shareDialog" aria-labelledby="shareTitle">
-        <div class="share-dialog__content">
-            <button class="dialog-close" type="button" data-action="close-share" aria-label="Cerrar">×</button>
-            <p class="message-kicker">Tu dedicatoria está lista</p>
-            <h2 id="shareTitle">Compartila con alguien especial</h2>
-            <div class="share-card-preview" id="shareCardPreview">
-                <img src="img/sunflowers-realistic.webp" alt="" aria-hidden="true">
-                <div>
-                    <p class="share-card-preview__eyebrow">Flores para ti 🌻</p>
-                    <p class="share-card-preview__title" id="shareCardTitle">Una dedicatoria para vos</p>
-                    <p class="share-card-preview__message" id="shareCardMessage">Que nunca falte un motivo para florecer.</p>
-                </div>
-            </div>
-            <div class="share-qr-wrap">
-                <img id="shareQrCode" width="148" height="148" alt="Código QR para abrir la dedicatoria" loading="lazy">
-                <p>Escaneá para abrirla en otro dispositivo o descargá la tarjeta.</p>
-            </div>
-            <div class="share-dialog__actions">
-                <button class="dialog-primary" type="button" data-action="share-now">Compartir ahora</button>
-                <button class="dialog-secondary" type="button" data-action="copy-link">Copiar enlace</button>
-                <button class="dialog-secondary" type="button" data-action="share-whatsapp">WhatsApp</button>
-                <button class="dialog-secondary" type="button" data-action="download-card">Descargar tarjeta</button>
-            </div>
-            <p class="share-dialog__status" id="shareDialogStatus" aria-live="polite"></p>
+      <div class="share-dialog__content">
+        <button
+          class="dialog-close"
+          type="button"
+          data-action="close-share"
+          aria-label="Cerrar"
+        >
+          ×
+        </button>
+        <p class="message-kicker">Tu dedicatoria está lista</p>
+        <h2 id="shareTitle">Compartila con alguien especial</h2>
+        <div class="share-card-preview" id="shareCardPreview">
+          <img src="img/sunflowers-realistic.webp" alt="" aria-hidden="true" />
+          <div>
+            <p class="share-card-preview__eyebrow">Flores para ti 🌻</p>
+            <p class="share-card-preview__title" id="shareCardTitle">
+              Una dedicatoria para vos
+            </p>
+            <p class="share-card-preview__message" id="shareCardMessage">
+              Que nunca falte un motivo para florecer.
+            </p>
+          </div>
         </div>
+        <div class="share-qr-wrap">
+          <img
+            id="shareQrCode"
+            width="148"
+            height="148"
+            alt="Código QR para abrir la dedicatoria"
+            loading="lazy"
+          />
+          <p>Escaneá para abrirla en otro dispositivo o descargá la tarjeta.</p>
+        </div>
+        <div class="share-dialog__actions">
+          <button class="dialog-primary" type="button" data-action="share-now">
+            Compartir ahora
+          </button>
+          <button
+            class="dialog-secondary"
+            type="button"
+            data-action="copy-link"
+          >
+            Copiar enlace
+          </button>
+          <button
+            class="dialog-secondary"
+            type="button"
+            data-action="share-whatsapp"
+          >
+            WhatsApp
+          </button>
+          <button
+            class="dialog-secondary"
+            type="button"
+            data-action="download-card"
+          >
+            Descargar tarjeta
+          </button>
+        </div>
+        <p
+          class="share-dialog__status"
+          id="shareDialogStatus"
+          aria-live="polite"
+        ></p>
+      </div>
     </dialog>
 
-<script type="module" src="js/interactive-scene.js"></script>
-<script src="js/mov.js" defer></script>
-</body>
+    <script type="module" src="js/interactive-scene.js?v=28"></script>
+    <script src="js/mov.js" defer></script>
+  </body>
 </html>

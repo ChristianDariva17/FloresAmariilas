@@ -1,4 +1,4 @@
-const CACHE_NAME = 'flores-para-ti-v24';
+const CACHE_NAME = 'flores-para-ti-v25';
 const SHELL_ASSETS = [
     '/',
     '/css/style.css',

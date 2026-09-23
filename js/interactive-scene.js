@@ -27,6 +27,7 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
     const QUALITY_PROFILES = {
         high: {
             flowerCount: 7,
+            backgroundFlowerCount: 18,
             particleCount: 68,
             maxPixelRatio: 1.65,
             anisotropy: 8,
@@ -39,6 +40,7 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
         },
         balanced: {
             flowerCount: 4,
+            backgroundFlowerCount: 12,
             particleCount: 40,
             maxPixelRatio: 1.15,
             anisotropy: 4,
@@ -51,6 +53,7 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
         },
         mobile: {
             flowerCount: 3,
+            backgroundFlowerCount: 6,
             particleCount: 24,
             maxPixelRatio: 1,
             anisotropy: 2,
@@ -223,6 +226,14 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
     glbGarden.visible = false;
     scene.add(glbGarden);
 
+    // Las flores cercanas conservan el GLB completo; el fondo usa instancing
+    // para multiplicar el jardín sin multiplicar llamadas de dibujo.
+    const instancedGarden = new THREE.Group();
+    instancedGarden.position.copy(garden.position);
+    instancedGarden.scale.copy(garden.scale);
+    instancedGarden.visible = false;
+    scene.add(instancedGarden);
+
     function createContactShadowTexture() {
         const shadowCanvas = document.createElement('canvas');
         shadowCanvas.width = 256;
@@ -263,10 +274,16 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
 
     updateContactShadowQuality();
     const glbFlowers = [];
+    const backgroundInstancedMeshes = [];
+    const backgroundWindMaterials = [];
     const gltfLoader = new GLTFLoader();
     const ktx2Loader = new KTX2Loader();
     let loadedModelPath = '';
     let pendingModelPath = '';
+    let backgroundModelPath = '';
+    let pendingBackgroundModelPath = '';
+    let backgroundFlowerCount = 0;
+    let backgroundBudgetScale = 1;
     const textureLoader = new THREE.TextureLoader();
     const maxAnisotropy = renderer.capabilities.getMaxAnisotropy();
     let ktx2Enabled = false;
@@ -679,13 +696,177 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
     function refreshPbrMaterials() {
         prepareModelMaterials(garden);
         prepareModelMaterials(glbGarden);
+        prepareModelMaterials(instancedGarden);
         glbFlowers.forEach(applyFlowerShadowBudget);
+    }
+
+    function cloneWindMaterial(material) {
+        const clone = material.clone();
+        clone.userData = { ...clone.userData, backgroundWind: true };
+        clone.onBeforeCompile = (shader) => {
+            shader.uniforms.uWindTime = { value: 0 };
+            shader.uniforms.uWindStrength = { value: 0.012 };
+            shader.vertexShader = `
+                attribute float aWindPhase;
+                uniform float uWindTime;
+                uniform float uWindStrength;
+                ${shader.vertexShader}
+            `;
+            shader.vertexShader = shader.vertexShader.replace(
+                '#include <begin_vertex>',
+                `#include <begin_vertex>
+                float windWave = sin(uWindTime * 0.82 + aWindPhase + position.y * 3.2 + position.x * 2.4);
+                float windWeight = 0.32 + 0.68 * clamp(abs(position.y) * 2.0, 0.0, 1.0);
+                transformed.x += windWave * uWindStrength * windWeight;
+                transformed.z += windWave * uWindStrength * 0.35 * windWeight;`
+            );
+            clone.userData.windShader = shader;
+        };
+        clone.customProgramCacheKey = () => 'sunflower-background-wind-v1';
+        clone.needsUpdate = true;
+        return clone;
+    }
+
+    function cloneWindMaterials(material) {
+        return Array.isArray(material)
+            ? material.map(cloneWindMaterial)
+            : cloneWindMaterial(material);
+    }
+
+    function clearInstancedBackground() {
+        instancedGarden.clear();
+        backgroundInstancedMeshes.length = 0;
+        backgroundWindMaterials.length = 0;
+        backgroundFlowerCount = 0;
+        instancedGarden.visible = false;
+    }
+
+    function getBackgroundInstanceCount() {
+        return Math.max(0, Math.ceil(backgroundFlowerCount * backgroundBudgetScale));
+    }
+
+    function layoutBackgroundInstances() {
+        if (!backgroundInstancedMeshes.length) return;
+
+        const activeCount = getBackgroundInstanceCount();
+        const columns = Math.max(1, Math.ceil(Math.sqrt(Math.max(activeCount, 1) * 1.6)));
+        const rowCount = Math.ceil(Math.max(activeCount, 1) / columns);
+        const matrix = new THREE.Matrix4();
+        const instanceMatrix = new THREE.Matrix4();
+        const quaternion = new THREE.Quaternion();
+        const localScale = new THREE.Vector3();
+        const position = new THREE.Vector3();
+        const rotation = new THREE.Euler();
+
+        backgroundInstancedMeshes.forEach(({ mesh, localMatrix }) => {
+            mesh.count = activeCount;
+            for (let index = 0; index < activeCount; index += 1) {
+                const row = Math.floor(index / columns);
+                const column = index % columns;
+                const normalizedColumn = columns === 1 ? 0.5 : column / (columns - 1);
+                const normalizedRow = rowCount === 1 ? 0.5 : row / (rowCount - 1);
+                position.set(
+                    (normalizedColumn - 0.5) * 2.95 + (flowerNoise(index, 31) - 0.5) * 0.18,
+                    -0.04 + normalizedRow * 0.34 + (flowerNoise(index, 32) - 0.5) * 0.08,
+                    -0.5 - normalizedRow * 0.1 - flowerNoise(index, 33) * 0.08
+                );
+                localScale.setScalar(0.3 + flowerNoise(index, 34) * 0.14 - normalizedRow * 0.025);
+                rotation.set(
+                    (flowerNoise(index, 35) - 0.5) * 0.08,
+                    (flowerNoise(index, 36) - 0.5) * 0.12,
+                    (flowerNoise(index, 37) - 0.5) * 0.12
+                );
+                quaternion.setFromEuler(rotation);
+                matrix.compose(position, quaternion, localScale);
+                instanceMatrix.multiplyMatrices(matrix, localMatrix);
+                mesh.setMatrixAt(index, instanceMatrix);
+            }
+            mesh.instanceMatrix.needsUpdate = true;
+        });
+    }
+
+    function createInstancedBackground(sourceScene) {
+        clearInstancedBackground();
+        const count = getQualityProfile().backgroundFlowerCount;
+        if (!sourceScene || !count) return;
+
+        sourceScene.updateMatrixWorld(true);
+        const phases = new Float32Array(count);
+        for (let index = 0; index < count; index += 1) {
+            phases[index] = index * 0.92 + flowerNoise(index, 38) * 0.8;
+        }
+
+        sourceScene.traverse((object) => {
+            if (!object.isMesh || !object.geometry || !object.material) return;
+            const geometry = object.geometry.clone();
+            geometry.setAttribute('aWindPhase', new THREE.InstancedBufferAttribute(phases, 1));
+            const mesh = new THREE.InstancedMesh(geometry, cloneWindMaterials(object.material), count);
+            mesh.name = `Background_${object.name || 'FlowerPart'}`;
+            mesh.frustumCulled = false;
+            mesh.instanceMatrix.setUsage(THREE.StaticDrawUsage);
+            instancedGarden.add(mesh);
+            backgroundInstancedMeshes.push({ mesh, localMatrix: object.matrixWorld.clone() });
+
+            const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+            materials.forEach((material) => backgroundWindMaterials.push(material));
+        });
+
+        backgroundFlowerCount = count;
+        backgroundBudgetScale = 1;
+        prepareModelMaterials(instancedGarden);
+        layoutBackgroundInstances();
+        instancedGarden.visible = backgroundInstancedMeshes.length > 0;
+        if (perfDebug) console.info(`[FloresPerf] background-ready flowers=${count} meshes=${backgroundInstancedMeshes.length}`);
+    }
+
+    function updateBackgroundWind(elapsed) {
+        backgroundWindMaterials.forEach((material) => {
+            const shader = material.userData.windShader;
+            if (!shader) return;
+            shader.uniforms.uWindTime.value = elapsed;
+            shader.uniforms.uWindStrength.value = reducedMotion() ? 0 : 0.012;
+        });
     }
 
     function getModelPath() {
         if (mobileQuery.matches) return 'assets/models/sunflower-mobile.glb';
         if (isLowPowerDevice || window.innerWidth < 1600) return 'assets/models/sunflower-optimized.glb';
         return 'assets/models/sunflower.glb';
+    }
+
+    function getBackgroundModelPath() {
+        return getQualityProfileName() === 'high'
+            ? 'assets/models/sunflower-optimized.glb'
+            : 'assets/models/sunflower-mobile.glb';
+    }
+
+    function loadBackgroundModel(modelPath = getBackgroundModelPath(), sourceScene = null) {
+        if (modelPath === backgroundModelPath || modelPath === pendingBackgroundModelPath) return;
+        pendingBackgroundModelPath = modelPath;
+
+        const buildBackground = (sceneSource) => {
+            if (modelPath !== getBackgroundModelPath()) return;
+            prepareModelMaterials(sceneSource);
+            createInstancedBackground(sceneSource);
+            backgroundModelPath = modelPath;
+            pendingBackgroundModelPath = '';
+        };
+
+        if (modelPath === loadedModelPath && sourceScene) {
+            buildBackground(sourceScene);
+            return;
+        }
+
+        gltfLoader.load(
+            modelPath,
+            (gltf) => buildBackground(gltf.scene),
+            undefined,
+            (error) => {
+                pendingBackgroundModelPath = '';
+                clearInstancedBackground();
+                console.warn('No se pudo cargar el LOD instanciado del fondo.', error);
+            }
+        );
     }
 
     function loadSunflowerModel(modelPath = getModelPath()) {
@@ -726,6 +907,7 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
                 loadedModelPath = modelPath;
                 pendingModelPath = '';
                 layoutGarden();
+                loadBackgroundModel(getBackgroundModelPath(), gltf.scene);
                 if (reducedMotion()) renderer.render(scene, camera);
             },
             undefined,
@@ -828,12 +1010,15 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
         const profile = getQualityProfile();
         if (performanceState.fps < profile.targetFps - 8) {
             adaptiveRenderScale = Math.max(0.72, adaptiveRenderScale - 0.08);
+            backgroundBudgetScale = Math.max(0.5, backgroundBudgetScale - 0.2);
         } else if (performanceState.fps > profile.targetFps + 8) {
             adaptiveRenderScale = Math.min(1, adaptiveRenderScale + 0.04);
+            backgroundBudgetScale = Math.min(1, backgroundBudgetScale + 0.1);
         }
 
         renderer.setPixelRatio(getRenderPixelRatio());
         renderer.setSize(window.innerWidth, window.innerHeight, false);
+        layoutBackgroundInstances();
         performanceState.minFps = Math.min(performanceState.minFps, performanceState.fps);
         performanceState.maxFps = Math.max(performanceState.maxFps, performanceState.fps);
         performanceState.samples += 1;
@@ -845,12 +1030,13 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
             triangles: renderer.info.render.triangles,
             pixelRatio: Number(getRenderPixelRatio().toFixed(2)),
             adaptiveRenderScale: Number(adaptiveRenderScale.toFixed(2)),
+            backgroundFlowers: getBackgroundInstanceCount(),
             pbrTextures: `${pbrTexturesReady}/${pbrTextureRequests}`
         };
         if (performanceHud) {
             performanceHud.hidden = false;
             const modelLabel = loadedModelPath ? loadedModelPath.split('/').pop() : 'cargando';
-            performanceHud.textContent = `Perfil ${telemetry.profile} · ${telemetry.fps} FPS (mín. ${telemetry.minFps}) · ${telemetry.drawCalls} llamadas · ${Math.round(telemetry.triangles / 1000)}k tri · DPR ${telemetry.pixelRatio} · LOD ${modelLabel}`;
+            performanceHud.textContent = `Perfil ${telemetry.profile} · ${telemetry.fps} FPS (mín. ${telemetry.minFps}) · ${telemetry.drawCalls} llamadas · ${Math.round(telemetry.triangles / 1000)}k tri · BG ${telemetry.backgroundFlowers} · DPR ${telemetry.pixelRatio} · LOD ${modelLabel}`;
         }
         if (perfDebug) console.info('[FloresPerf]', telemetry);
         performanceState.frames = 0;
@@ -868,6 +1054,7 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
         renderer.setSize(width, height, false);
         updateContactShadowQuality();
         layoutGarden();
+        layoutBackgroundInstances();
     }
 
     function updateParticles(delta, elapsed) {
@@ -898,12 +1085,14 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
         const revealScale = 0.88 + sceneReveal * 0.12;
         const targetScale = (0.96 + bloomTarget * 0.045) * revealScale;
 
-        [garden, glbGarden].forEach((root) => {
+        [garden, glbGarden, instancedGarden].forEach((root) => {
             root.scale.x += (targetScale - root.scale.x) * 0.045;
             root.scale.y += (targetScale - root.scale.y) * 0.045;
             root.position.x += (pointer.x * 0.045 - root.position.x) * 0.035;
             root.rotation.z += ((pointer.x * 0.008 + wind * 0.35) - root.rotation.z) * 0.035;
         });
+
+        updateBackgroundWind(elapsed);
 
         contactShadow.position.x += (pointer.x * 0.045 - contactShadow.position.x) * 0.035;
 
@@ -1125,6 +1314,9 @@ import { RoomEnvironment } from './vendor/RoomEnvironment.js';
                 glbFlowers.length = 0;
                 glbGarden.visible = false;
                 garden.visible = true;
+                backgroundModelPath = '';
+                pendingBackgroundModelPath = '';
+                clearInstancedBackground();
                 loadSunflowerModel(nextModelPath);
             }
             resize();
